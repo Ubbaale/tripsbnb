@@ -1,0 +1,16 @@
+{
+  "appName": "Tripsbnb - All-in-One Travel",
+  "subtitle": "Stays, Dining, Safaris & More",
+  "shortDescription": "Book stays, dining, safaris, car hire, and find travel companions — all in one premium travel app.",
+  "fullDescription": "Tripsbnb is your all-in-one travel companion. Whether you're booking luxury accommodations, discovering local restaurants, planning safari adventures, hiring a car, or finding travel companions — Tripsbnb brings everything together in a single, beautifully designed app.\n\nKey Features:\n\n- STAYS & ACCOMMODATIONS: Browse houses, villas, hotels, cabins, treehouses, and 15+ property types. Filter by price, amenities, rooms, and more. Monthly apartment deals available.\n\n- DINING: Discover restaurants, cafes, bars, and fine dining. See real-time open/closed status, delivery options, and reserve tables. Order food for delivery or pickup.\n\n- SAFARI ADVENTURES: Book curated safari experiences with verified local guides.\n\n- CAR HIRE: Rent vehicles with comprehensive protection plans including insurance, GPS tracking, and damage reporting.\n\n- TRAVEL COMPANIONS: Discover verified travel companions with a swipe-based matching system and in-app chat.\n\n- DESTINATION GUIDE: AI-powered guides with hidden gems, budget tips, local transport, cultural etiquette, and mega events.\n\n- TRAVEL TOOLKIT: Currency converter (44+ currencies), AI-powered packing lists, and emergency information for any destination.\n\n- DEALS & BUNDLES: Flash deals, early-bird discounts, group savings, and curated travel bundles.\n\n- SECURE PAYMENTS: All transactions powered by Stripe with 24/7 support and verified vendors.\n\n- IN-APP CHAT: Communicate safely with vendors through our content-filtered messaging system.\n\n- MULTI-LANGUAGE: Available in 14 languages with auto-detection.\n\nTravel without boundaries. Download Tripsbnb today.",
+  "keywords": "travel, booking, stays, accommodation, safari, dining, restaurants, car hire, rental, companions, deals, destination guide, currency converter, hotel, villa, vacation",
+  "categories": {
+    "ios": "Travel",
+    "android": "Travel & Local"
+  },
+  "contentRating": "17+",
+  "privacyPolicyUrl": "https://tripsbnb.com/privacy",
+  "termsOfServiceUrl": "https://tripsbnb.com/terms",
+  "supportUrl": "https://tripsbnb.com/support",
+  "marketingUrl": "https://tripsbnb.com"
+}

@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>APP_NAME_PLACEHOLDER - Restaurant Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      :root {
+        --primary: #1A4D2E;
+        --primary-light: #2D6B45;
+        --accent: #DAA520;
+        --bg: #FAFAF8;
+        --card-bg: #fff;
+        --border: #e8e8e4;
+        --text: #333;
+        --text-light: #888;
+        --font-heading: 'Cormorant Garamond', serif;
+        --font-body: 'Inter', -apple-system, sans-serif;
+        --success: #2E7D32;
+        --warning: #F57F17;
+        --danger: #C62828;
+        --info: #1565C0;
+      }
+      body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+
+      .header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: #fff; position: sticky; top: 0; z-index: 100;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      }
+      .header-top {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 20px 32px 12px; max-width: 1280px; margin: 0 auto;
+      }
+      .logo-area { display: flex; align-items: center; gap: 12px; }
+      .logo-text h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+      .logo-text .subtitle { font-size: 13px; opacity: 0.8; }
+      .header-badge {
+        background: rgba(218,165,32,0.2); border: 1px solid rgba(218,165,32,0.4);
+        color: var(--accent); padding: 6px 14px; border-radius: 20px;
+        font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+      }
+      .nav-tabs { display: flex; max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+      .nav-tab {
+        padding: 12px 24px; font-size: 14px; font-weight: 500;
+        color: rgba(255,255,255,0.7); cursor: pointer; border: none; background: none;
+        border-bottom: 3px solid transparent; transition: all 0.2s; font-family: inherit;
+      }
+      .nav-tab:hover { color: #fff; }
+      .nav-tab.active { color: #fff; border-bottom-color: var(--accent); }
+
+      .main-content { max-width: 1280px; margin: 0 auto; padding: 32px; }
+      .tab-content { display: none; }
+      .tab-content.active { display: block; }
+
+      .restaurant-selector {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
+        padding: 24px; margin-bottom: 28px; display: flex; gap: 16px; align-items: end; flex-wrap: wrap;
+      }
+      .restaurant-selector .form-group { margin-bottom: 0; flex: 1; min-width: 200px; }
+
+      .section-title { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 24px; }
+      .section-subtitle { font-size: 14px; color: var(--text-light); margin-top: -16px; margin-bottom: 24px; }
+
+      .stats-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 16px; margin-bottom: 32px;
+      }
+      .stat-card {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
+        padding: 20px; text-align: center;
+      }
+      .stat-card.highlight { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+      .stat-card.highlight .stat-label { color: rgba(255,255,255,0.7); }
+      .stat-card.highlight .stat-value { color: var(--accent); }
+      .stat-value { font-size: 28px; font-weight: 700; color: var(--primary); line-height: 1.2; }
+      .stat-label { font-size: 12px; color: var(--text-light); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; margin-top: 4px; }
+
+      .form-section {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
+        padding: 28px; margin-bottom: 24px;
+      }
+      .form-section-title {
+        font-size: 16px; font-weight: 600; color: var(--primary);
+        margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #E8F5E9;
+      }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+      .form-group { display: flex; flex-direction: column; gap: 6px; }
+      .form-group.full-width { grid-column: 1 / -1; }
+      .form-label { font-size: 13px; font-weight: 500; color: #555; }
+      .form-input, .form-select, .form-textarea {
+        padding: 10px 14px; border: 1px solid #d0d0cc; border-radius: 8px;
+        font-size: 14px; font-family: inherit; color: var(--text); background: #fff;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+      .form-input:focus, .form-select:focus, .form-textarea:focus {
+        outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,77,46,0.1);
+      }
+      .form-textarea { resize: vertical; min-height: 80px; }
+      .price-input-group { display: flex; align-items: center; }
+      .price-prefix {
+        background: #f5f5f2; border: 1px solid #d0d0cc; border-right: none;
+        padding: 10px 12px; border-radius: 8px 0 0 8px; font-size: 14px; color: #666; font-weight: 500;
+      }
+      .price-input-group .form-input { border-radius: 0 8px 8px 0; flex: 1; }
+
+      .btn {
+        display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+        padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
+        font-family: inherit; cursor: pointer; border: 1px solid transparent; transition: all 0.2s;
+      }
+      .btn-primary { background: var(--primary); color: #fff; }
+      .btn-primary:hover { background: #153D25; }
+      .btn-secondary { background: #fff; color: var(--primary); border-color: #d0d0cc; }
+      .btn-secondary:hover { background: #f5f5f2; border-color: var(--primary); }
+      .btn-success { background: #E8F5E9; color: var(--success); border-color: #A5D6A7; }
+      .btn-success:hover { background: #C8E6C9; }
+      .btn-warning { background: #FFF8E1; color: var(--warning); border-color: #FFE082; }
+      .btn-warning:hover { background: #FFF3C4; }
+      .btn-danger { background: #FFEBEE; color: var(--danger); border-color: #FFCDD2; }
+      .btn-danger:hover { background: #FFCDD2; }
+      .btn-info { background: #E3F2FD; color: var(--info); border-color: #90CAF9; }
+      .btn-info:hover { background: #BBDEFB; }
+      .btn-gold { background: linear-gradient(135deg, var(--accent), #C49200); color: #fff; }
+      .btn-sm { padding: 6px 12px; font-size: 12px; }
+      .btn-lg { padding: 12px 28px; font-size: 15px; }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+      .menu-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px;
+      }
+      .menu-item-card {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
+        padding: 16px; display: flex; justify-content: space-between; align-items: flex-start;
+        transition: box-shadow 0.2s;
+      }
+      .menu-item-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+      .menu-item-card.unavailable { opacity: 0.5; background: #f9f9f6; }
+      .menu-item-info { flex: 1; min-width: 0; }
+      .menu-item-name { font-size: 15px; font-weight: 600; color: var(--primary); margin-bottom: 2px; }
+      .menu-item-desc { font-size: 13px; color: var(--text-light); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .menu-item-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+      .menu-item-price { font-size: 15px; font-weight: 700; color: var(--primary); }
+      .menu-item-actions { display: flex; gap: 6px; margin-left: 12px; flex-shrink: 0; align-items: center; }
+
+      .badge {
+        display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+        border-radius: 12px; font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.3px;
+      }
+      .badge-category { background: #E8F5E9; color: var(--primary); }
+      .badge-available { background: #E8F5E9; color: var(--success); }
+      .badge-unavailable { background: #FFEBEE; color: var(--danger); }
+
+      .order-card {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border);
+        padding: 20px; margin-bottom: 16px; transition: box-shadow 0.2s;
+      }
+      .order-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+      .order-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+      .order-id { font-size: 13px; color: var(--text-light); font-family: monospace; }
+      .order-customer { font-size: 15px; font-weight: 600; color: var(--text); }
+      .order-type-badge {
+        padding: 4px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; text-transform: uppercase;
+      }
+      .order-type-badge.delivery { background: #E3F2FD; color: var(--info); }
+      .order-type-badge.pickup { background: #FFF8E1; color: var(--warning); }
+      .order-items { margin: 12px 0; padding: 12px; background: #f9f9f6; border-radius: 8px; }
+      .order-item-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+      .order-item-qty { color: var(--text-light); margin-right: 8px; }
+      .order-totals { border-top: 1px solid var(--border); padding-top: 12px; margin-top: 12px; }
+      .order-total-row { display: flex; justify-content: space-between; font-size: 14px; padding: 2px 0; }
+      .order-total-row.total { font-weight: 700; font-size: 16px; color: var(--primary); border-top: 1px solid var(--border); padding-top: 8px; margin-top: 4px; }
+      .order-address { font-size: 13px; color: var(--text-light); margin-top: 8px; padding: 8px 12px; background: #f0f0ec; border-radius: 8px; }
+      .order-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+
+      .badge-status {
+        padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: 0.3px;
+      }
+      .badge-status.pending { background: #FFF8E1; color: var(--warning); }
+      .badge-status.confirmed { background: #E3F2FD; color: var(--info); }
+      .badge-status.preparing { background: #F3E5F5; color: #7B1FA2; }
+      .badge-status.ready { background: #E8F5E9; color: var(--success); }
+      .badge-status.out_for_delivery { background: #E0F7FA; color: #00838F; }
+      .badge-status.delivered { background: #E8F5E9; color: var(--success); }
+      .badge-status.cancelled { background: #FFEBEE; color: var(--danger); }
+
+      .order-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+      .filter-btn {
+        padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+        cursor: pointer; border: 1px solid var(--border); background: var(--card-bg);
+        color: var(--text); transition: all 0.2s; font-family: inherit;
+      }
+      .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+      .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+      .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+      .empty-state h3 { font-size: 18px; font-weight: 600; color: #666; margin-bottom: 8px; }
+      .empty-state p { font-size: 14px; max-width: 400px; margin: 0 auto; }
+
+      .loading-center { display: flex; align-items: center; justify-content: center; padding: 60px; gap: 12px; color: var(--text-light); font-size: 14px; }
+      .loading-spinner {
+        display: inline-block; width: 20px; height: 20px;
+        border: 2px solid rgba(26,77,46,0.2); border-top-color: var(--primary);
+        border-radius: 50%; animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .alert {
+        padding: 14px 20px; border-radius: 8px; font-size: 14px;
+        margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+      }
+      .alert-success { background: #E8F5E9; color: #1B5E20; border: 1px solid #A5D6A7; }
+      .alert-error { background: #FFEBEE; color: #B71C1C; border: 1px solid #EF9A9A; }
+      .alert-close { margin-left: auto; cursor: pointer; font-size: 18px; opacity: 0.6; background: none; border: none; color: inherit; }
+      .alert-close:hover { opacity: 1; }
+
+      .modal-overlay {
+        display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+        z-index: 200; align-items: center; justify-content: center; padding: 20px;
+      }
+      .modal-overlay.active { display: flex; }
+      .modal {
+        background: #fff; border-radius: 16px; width: 100%; max-width: 560px;
+        max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      }
+      .modal-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 24px 28px; border-bottom: 1px solid var(--border);
+      }
+      .modal-title { font-size: 18px; font-weight: 600; color: var(--primary); }
+      .modal-close {
+        width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+        border-radius: 8px; border: none; background: #f5f5f2; cursor: pointer;
+        font-size: 18px; color: #666; transition: background 0.2s;
+      }
+      .modal-close:hover { background: #e8e8e4; }
+      .modal-body { padding: 28px; }
+      .modal-footer { padding: 16px 28px 24px; display: flex; justify-content: flex-end; gap: 12px; }
+
+      .footer {
+        text-align: center; padding: 32px; color: var(--text-light); font-size: 13px;
+        border-top: 1px solid var(--border); margin-top: 40px;
+      }
+      .footer a { color: var(--primary); text-decoration: none; font-weight: 500; }
+      .footer a:hover { text-decoration: underline; }
+
+      .category-header {
+        font-size: 14px; font-weight: 600; color: var(--text-light); text-transform: uppercase;
+        letter-spacing: 0.5px; margin: 24px 0 12px; padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      .category-header:first-child { margin-top: 0; }
+
+      .toggle-switch { position: relative; display: inline-block; width: 40px; height: 22px; }
+      .toggle-switch input { opacity: 0; width: 0; height: 0; }
+      .toggle-slider {
+        position: absolute; cursor: pointer; inset: 0; background: #ccc;
+        border-radius: 22px; transition: 0.3s;
+      }
+      .toggle-slider:before {
+        content: ''; position: absolute; height: 16px; width: 16px;
+        left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s;
+      }
+      .toggle-switch input:checked + .toggle-slider { background: var(--success); }
+      .toggle-switch input:checked + .toggle-slider:before { transform: translateX(18px); }
+
+      .refresh-indicator { font-size: 12px; color: var(--text-light); margin-left: auto; }
+
+      @media (max-width: 768px) {
+        .header-top { padding: 16px 20px 8px; }
+        .header-badge { display: none; }
+        .nav-tabs { padding: 0 16px; overflow-x: auto; }
+        .nav-tab { padding: 10px 16px; font-size: 13px; white-space: nowrap; }
+        .main-content { padding: 20px 16px; }
+        .form-grid { grid-template-columns: 1fr; }
+        .menu-grid { grid-template-columns: 1fr; }
+        .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        .restaurant-selector { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-top">
+        <div class="logo-area">
+          <div class="logo-text">
+            <h1>Tripsbnb</h1>
+            <div class="subtitle">Restaurant Dashboard</div>
+          </div>
+        </div>
+        <div class="header-badge">Partner Portal</div>
+      </div>
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-tab="overview">Overview</button>
+        <button class="nav-tab" data-tab="menu">Menu Management</button>
+        <button class="nav-tab" data-tab="orders">Delivery Orders</button>
+        <button class="nav-tab" data-tab="add-item">Add Menu Item</button>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <div id="alert-container"></div>
+
+      <div class="restaurant-selector">
+        <div class="form-group">
+          <label class="form-label">Select Your Restaurant</label>
+          <select class="form-select" id="restaurant-select" onchange="onRestaurantChange()">
+            <option value="">Loading restaurants...</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="refreshAll()">Refresh</button>
+      </div>
+
+      <div id="tab-overview" class="tab-content active">
+        <h2 class="section-title">Restaurant Overview</h2>
+        <div id="overview-loading" class="loading-center">
+          <div class="loading-spinner"></div>
+          <span>Select a restaurant to view overview...</span>
+        </div>
+        <div id="overview-content" style="display:none;">
+          <div class="stats-grid">
+            <div class="stat-card highlight">
+              <div class="stat-value" id="stat-menu-items">0</div>
+              <div class="stat-label">Menu Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-active-items">0</div>
+              <div class="stat-label">Active Items</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-total-orders">0</div>
+              <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-pending-orders">0</div>
+              <div class="stat-label">Pending Orders</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="stat-revenue">$0</div>
+              <div class="stat-label">Total Revenue</div>
+            </div>
+          </div>
+          <div class="form-section">
+            <div class="form-section-title">Restaurant Info</div>
+            <div id="restaurant-info"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-menu" class="tab-content">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <h2 class="section-title" style="margin-bottom:0;">Menu Items</h2>
+          <button class="btn btn-primary" onclick="switchTab('add-item')">+ Add New Item</button>
+        </div>
+        <div id="menu-loading" class="loading-center">
+          <div class="loading-spinner"></div>
+          <span>Loading menu items...</span>
+        </div>
+        <div id="menu-empty" class="empty-state" style="display:none;">
+          <h3>No Menu Items Yet</h3>
+          <p>Add your first menu item to start receiving delivery orders.</p>
+          <button class="btn btn-primary btn-lg" style="margin-top:20px" onclick="switchTab('add-item')">Add First Item</button>
+        </div>
+        <div id="menu-content"></div>
+      </div>
+
+      <div id="tab-orders" class="tab-content">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;">
+          <h2 class="section-title" style="margin-bottom:0;">Delivery Orders</h2>
+          <div class="refresh-indicator" id="orders-refresh-time"></div>
+        </div>
+        <div class="order-filters" id="order-filters">
+          <button class="filter-btn active" data-filter="all" onclick="filterOrders('all')">All</button>
+          <button class="filter-btn" data-filter="pending" onclick="filterOrders('pending')">Pending</button>
+          <button class="filter-btn" data-filter="confirmed" onclick="filterOrders('confirmed')">Confirmed</button>
+          <button class="filter-btn" data-filter="preparing" onclick="filterOrders('preparing')">Preparing</button>
+          <button class="filter-btn" data-filter="ready" onclick="filterOrders('ready')">Ready</button>
+          <button class="filter-btn" data-filter="out_for_delivery" onclick="filterOrders('out_for_delivery')">Out for Delivery</button>
+          <button class="filter-btn" data-filter="delivered" onclick="filterOrders('delivered')">Delivered</button>
+          <button class="filter-btn" data-filter="cancelled" onclick="filterOrders('cancelled')">Cancelled</button>
+        </div>
+        <div id="orders-loading" class="loading-center">
+          <div class="loading-spinner"></div>
+          <span>Loading orders...</span>
+        </div>
+        <div id="orders-empty" class="empty-state" style="display:none;">
+          <h3>No Orders Yet</h3>
+          <p>Orders will appear here when customers place them through the app.</p>
+        </div>
+        <div id="orders-list"></div>
+      </div>
+
+      <div id="tab-add-item" class="tab-content">
+        <h2 class="section-title">Add New Menu Item</h2>
+        <form id="add-item-form" onsubmit="handleAddItem(event)">
+          <div class="form-section">
+            <div class="form-section-title">Item Details</div>
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Item Name *</label>
+                <input class="form-input" type="text" name="name" required placeholder="e.g., Grilled Chicken Platter" />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" name="description" placeholder="Describe the dish, ingredients, portion size..."></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category *</label>
+                <select class="form-select" name="category" required>
+                  <option value="">Select category...</option>
+                  <option value="appetizer">Appetizer</option>
+                  <option value="main">Main Course</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="drink">Drink</option>
+                  <option value="side">Side Dish</option>
+                  <option value="special">Special</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Price *</label>
+                <div class="price-input-group">
+                  <span class="price-prefix">$</span>
+                  <input class="form-input" type="number" name="price" min="0.01" step="0.01" required placeholder="0.00" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Image URL</label>
+                <input class="form-input" type="url" name="imageUrl" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sort Order</label>
+                <input class="form-input" type="number" name="sortOrder" min="0" value="0" placeholder="0" />
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:12px;">
+            <button type="button" class="btn btn-secondary" onclick="switchTab('menu')">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-lg" id="add-item-btn">Add Menu Item</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div id="edit-modal" class="modal-overlay" onclick="if(event.target===this)closeEditModal()">
+      <div class="modal">
+        <div class="modal-header">
+          <div class="modal-title">Edit Menu Item</div>
+          <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-item-form" onsubmit="handleEditItem(event)">
+            <input type="hidden" name="id" id="edit-id" />
+            <div class="form-grid">
+              <div class="form-group full-width">
+                <label class="form-label">Item Name *</label>
+                <input class="form-input" type="text" name="name" id="edit-name" required />
+              </div>
+              <div class="form-group full-width">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" name="description" id="edit-description"></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category *</label>
+                <select class="form-select" name="category" id="edit-category" required>
+                  <option value="appetizer">Appetizer</option>
+                  <option value="main">Main Course</option>
+                  <option value="dessert">Dessert</option>
+                  <option value="drink">Drink</option>
+                  <option value="side">Side Dish</option>
+                  <option value="special">Special</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Price *</label>
+                <div class="price-input-group">
+                  <span class="price-prefix">$</span>
+                  <input class="form-input" type="number" name="price" id="edit-price" min="0.01" step="0.01" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Image URL</label>
+                <input class="form-input" type="url" name="imageUrl" id="edit-imageUrl" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Sort Order</label>
+                <input class="form-input" type="number" name="sortOrder" id="edit-sortOrder" min="0" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Available</label>
+                <label class="toggle-switch">
+                  <input type="checkbox" name="isAvailable" id="edit-isAvailable" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="document.getElementById('edit-item-form').requestSubmit()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <a href="/">Tripsbnb</a> &mdash; Restaurant Partner Dashboard
+      <br /><span style="font-size:12px;margin-top:4px;display:inline-block;">Powered by TripVerse</span>
+    </footer>
+
+    <script>
+      let restaurants = [];
+      let menuItems = [];
+      let orders = [];
+      let selectedRestaurantId = null;
+      let currentOrderFilter = 'all';
+      let ordersRefreshInterval = null;
+
+      document.querySelectorAll('.nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+      });
+
+      function switchTab(tab) {
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        const tabBtn = document.querySelector(`[data-tab="${tab}"]`);
+        if (tabBtn) tabBtn.classList.add('active');
+        document.getElementById(`tab-${tab}`).classList.add('active');
+      }
+
+      function showAlert(message, type = 'success') {
+        const container = document.getElementById('alert-container');
+        const alert = document.createElement('div');
+        alert.className = `alert alert-${type}`;
+        alert.innerHTML = `<span>${type === 'success' ? '&#10003;' : '&#9888;'}</span><span>${message}</span><button class="alert-close" onclick="this.parentElement.remove()">&times;</button>`;
+        container.prepend(alert);
+        setTimeout(() => alert.remove(), 6000);
+      }
+
+      function escHtml(str) {
+        if (!str) return '';
+        const d = document.createElement('div');
+        d.textContent = str;
+        return d.innerHTML;
+      }
+
+      function formatPrice(cents) {
+        if (!cents && cents !== 0) return '$0.00';
+        return '$' + (cents / 100).toFixed(2);
+      }
+
+      function formatCategory(cat) {
+        if (!cat) return '';
+        const labels = { appetizer: 'Appetizer', main: 'Main Course', dessert: 'Dessert', drink: 'Drink', side: 'Side Dish', special: 'Special' };
+        return labels[cat] || cat.charAt(0).toUpperCase() + cat.slice(1);
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return '-';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+      }
+
+      function formatStatus(status) {
+        if (!status) return '';
+        return status.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      }
+
+      async function loadRestaurants() {
+        try {
+          const res = await fetch('/api/restaurants');
+          if (!res.ok) throw new Error('Failed to load restaurants');
+          restaurants = await res.json();
+          const select = document.getElementById('restaurant-select');
+          select.innerHTML = '<option value="">-- Select a restaurant --</option>' +
+            restaurants.map(r => `<option value="${r.id}">${escHtml(r.name)} - ${escHtml(r.city || '')}</option>`).join('');
+        } catch (err) {
+          showAlert('Failed to load restaurants: ' + err.message, 'error');
+        }
+      }
+
+      function onRestaurantChange() {
+        selectedRestaurantId = document.getElementById('restaurant-select').value;
+        if (selectedRestaurantId) {
+          refreshAll();
+        }
+      }
+
+      async function refreshAll() {
+        if (!selectedRestaurantId) {
+          showAlert('Please select a restaurant first.', 'error');
+          return;
+        }
+        await Promise.all([loadMenu(), loadOrders(), loadOverview()]);
+      }
+
+      async function loadOverview() {
+        if (!selectedRestaurantId) return;
+        const loading = document.getElementById('overview-loading');
+        const content = document.getElementById('overview-content');
+        loading.style.display = 'flex';
+        content.style.display = 'none';
+
+        try {
+          const [menuRes, ordersRes] = await Promise.all([
+            fetch(`/api/restaurants/${selectedRestaurantId}/menu`),
+            fetch(`/api/delivery-orders?restaurantId=${selectedRestaurantId}`)
+          ]);
+          const items = menuRes.ok ? await menuRes.json() : [];
+          const allOrders = ordersRes.ok ? await ordersRes.json() : [];
+
+          const activeItems = items.filter(i => i.isAvailable);
+          const pendingOrders = allOrders.filter(o => o.status === 'pending');
+          const completedOrders = allOrders.filter(o => o.status === 'delivered');
+          const revenue = completedOrders.reduce((sum, o) => sum + (o.subtotalAmount || 0), 0);
+
+          document.getElementById('stat-menu-items').textContent = items.length;
+          document.getElementById('stat-active-items').textContent = activeItems.length;
+          document.getElementById('stat-total-orders').textContent = allOrders.length;
+          document.getElementById('stat-pending-orders').textContent = pendingOrders.length;
+          document.getElementById('stat-revenue').textContent = formatPrice(revenue);
+
+          const rest = restaurants.find(r => r.id === selectedRestaurantId);
+          if (rest) {
+            document.getElementById('restaurant-info').innerHTML = `
+              <div class="form-grid">
+                <div class="form-group"><div class="form-label">Name</div><div>${escHtml(rest.name)}</div></div>
+                <div class="form-group"><div class="form-label">Type</div><div style="text-transform:capitalize">${escHtml(rest.venueType || 'restaurant')}</div></div>
+                <div class="form-group"><div class="form-label">Location</div><div>${escHtml(rest.city || '')}, ${escHtml(rest.country || '')}</div></div>
+                <div class="form-group"><div class="form-label">Phone</div><div>${escHtml(rest.phone || 'N/A')}</div></div>
+                ${rest.deliveryAvailable ? '<div class="form-group"><div class="form-label">Delivery</div><div style="color:var(--success);font-weight:600;">Available</div></div>' : ''}
+                ${rest.reservationAvailable ? '<div class="form-group"><div class="form-label">Reservations</div><div style="color:var(--success);font-weight:600;">Available</div></div>' : ''}
+              </div>
+            `;
+          }
+
+          loading.style.display = 'none';
+          content.style.display = 'block';
+        } catch (err) {
+          loading.style.display = 'none';
+          showAlert('Failed to load overview.', 'error');
+        }
+      }
+
+      async function loadMenu() {
+        if (!selectedRestaurantId) return;
+        const loading = document.getElementById('menu-loading');
+        const empty = document.getElementById('menu-empty');
+        const content = document.getElementById('menu-content');
+
+        loading.style.display = 'flex';
+        empty.style.display = 'none';
+        content.innerHTML = '';
+
+        try {
+          const res = await fetch(`/api/restaurants/${selectedRestaurantId}/menu`);
+          if (!res.ok) throw new Error('Failed to load menu');
+          menuItems = await res.json();
+          loading.style.display = 'none';
+
+          if (menuItems.length === 0) {
+            empty.style.display = 'block';
+            return;
+          }
+
+          const categories = {};
+          menuItems.forEach(item => {
+            const cat = item.category || 'other';
+            if (!categories[cat]) categories[cat] = [];
+            categories[cat].push(item);
+          });
+
+          const categoryOrder = ['special', 'appetizer', 'main', 'side', 'dessert', 'drink', 'other'];
+          let html = '';
+
+          categoryOrder.forEach(cat => {
+            if (!categories[cat]) return;
+            html += `<div class="category-header">${formatCategory(cat)} (${categories[cat].length})</div>`;
+            html += '<div class="menu-grid">';
+            categories[cat].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)).forEach(item => {
+              html += `
+                <div class="menu-item-card ${item.isAvailable ? '' : 'unavailable'}">
+                  <div class="menu-item-info">
+                    <div class="menu-item-name">${escHtml(item.name)}</div>
+                    ${item.description ? `<div class="menu-item-desc">${escHtml(item.description)}</div>` : ''}
+                    <div class="menu-item-meta">
+                      <span class="menu-item-price">${formatPrice(item.price)}</span>
+                      <span class="badge ${item.isAvailable ? 'badge-available' : 'badge-unavailable'}">${item.isAvailable ? 'Available' : 'Unavailable'}</span>
+                    </div>
+                  </div>
+                  <div class="menu-item-actions">
+                    <label class="toggle-switch" title="Toggle availability">
+                      <input type="checkbox" ${item.isAvailable ? 'checked' : ''} onchange="toggleAvailability('${item.id}', this.checked)" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                    <button class="btn btn-secondary btn-sm" onclick="openEditModal('${item.id}')">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteItem('${item.id}', '${escHtml(item.name)}')">Delete</button>
+                  </div>
+                </div>
+              `;
+            });
+            html += '</div>';
+          });
+
+          content.innerHTML = html;
+        } catch (err) {
+          loading.style.display = 'none';
+          showAlert('Failed to load menu items.', 'error');
+        }
+      }
+
+      async function handleAddItem(e) {
+        e.preventDefault();
+        if (!selectedRestaurantId) {
+          showAlert('Please select a restaurant first.', 'error');
+          return;
+        }
+
+        const btn = document.getElementById('add-item-btn');
+        btn.disabled = true;
+        btn.textContent = 'Adding...';
+
+        try {
+          const form = new FormData(e.target);
+          const priceVal = parseFloat(form.get('price'));
+          if (isNaN(priceVal) || priceVal <= 0) {
+            showAlert('Please enter a valid price.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Add Menu Item';
+            return;
+          }
+          const data = {
+            restaurantId: selectedRestaurantId,
+            name: form.get('name'),
+            description: form.get('description') || null,
+            price: Math.round(priceVal * 100),
+            category: form.get('category'),
+            imageUrl: form.get('imageUrl') || null,
+            sortOrder: parseInt(form.get('sortOrder')) || 0,
+            isAvailable: true,
+            currency: 'usd'
+          };
+
+          const res = await fetch(`/api/restaurants/${selectedRestaurantId}/menu`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || 'Failed to add menu item');
+          }
+
+          showAlert('Menu item added successfully!');
+          e.target.reset();
+          await loadMenu();
+          switchTab('menu');
+        } catch (err) {
+          showAlert(err.message, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Add Menu Item';
+        }
+      }
+
+      function openEditModal(id) {
+        const item = menuItems.find(i => i.id === id);
+        if (!item) return;
+
+        document.getElementById('edit-id').value = item.id;
+        document.getElementById('edit-name').value = item.name || '';
+        document.getElementById('edit-description').value = item.description || '';
+        document.getElementById('edit-category').value = item.category || 'main';
+        document.getElementById('edit-price').value = item.price ? (item.price / 100).toFixed(2) : '';
+        document.getElementById('edit-imageUrl').value = item.imageUrl || '';
+        document.getElementById('edit-sortOrder').value = item.sortOrder || 0;
+        document.getElementById('edit-isAvailable').checked = item.isAvailable !== false;
+
+        document.getElementById('edit-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeEditModal() {
+        document.getElementById('edit-modal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      async function handleEditItem(e) {
+        e.preventDefault();
+        const form = new FormData(e.target);
+        const id = form.get('id');
+
+        try {
+          const editPriceVal = parseFloat(form.get('price'));
+          if (isNaN(editPriceVal) || editPriceVal <= 0) {
+            showAlert('Please enter a valid price.', 'error');
+            return;
+          }
+          const data = {
+            name: form.get('name'),
+            description: form.get('description') || null,
+            price: Math.round(editPriceVal * 100),
+            category: form.get('category'),
+            imageUrl: form.get('imageUrl') || null,
+            sortOrder: parseInt(form.get('sortOrder')) || 0,
+            isAvailable: document.getElementById('edit-isAvailable').checked
+          };
+
+          const res = await fetch(`/api/menu-items/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || 'Failed to update menu item');
+          }
+
+          showAlert('Menu item updated successfully!');
+          closeEditModal();
+          await loadMenu();
+        } catch (err) {
+          showAlert(err.message, 'error');
+        }
+      }
+
+      async function toggleAvailability(id, available) {
+        try {
+          const res = await fetch(`/api/menu-items/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isAvailable: available })
+          });
+
+          if (!res.ok) throw new Error('Failed to update availability');
+          showAlert(`Item ${available ? 'enabled' : 'disabled'} successfully.`);
+          await loadMenu();
+        } catch (err) {
+          showAlert(err.message, 'error');
+        }
+      }
+
+      async function deleteItem(id, name) {
+        if (!confirm(`Are you sure you want to delete "${name}"? This cannot be undone.`)) return;
+
+        try {
+          const res = await fetch(`/api/menu-items/${id}`, { method: 'DELETE' });
+          if (!res.ok) throw new Error('Failed to delete menu item');
+          showAlert(`"${name}" deleted successfully.`);
+          await loadMenu();
+        } catch (err) {
+          showAlert(err.message, 'error');
+        }
+      }
+
+      async function loadOrders() {
+        if (!selectedRestaurantId) return;
+        const loading = document.getElementById('orders-loading');
+        const empty = document.getElementById('orders-empty');
+        const list = document.getElementById('orders-list');
+
+        loading.style.display = 'flex';
+        empty.style.display = 'none';
+        list.innerHTML = '';
+
+        try {
+          const res = await fetch(`/api/delivery-orders?restaurantId=${selectedRestaurantId}`);
+          if (!res.ok) throw new Error('Failed to load orders');
+          orders = await res.json();
+          loading.style.display = 'none';
+
+          document.getElementById('orders-refresh-time').textContent = 'Last updated: ' + new Date().toLocaleTimeString();
+
+          renderOrders();
+        } catch (err) {
+          loading.style.display = 'none';
+          showAlert('Failed to load orders.', 'error');
+        }
+      }
+
+      function filterOrders(filter) {
+        currentOrderFilter = filter;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector(`[data-filter="${filter}"]`).classList.add('active');
+        renderOrders();
+      }
+
+      function renderOrders() {
+        const empty = document.getElementById('orders-empty');
+        const list = document.getElementById('orders-list');
+
+        const filtered = currentOrderFilter === 'all'
+          ? orders
+          : orders.filter(o => o.status === currentOrderFilter);
+
+        if (filtered.length === 0) {
+          empty.style.display = 'block';
+          list.innerHTML = '';
+          return;
+        }
+
+        empty.style.display = 'none';
+
+        const sorted = [...filtered].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        list.innerHTML = sorted.map(order => {
+          const items = order.items || [];
+          const nextStatus = getNextStatus(order.status);
+
+          return `
+            <div class="order-card">
+              <div class="order-header">
+                <div>
+                  <div class="order-customer">${escHtml(order.customerName || 'Unknown Customer')}</div>
+                  <div class="order-id">#${order.id.substring(0, 8)} &middot; ${formatDate(order.createdAt)}</div>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center;">
+                  <span class="order-type-badge ${order.orderType}">${order.orderType === 'delivery' ? 'Delivery' : 'Pickup'}</span>
+                  <span class="badge-status ${order.status}">${formatStatus(order.status)}</span>
+                </div>
+              </div>
+
+              ${items.length > 0 ? `
+                <div class="order-items">
+                  ${items.map(i => `
+                    <div class="order-item-row">
+                      <span><span class="order-item-qty">${i.quantity}x</span> ${escHtml(i.itemName)}</span>
+                      <span>${formatPrice(i.itemPrice * i.quantity)}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+
+              <div class="order-totals">
+                <div class="order-total-row"><span>Subtotal</span><span>${formatPrice(order.subtotalAmount)}</span></div>
+                ${order.deliveryFeeAmount > 0 ? `<div class="order-total-row"><span>Delivery Fee</span><span>${formatPrice(order.deliveryFeeAmount)}</span></div>` : ''}
+                <div class="order-total-row"><span>Service Fee (12%)</span><span>${formatPrice(order.serviceFeeAmount)}</span></div>
+                <div class="order-total-row total"><span>Total</span><span>${formatPrice(order.totalAmount)}</span></div>
+              </div>
+
+              ${order.customerPhone ? `<div style="font-size:13px;color:var(--text-light);margin-top:8px;">Phone: ${escHtml(order.customerPhone)}</div>` : ''}
+              ${order.orderType === 'delivery' && order.deliveryAddress ? `<div class="order-address">Deliver to: ${escHtml(order.deliveryAddress)}${order.deliveryCity ? ', ' + escHtml(order.deliveryCity) : ''}</div>` : ''}
+              ${order.deliveryNotes ? `<div style="font-size:13px;color:var(--text-light);margin-top:4px;font-style:italic;">Note: ${escHtml(order.deliveryNotes)}</div>` : ''}
+
+              <div class="order-actions">
+                ${nextStatus ? `<button class="btn ${getStatusBtnClass(nextStatus)} btn-sm" onclick="updateOrderStatus('${order.id}', '${nextStatus}')">${getStatusBtnLabel(nextStatus)}</button>` : ''}
+                ${order.status !== 'cancelled' && order.status !== 'delivered' ? `<button class="btn btn-danger btn-sm" onclick="updateOrderStatus('${order.id}', 'cancelled')">Cancel Order</button>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      function getNextStatus(current) {
+        const flow = {
+          'pending': 'confirmed',
+          'confirmed': 'preparing',
+          'preparing': 'ready',
+          'ready': 'out_for_delivery',
+          'out_for_delivery': 'delivered'
+        };
+        return flow[current] || null;
+      }
+
+      function getStatusBtnClass(status) {
+        const classes = {
+          'confirmed': 'btn-info',
+          'preparing': 'btn-warning',
+          'ready': 'btn-success',
+          'out_for_delivery': 'btn-info',
+          'delivered': 'btn-success'
+        };
+        return classes[status] || 'btn-primary';
+      }
+
+      function getStatusBtnLabel(status) {
+        const labels = {
+          'confirmed': 'Confirm Order',
+          'preparing': 'Start Preparing',
+          'ready': 'Mark Ready',
+          'out_for_delivery': 'Send Out for Delivery',
+          'delivered': 'Mark Delivered'
+        };
+        return labels[status] || formatStatus(status);
+      }
+
+      async function updateOrderStatus(orderId, newStatus) {
+        try {
+          const res = await fetch(`/api/delivery-orders/${orderId}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: newStatus })
+          });
+
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || 'Failed to update order status');
+          }
+
+          showAlert(`Order status updated to "${formatStatus(newStatus)}".`);
+          await loadOrders();
+          loadOverview();
+        } catch (err) {
+          showAlert(err.message, 'error');
+        }
+      }
+
+      function startOrdersAutoRefresh() {
+        if (ordersRefreshInterval) clearInterval(ordersRefreshInterval);
+        ordersRefreshInterval = setInterval(() => {
+          if (selectedRestaurantId && document.querySelector('[data-tab="orders"]').classList.contains('active')) {
+            loadOrders();
+          }
+        }, 30000);
+      }
+
+      loadRestaurants();
+      startOrdersAutoRefresh();
+    </script>
+  </body>
+</html>

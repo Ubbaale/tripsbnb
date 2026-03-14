@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>About Us - APP_NAME_PLACEHOLDER</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Learn about APP_NAME_PLACEHOLDER - your all-in-one travel platform for stays, dining, safaris, car hire and unforgettable experiences." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #1A4D2E;
+        --primary-light: #2D6B45;
+        --primary-dark: #0F2E1B;
+        --accent: #DAA520;
+        --accent-light: #E8C252;
+        --accent-glow: rgba(218,165,32,0.25);
+        --bg: #FAFAF8;
+        --bg-dark: #0A0F0C;
+        --text: #1a1a1a;
+        --text-light: #6B7280;
+        --text-on-dark: #F0EDE8;
+        --card-bg: #fff;
+        --radius: 16px;
+        --radius-lg: 24px;
+        --shadow: 0 4px 24px rgba(0,0,0,0.08);
+        --shadow-lg: 0 12px 48px rgba(0,0,0,0.15);
+        --nav-height: 72px;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; line-height: 1.15; }
+      a { text-decoration: none; color: inherit; }
+
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0;
+        height: var(--nav-height); z-index: 100;
+        background: rgba(10, 15, 12, 0.95);
+        backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 1px 0 rgba(218,165,32,0.1), 0 4px 30px rgba(0,0,0,0.2);
+      }
+      .nav-inner {
+        max-width: 1280px; margin: 0 auto; height: 100%;
+        display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+      }
+      .nav-logo { display: flex; align-items: center; gap: 12px; }
+      .nav-logo-icon {
+        width: 38px; height: 38px; overflow: hidden;
+        flex-shrink: 0;
+      }
+      .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+      .nav-logo-text {
+        font-family: 'Cormorant Garamond', serif; font-size: 26px;
+        font-weight: 700; color: #fff; letter-spacing: -0.5px;
+      }
+      .nav-links { display: flex; align-items: center; gap: 4px; }
+      .nav-link {
+        color: rgba(255,255,255,0.7); font-size: 14px; font-weight: 500;
+        padding: 8px 16px; border-radius: 8px; transition: all 0.25s;
+      }
+      .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+      .nav-link.active { color: #fff; background: rgba(218,165,32,0.2); }
+      .nav-cta {
+        background: var(--accent); color: var(--primary-dark); font-weight: 600;
+        padding: 10px 24px; border-radius: 10px; margin-left: 12px;
+        transition: all 0.25s; font-size: 14px;
+      }
+      .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 20px var(--accent-glow); }
+
+      .hero {
+        position: relative; min-height: 520px; overflow: hidden;
+        display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 40%, var(--primary-light) 100%);
+        padding: calc(var(--nav-height) + 60px) 40px 80px;
+      }
+      .hero::before {
+        content: ''; position: absolute; inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .hero-content {
+        position: relative; z-index: 2; text-align: center; max-width: 800px;
+      }
+      .hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(218,165,32,0.15); border: 1px solid rgba(218,165,32,0.3);
+        padding: 8px 20px; border-radius: 100px; margin-bottom: 28px;
+        font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      }
+      .hero h1 {
+        font-size: clamp(40px, 6vw, 72px); color: #fff;
+        margin-bottom: 20px; letter-spacing: -2px;
+      }
+      .hero h1 span { color: var(--accent); }
+      .hero-sub {
+        font-size: 19px; color: rgba(255,255,255,0.7); max-width: 580px;
+        margin: 0 auto; line-height: 1.7;
+      }
+
+      .section {
+        padding: 100px 40px;
+      }
+      .section-inner {
+        max-width: 1100px; margin: 0 auto;
+      }
+      .section-header {
+        text-align: center; margin-bottom: 64px;
+      }
+      .section-header h2 {
+        font-size: clamp(32px, 4vw, 48px); color: var(--text);
+        margin-bottom: 16px; letter-spacing: -1px;
+      }
+      .section-header h2 span { color: var(--accent); }
+      .section-header p {
+        font-size: 17px; color: var(--text-light); max-width: 600px;
+        margin: 0 auto; line-height: 1.7;
+      }
+
+      .story-section { background: var(--bg); }
+      .story-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      }
+      .story-img {
+        border-radius: var(--radius-lg); overflow: hidden;
+        box-shadow: var(--shadow-lg); position: relative;
+      }
+      .story-img img { width: 100%; height: 400px; object-fit: cover; display: block; }
+      .story-img::after {
+        content: ''; position: absolute; inset: 0;
+        border-radius: var(--radius-lg);
+        box-shadow: inset 0 0 0 1px rgba(218,165,32,0.15);
+      }
+      .story-text h2 {
+        font-size: clamp(28px, 3.5vw, 42px); margin-bottom: 20px; letter-spacing: -0.5px;
+      }
+      .story-text h2 span { color: var(--accent); }
+      .story-text p {
+        font-size: 16px; color: var(--text-light); line-height: 1.8; margin-bottom: 16px;
+      }
+      .story-text .highlight {
+        font-size: 15px; color: var(--primary); font-weight: 600;
+        border-left: 3px solid var(--accent); padding-left: 16px; margin-top: 24px;
+        line-height: 1.7;
+      }
+
+      .mission-section {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        position: relative; overflow: hidden;
+      }
+      .mission-section::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 30% 50%, rgba(218,165,32,0.08) 0%, transparent 60%);
+      }
+      .mission-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+        position: relative; z-index: 1;
+      }
+      .mission-card {
+        background: rgba(255,255,255,0.06); backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius);
+        padding: 40px 32px; text-align: center;
+        transition: all 0.35s;
+      }
+      .mission-card:hover {
+        background: rgba(255,255,255,0.1); transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      }
+      .mission-icon {
+        width: 64px; height: 64px; border-radius: 16px;
+        background: linear-gradient(135deg, var(--accent), #c9941a);
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 24px;
+        box-shadow: 0 4px 16px rgba(218,165,32,0.3);
+      }
+      .mission-icon svg { width: 28px; height: 28px; color: var(--primary-dark); }
+      .mission-card h3 {
+        font-size: 24px; color: #fff; margin-bottom: 12px;
+      }
+      .mission-card p {
+        font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.7;
+      }
+
+      .services-section { background: var(--bg); }
+      .services-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      }
+      .service-card {
+        background: var(--card-bg); border-radius: var(--radius);
+        overflow: hidden; box-shadow: var(--shadow);
+        transition: all 0.35s;
+      }
+      .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+      .service-img { height: 200px; overflow: hidden; position: relative; }
+      .service-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+      .service-card:hover .service-img img { transform: scale(1.05); }
+      .service-img .service-label {
+        position: absolute; bottom: 12px; left: 12px;
+        background: var(--accent); color: var(--primary-dark);
+        padding: 4px 14px; border-radius: 100px;
+        font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      }
+      .service-body { padding: 24px; }
+      .service-body h3 { font-size: 22px; margin-bottom: 8px; }
+      .service-body p { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+      .values-section { background: #fff; }
+      .values-grid {
+        display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      }
+      .value-card {
+        text-align: center; padding: 36px 24px;
+        border-radius: var(--radius); border: 1px solid rgba(0,0,0,0.06);
+        transition: all 0.3s;
+      }
+      .value-card:hover { border-color: var(--accent); box-shadow: var(--shadow); }
+      .value-icon {
+        width: 56px; height: 56px; border-radius: 14px;
+        background: rgba(26,77,46,0.08); margin: 0 auto 20px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .value-icon svg { width: 24px; height: 24px; color: var(--primary); }
+      .value-card h3 { font-size: 20px; margin-bottom: 8px; color: var(--text); }
+      .value-card p { font-size: 13px; color: var(--text-light); line-height: 1.7; }
+
+      .promise-section {
+        background: var(--bg);
+        position: relative;
+      }
+      .promise-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      }
+      .promise-list { display: flex; flex-direction: column; gap: 24px; }
+      .promise-item {
+        display: flex; gap: 16px; align-items: flex-start;
+      }
+      .promise-check {
+        width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+        background: rgba(26,77,46,0.08);
+        display: flex; align-items: center; justify-content: center;
+      }
+      .promise-check svg { width: 20px; height: 20px; color: var(--primary); }
+      .promise-item h4 { font-size: 18px; margin-bottom: 4px; }
+      .promise-item p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+      .promise-img {
+        border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);
+      }
+      .promise-img img { width: 100%; height: 480px; object-fit: cover; display: block; }
+
+      .cta-section {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        text-align: center; padding: 100px 40px;
+        position: relative; overflow: hidden;
+      }
+      .cta-section::before {
+        content: ''; position: absolute; inset: 0;
+        background: radial-gradient(ellipse at 70% 30%, rgba(218,165,32,0.1) 0%, transparent 60%);
+      }
+      .cta-content { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+      .cta-content h2 {
+        font-size: clamp(32px, 4.5vw, 52px); color: #fff;
+        margin-bottom: 16px; letter-spacing: -1px;
+      }
+      .cta-content h2 span { color: var(--accent); }
+      .cta-content p {
+        font-size: 17px; color: rgba(255,255,255,0.7); margin-bottom: 36px;
+        line-height: 1.7; max-width: 500px; margin-left: auto; margin-right: auto;
+      }
+      .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 16px 32px; border-radius: 12px; font-size: 16px;
+        font-weight: 600; transition: all 0.3s; text-decoration: none;
+      }
+      .btn-accent {
+        background: var(--accent); color: var(--primary-dark);
+        box-shadow: 0 4px 20px var(--accent-glow);
+      }
+      .btn-accent:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); }
+      .btn-outline {
+        background: transparent; color: #fff;
+        border: 2px solid rgba(255,255,255,0.3);
+      }
+      .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+      .btn svg { width: 18px; height: 18px; }
+
+      .footer {
+        background: var(--bg-dark); padding: 60px 40px 28px; color: var(--text-on-dark);
+      }
+      .footer-inner {
+        max-width: 1100px; margin: 0 auto;
+        display: flex; justify-content: space-between; align-items: center;
+        border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px;
+      }
+      .footer-logo { display: flex; align-items: center; gap: 10px; }
+      .footer-logo-icon {
+        width: 32px; height: 32px; overflow: hidden;
+      }
+      .footer-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+      .footer-logo-text {
+        font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #fff;
+      }
+      .footer-copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+      .footer-powered {
+        font-size: 12px; color: rgba(255,255,255,0.35);
+      }
+      .footer-powered span { color: var(--accent); font-weight: 600; }
+
+      .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 900px) {
+        .story-grid, .promise-grid { grid-template-columns: 1fr; gap: 40px; }
+        .mission-grid { grid-template-columns: 1fr; gap: 20px; }
+        .services-grid { grid-template-columns: 1fr; }
+        .values-grid { grid-template-columns: repeat(2, 1fr); }
+        .nav-links { display: none; }
+        .section { padding: 72px 20px; }
+        .hero { padding: calc(var(--nav-height) + 40px) 20px 60px; min-height: 420px; }
+        .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      }
+      @media (max-width: 540px) {
+        .values-grid { grid-template-columns: 1fr; }
+        .cta-section { padding: 72px 20px; }
+        .cta-buttons { flex-direction: column; align-items: center; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <nav class="nav">
+      <div class="nav-inner">
+        <a href="/" class="nav-logo">
+          <div class="nav-logo-icon"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER logo" /></div>
+          <span class="nav-logo-text">APP_NAME_PLACEHOLDER</span>
+        </a>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/about" class="nav-link active">About Us</a>
+          <a href="/partner" class="nav-link">List Your Business</a>
+          <a href="/app" class="nav-cta">Open Web App</a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">Our Story</div>
+        <h1>Travel Without<br><span>Boundaries</span></h1>
+        <p class="hero-sub">We believe extraordinary travel should be accessible to everyone. APP_NAME_PLACEHOLDER brings together every part of your journey into one seamless, affordable experience.</p>
+      </div>
+    </section>
+
+    <section class="section story-section">
+      <div class="section-inner">
+        <div class="story-grid reveal">
+          <div class="story-img">
+            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80&auto=format" alt="Traveler overlooking a stunning mountain landscape" loading="lazy" />
+          </div>
+          <div class="story-text">
+            <h2>Why We Built <span>APP_NAME_PLACEHOLDER</span></h2>
+            <p>Planning a trip used to mean juggling dozens of tabs, comparing prices across scattered platforms, and hoping nothing falls through the cracks. We experienced that frustration firsthand and decided to fix it.</p>
+            <p>APP_NAME_PLACEHOLDER was born from a simple idea: what if one platform could handle your entire trip, from the moment you start dreaming to the moment you return home? A place where you can book a cozy cabin, find the best local restaurant, arrange a safari, rent a car, and even meet a travel companion, all without leaving the app.</p>
+            <div class="highlight">We are not just another booking site. We are your travel partner, built by travelers, for travelers.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section mission-section">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <h2 style="color:#fff;">Our <span>Mission</span></h2>
+          <p style="color:rgba(255,255,255,0.65);">Three principles guide everything we do at APP_NAME_PLACEHOLDER</p>
+        </div>
+        <div class="mission-grid">
+          <div class="mission-card reveal">
+            <div class="mission-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3>Make Travel Accessible</h3>
+            <p>Whether you are a budget backpacker or a luxury seeker, we offer options for every traveler. Our competitive pricing saves you up to 40% compared to traditional booking platforms, because we believe incredible experiences should not have incredible price tags.</p>
+          </div>
+          <div class="mission-card reveal">
+            <div class="mission-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3>Travel with Confidence</h3>
+            <p>Your safety is our priority. Every vendor is verified, every transaction is secured through Stripe, and our built-in Safety Center provides emergency contacts, guidelines, and 24/7 support wherever you are in the world.</p>
+          </div>
+          <div class="mission-card reveal">
+            <div class="mission-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Empower Local Communities</h3>
+            <p>We connect travelers with local businesses, from family-run guesthouses to independent restaurants and guides. Vendors keep 100% of their listed price, and our transparent 12% service fee (paid by the traveler) keeps the platform running without cutting into their earnings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section services-section">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <h2>Everything You Need, <span>One Platform</span></h2>
+          <p>From the first spark of wanderlust to your final day exploring, APP_NAME_PLACEHOLDER covers every aspect of your journey</p>
+        </div>
+        <div class="services-grid">
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&q=80&auto=format" alt="Luxury resort pool at sunset" loading="lazy" />
+              <span class="service-label">Stays</span>
+            </div>
+            <div class="service-body">
+              <h3>Accommodation</h3>
+              <p>Browse thousands of stays, from beachside villas and mountain cabins to boutique hotels and treehouses. Filter by property type, amenities, instant book availability, and guest rating to find your perfect match.</p>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&auto=format" alt="Fine dining restaurant plating" loading="lazy" />
+              <span class="service-label">Dining</span>
+            </div>
+            <div class="service-body">
+              <h3>Restaurants & Nightlife</h3>
+              <p>Discover local restaurants, rooftop bars, cozy cafes, and vibrant clubs at your destination. See real-time open/closed status, reserve tables, check delivery options, and explore menus before you arrive.</p>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=600&q=80&auto=format" alt="Safari jeep watching elephants at golden hour" loading="lazy" />
+              <span class="service-label">Safaris</span>
+            </div>
+            <div class="service-body">
+              <h3>Safari Adventures</h3>
+              <p>From the Serengeti to Kruger, book guided safaris with trusted operators. Choose between game drives, walking safaris, hot air balloon rides, and multi-day expeditions tailored to your interests.</p>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&q=80&auto=format" alt="Car on a scenic coastal road" loading="lazy" />
+              <span class="service-label">Car Hire</span>
+            </div>
+            <div class="service-body">
+              <h3>Vehicle Rentals</h3>
+              <p>Rent cars, SUVs, and specialty vehicles with comprehensive protection options. GPS tracking, insurance coverage, damage reporting, and flexible fuel policies make every road trip worry-free.</p>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?w=600&q=80&auto=format" alt="Two travelers exploring a new city together" loading="lazy" />
+              <span class="service-label">Companions</span>
+            </div>
+            <div class="service-body">
+              <h3>Travel Companions</h3>
+              <p>Traveling solo? Connect with verified travel companions who share your interests. Our safety-first approach includes verified profiles, content filtering, and a dedicated safety center.</p>
+            </div>
+          </div>
+          <div class="service-card reveal">
+            <div class="service-img">
+              <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&q=80&auto=format" alt="Traveler consulting a map at a scenic overlook" loading="lazy" />
+              <span class="service-label">Toolkit</span>
+            </div>
+            <div class="service-body">
+              <h3>Travel Toolkit</h3>
+              <p>AI-powered destination guides, real-time currency converter supporting 44 currencies, smart packing lists, emergency info with local phrases, and event discovery, all built into the app.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section values-section">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <h2>What We <span>Stand For</span></h2>
+          <p>The values that shape every feature we build and every partnership we form</p>
+        </div>
+        <div class="values-grid">
+          <div class="value-card reveal">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Transparency</h3>
+            <p>No hidden fees, no surprise charges. You see exactly what you pay for, every time. Our 12% service fee is clearly stated upfront.</p>
+          </div>
+          <div class="value-card reveal">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h3>Authenticity</h3>
+            <p>We curate real experiences with real people. Verified vendors, honest reviews, and genuine local recommendations you can trust.</p>
+          </div>
+          <div class="value-card reveal">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3>Security</h3>
+            <p>Stripe-powered payments, verified profiles, encrypted data, and a safety center with emergency contacts in every destination.</p>
+          </div>
+          <div class="value-card reveal">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            </div>
+            <h3>Sustainability</h3>
+            <p>We partner with eco-conscious vendors and promote responsible tourism that benefits local communities and protects natural wonders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section promise-section">
+      <div class="section-inner">
+        <div class="promise-grid reveal">
+          <div>
+            <div class="section-header" style="text-align:left; margin-bottom:40px;">
+              <h2>Our Promise <span>to You</span></h2>
+              <p style="margin:0;">Every decision we make is guided by what matters most to travelers</p>
+            </div>
+            <div class="promise-list">
+              <div class="promise-item">
+                <div class="promise-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <h4>Best Price Guarantee</h4>
+                  <p>Group discounts, last-minute deals, early-bird pricing, and seasonal rates ensure you always get the best value.</p>
+                </div>
+              </div>
+              <div class="promise-item">
+                <div class="promise-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <h4>Global Reach, Local Feel</h4>
+                  <p>14 languages, 40+ currencies, and locally curated content so you feel at home wherever you travel.</p>
+                </div>
+              </div>
+              <div class="promise-item">
+                <div class="promise-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <h4>One App, Zero Hassle</h4>
+                  <p>Stays, dining, safaris, car hire, companions, currency tools, packing lists, and destination guides, all in your pocket.</p>
+                </div>
+              </div>
+              <div class="promise-item">
+                <div class="promise-check">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <h4>Vendor-Friendly Platform</h4>
+                  <p>Restaurants, lodges, and guides keep 100% of their listed price. No monthly fees, just a transparent service model that works for everyone.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="promise-img">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&q=80&auto=format" alt="Breathtaking lake surrounded by mountains at golden hour" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="cta-content reveal">
+        <h2>Start Your <span>Journey</span> Today</h2>
+        <p>Whether you are planning a weekend getaway or a month-long adventure, APP_NAME_PLACEHOLDER has everything you need.</p>
+        <div class="cta-buttons">
+          <a href="/app" class="btn btn-accent">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Explore the Web App
+          </a>
+          <a href="/partner" class="btn btn-outline">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            List Your Business
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <div class="footer-logo-icon"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER logo" /></div>
+          <span class="footer-logo-text">APP_NAME_PLACEHOLDER</span>
+        </div>
+        <span class="footer-copy">2026 APP_NAME_PLACEHOLDER. All rights reserved.</span>
+        <div class="footer-powered">Powered by <span>TripVerse</span></div>
+      </div>
+    </footer>
+
+    <script>
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+    </script>
+  </body>
+</html>

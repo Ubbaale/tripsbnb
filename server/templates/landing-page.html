@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>APP_NAME_PLACEHOLDER - Your All-in-One Travel Platform</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="APP_NAME_PLACEHOLDER - Book flights, stays, dining, safaris, car hire & more. Your premium all-in-one travel companion." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --primary: #1A4D2E;
+        --primary-light: #2D6B45;
+        --primary-dark: #0F2E1B;
+        --accent: #DAA520;
+        --accent-light: #E8C252;
+        --accent-glow: rgba(218,165,32,0.25);
+        --bg: #FAFAF8;
+        --bg-dark: #0A0F0C;
+        --text: #1a1a1a;
+        --text-light: #6B7280;
+        --text-on-dark: #F0EDE8;
+        --card-bg: #fff;
+        --radius: 16px;
+        --radius-lg: 24px;
+        --shadow: 0 4px 24px rgba(0,0,0,0.08);
+        --shadow-lg: 0 12px 48px rgba(0,0,0,0.15);
+        --nav-height: 72px;
+        --green-deal: #22C55E;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; line-height: 1.15; }
+      a { text-decoration: none; color: inherit; }
+
+      .nav {
+        position: fixed; top: 0; left: 0; right: 0;
+        height: var(--nav-height); z-index: 100;
+        transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .nav.scrolled {
+        background: rgba(10, 15, 12, 0.92);
+        backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        box-shadow: 0 1px 0 rgba(218,165,32,0.1), 0 4px 30px rgba(0,0,0,0.2);
+      }
+      .nav-inner {
+        max-width: 1280px; margin: 0 auto; height: 100%;
+        display: flex; align-items: center; justify-content: space-between; padding: 0 40px;
+      }
+      .nav-logo { display: flex; align-items: center; gap: 12px; }
+      .nav-logo-icon {
+        width: 38px; height: 38px; overflow: hidden;
+        flex-shrink: 0;
+      }
+      .nav-logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+      .nav-logo-text {
+        font-family: 'Cormorant Garamond', serif; font-size: 26px;
+        font-weight: 700; color: #fff; letter-spacing: -0.5px;
+      }
+      .nav-links { display: flex; align-items: center; gap: 4px; }
+      .nav-link {
+        color: rgba(255,255,255,0.7); font-size: 17px; font-weight: 500;
+        padding: 10px 20px; border-radius: 8px; transition: all 0.25s;
+      }
+      .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+      .nav-cta {
+        background: var(--accent); color: var(--primary-dark); font-weight: 600;
+        padding: 12px 28px; border-radius: 10px; margin-left: 12px;
+        transition: all 0.25s; font-size: 17px;
+      }
+      .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); box-shadow: 0 4px 20px var(--accent-glow); }
+
+      .hero { position: relative; height: 100vh; min-height: 700px; overflow: hidden; }
+      .hero-slides { position: absolute; inset: 0; }
+      .hero-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out; }
+      .hero-slide.active { opacity: 1; }
+      .hero-slide img {
+        width: 100%; height: 100%; object-fit: cover;
+        transform: scale(1.05); animation: heroZoom 8s ease-out forwards;
+      }
+      @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+      .hero-slide.active img { animation: heroZoom 8s ease-out forwards; }
+      .hero-overlay {
+        position: absolute; inset: 0;
+        background:
+          linear-gradient(180deg, rgba(10,15,12,0.4) 0%, rgba(10,15,12,0.15) 35%, rgba(10,15,12,0.5) 70%, rgba(10,15,12,0.85) 100%),
+          linear-gradient(90deg, rgba(10,15,12,0.4) 0%, transparent 50%);
+      }
+      .hero-content {
+        position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+        padding: 0 40px 100px; max-width: 1280px; margin: 0 auto;
+      }
+      .hero-inner { max-width: 680px; }
+      .hero-logo-mark {
+        width: 72px; height: 72px; overflow: hidden;
+        margin-bottom: 28px;
+      }
+      .hero-logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+      .hero-badge {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(218,165,32,0.12); border: 1px solid rgba(218,165,32,0.25);
+        color: var(--accent); padding: 7px 18px; border-radius: 100px;
+        font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+        text-transform: uppercase; margin-bottom: 24px; backdrop-filter: blur(8px);
+      }
+      .hero-title {
+        font-size: clamp(42px, 6vw, 76px); color: #fff; margin-bottom: 20px;
+        letter-spacing: -2px; text-shadow: 0 2px 40px rgba(0,0,0,0.3);
+      }
+      .hero-title em { font-style: normal; color: var(--accent); }
+      .hero-subtitle {
+        font-size: clamp(16px, 1.8vw, 20px); color: rgba(255,255,255,0.8);
+        max-width: 520px; line-height: 1.7; font-weight: 300; margin-bottom: 36px;
+      }
+      .hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        padding: 16px 32px; border-radius: 12px; font-size: 15px; font-weight: 600;
+        border: none; cursor: pointer; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        font-family: 'Inter', sans-serif; letter-spacing: 0.2px;
+      }
+      .btn svg { width: 18px; height: 18px; }
+      .btn-primary {
+        background: var(--accent); color: var(--primary-dark);
+        box-shadow: 0 4px 24px var(--accent-glow);
+      }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(218,165,32,0.4); background: var(--accent-light); }
+      .btn-glass {
+        background: rgba(255,255,255,0.1); color: #fff;
+        border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(12px);
+      }
+      .btn-glass:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.35); }
+      .btn-white {
+        background: #fff; color: var(--primary-dark); font-weight: 600;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      }
+      .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+      .btn-sm { padding: 12px 24px; font-size: 14px; }
+      .hero-slide-nav { position: absolute; bottom: 40px; right: 40px; z-index: 3; display: flex; gap: 8px; }
+      .hero-dot { width: 40px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.25); cursor: pointer; transition: all 0.4s; }
+      .hero-dot.active { background: var(--accent); width: 56px; }
+      .hero-scroll {
+        position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+        z-index: 3; color: rgba(255,255,255,0.4); display: flex; flex-direction: column;
+        align-items: center; gap: 8px; font-size: 11px; letter-spacing: 2px;
+        text-transform: uppercase; animation: gentleBounce 2.5s ease-in-out infinite;
+      }
+      @keyframes gentleBounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(6px); }
+      }
+
+      .price-banner {
+        background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+        padding: 20px 40px; text-align: center; position: relative; overflow: hidden;
+      }
+      .price-banner::before {
+        content: ''; position: absolute; inset: 0;
+        background: repeating-linear-gradient(90deg, transparent, transparent 200px, rgba(218,165,32,0.03) 200px, rgba(218,165,32,0.03) 400px);
+      }
+      .price-banner-inner {
+        max-width: 1280px; margin: 0 auto; display: flex; align-items: center;
+        justify-content: center; gap: 32px; flex-wrap: wrap; position: relative;
+      }
+      .price-banner-item {
+        display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.85);
+        font-size: 14px; font-weight: 500;
+      }
+      .price-banner-item svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+      .price-banner-highlight { color: var(--accent); font-weight: 700; }
+
+      .section-label {
+        display: inline-block; font-size: 12px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2.5px; color: var(--accent); margin-bottom: 12px;
+      }
+      .section-title { font-size: clamp(30px, 4vw, 48px); letter-spacing: -1px; margin-bottom: 12px; }
+      .section-desc { font-size: 17px; color: var(--text-light); max-width: 520px; line-height: 1.7; }
+
+      .dest-section { padding: 100px 0 80px; background: var(--bg); overflow: hidden; }
+      .dest-header { max-width: 1280px; margin: 0 auto; padding: 0 40px; margin-bottom: 48px; }
+      .dest-scroll {
+        display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+        padding: 0 40px 20px; scrollbar-width: none; -ms-overflow-style: none;
+      }
+      .dest-scroll::-webkit-scrollbar { display: none; }
+      .dest-card {
+        flex: 0 0 300px; height: 400px; border-radius: var(--radius-lg);
+        overflow: hidden; position: relative; scroll-snap-align: start;
+        cursor: pointer; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .dest-card:hover { transform: translateY(-8px); }
+      .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+      .dest-card:hover img { transform: scale(1.06); }
+      .dest-card-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.75) 100%); }
+      .dest-card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; }
+      .dest-card-name { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+      .dest-card-loc { font-size: 13px; color: rgba(255,255,255,0.7); display: flex; align-items: center; gap: 5px; }
+      .dest-card-loc svg { width: 13px; height: 13px; }
+      .dest-card-price {
+        position: absolute; top: 16px; right: 16px;
+        background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+        color: #fff; font-size: 13px; font-weight: 600; padding: 6px 14px;
+        border-radius: 100px;
+      }
+      .dest-card-price span { color: var(--accent); }
+      .dest-card-tag {
+        position: absolute; top: 16px; left: 16px;
+        background: rgba(218,165,32,0.9); color: var(--primary-dark);
+        font-size: 11px; font-weight: 700; padding: 5px 14px; border-radius: 100px;
+        letter-spacing: 0.5px; text-transform: uppercase;
+      }
+
+      .deals-section {
+        padding: 100px 40px; background: var(--bg);
+      }
+      .deals-inner { max-width: 1280px; margin: 0 auto; }
+      .deals-header { text-align: center; margin-bottom: 56px; }
+      .deals-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+      .deal-card {
+        background: var(--card-bg); border-radius: var(--radius-lg); overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.05); transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        cursor: pointer;
+      }
+      .deal-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+      .deal-card-img { position: relative; height: 200px; overflow: hidden; }
+      .deal-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+      .deal-card:hover .deal-card-img img { transform: scale(1.08); }
+      .deal-card-badge {
+        position: absolute; top: 12px; left: 12px;
+        background: #EF4444; color: #fff; font-size: 11px; font-weight: 700;
+        padding: 4px 12px; border-radius: 100px; letter-spacing: 0.3px;
+      }
+      .deal-card-badge.green { background: var(--green-deal); }
+      .deal-card-body { padding: 20px; }
+      .deal-card-title {
+        font-family: 'Cormorant Garamond', serif; font-size: 20px;
+        font-weight: 600; margin-bottom: 4px;
+      }
+      .deal-card-loc { font-size: 12px; color: var(--text-light); margin-bottom: 12px; }
+      .deal-card-prices { display: flex; align-items: baseline; gap: 8px; }
+      .deal-price-old {
+        font-size: 14px; color: var(--text-light);
+        text-decoration: line-through;
+      }
+      .deal-price-new { font-size: 22px; font-weight: 700; color: var(--primary); }
+      .deal-price-unit { font-size: 12px; color: var(--text-light); font-weight: 400; }
+      .deal-card-saves {
+        display: inline-flex; align-items: center; gap: 4px;
+        background: rgba(34,197,94,0.08); color: var(--green-deal);
+        font-size: 12px; font-weight: 600; padding: 4px 10px;
+        border-radius: 6px; margin-top: 8px;
+      }
+      .deal-card-saves svg { width: 14px; height: 14px; }
+
+      .immersive { position: relative; min-height: 600px; display: flex; align-items: center; overflow: hidden; }
+      .immersive-bg { position: absolute; inset: 0; }
+      .immersive-bg img { width: 100%; height: 100%; object-fit: cover; }
+      .immersive-overlay { position: absolute; inset: 0; }
+      .immersive.left .immersive-overlay { background: linear-gradient(90deg, rgba(10,15,12,0.88) 0%, rgba(10,15,12,0.65) 45%, rgba(10,15,12,0.2) 100%); }
+      .immersive.right .immersive-overlay { background: linear-gradient(270deg, rgba(10,15,12,0.88) 0%, rgba(10,15,12,0.65) 45%, rgba(10,15,12,0.2) 100%); }
+      .immersive-content {
+        position: relative; z-index: 2; max-width: 1280px;
+        margin: 0 auto; width: 100%; padding: 80px 40px;
+      }
+      .immersive-text { max-width: 500px; }
+      .immersive.right .immersive-text { margin-left: auto; }
+      .immersive-label {
+        display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+        font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+        color: var(--accent); margin-bottom: 16px;
+      }
+      .immersive-title { font-size: clamp(32px, 4vw, 52px); color: #fff; margin-bottom: 16px; letter-spacing: -1px; }
+      .immersive-desc { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 24px; }
+      .immersive-price-tag {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
+        color: #86efac; padding: 8px 18px; border-radius: 10px;
+        font-size: 14px; font-weight: 600; margin-bottom: 24px;
+      }
+      .immersive-price-tag svg { width: 16px; height: 16px; }
+      .immersive-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+      .immersive-feat { display: flex; align-items: center; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.85); font-weight: 500; }
+      .immersive-feat-icon {
+        width: 32px; height: 32px; border-radius: 8px;
+        background: rgba(218,165,32,0.15); display: flex; align-items: center;
+        justify-content: center; flex-shrink: 0;
+      }
+      .immersive-feat-icon svg { width: 16px; height: 16px; color: var(--accent); }
+
+      .photo-wall { padding: 0; background: var(--bg-dark); overflow: hidden; }
+      .photo-row { display: flex; gap: 4px; margin-bottom: 4px; }
+      .photo-item { position: relative; overflow: hidden; cursor: pointer; flex: 1; min-height: 220px; }
+      .photo-item.wide { flex: 2; }
+      .photo-item.tall { min-height: 440px; }
+      .photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+      .photo-item:hover img { transform: scale(1.06); }
+      .photo-item-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.55) 100%);
+        opacity: 0; transition: opacity 0.35s;
+      }
+      .photo-item:hover .photo-item-overlay { opacity: 1; }
+      .photo-item-label {
+        position: absolute; bottom: 16px; left: 16px; color: #fff;
+        font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600;
+        opacity: 0; transform: translateY(8px); transition: all 0.35s;
+      }
+      .photo-item:hover .photo-item-label { opacity: 1; transform: translateY(0); }
+      .photo-item-price-tag {
+        position: absolute; top: 12px; right: 12px;
+        background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+        color: #fff; font-size: 12px; font-weight: 600; padding: 5px 12px;
+        border-radius: 100px; opacity: 0; transition: opacity 0.3s;
+      }
+      .photo-item:hover .photo-item-price-tag { opacity: 1; }
+
+      .affordable-section { padding: 100px 40px; background: var(--bg); }
+      .affordable-inner { max-width: 1280px; margin: 0 auto; }
+      .affordable-header { text-align: center; margin-bottom: 64px; }
+      .affordable-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .afford-card {
+        background: var(--card-bg); border-radius: var(--radius-lg); padding: 40px 32px;
+        text-align: center; border: 1px solid rgba(0,0,0,0.04);
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1); position: relative; overflow: hidden;
+      }
+      .afford-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+      .afford-card-icon {
+        width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 20px;
+        display: flex; align-items: center; justify-content: center;
+        background: linear-gradient(135deg, rgba(26,77,46,0.1), rgba(26,77,46,0.04));
+      }
+      .afford-card-icon svg { width: 32px; height: 32px; color: var(--primary); }
+      .afford-card h3 { font-size: 24px; margin-bottom: 8px; }
+      .afford-card p { font-size: 14px; color: var(--text-light); line-height: 1.7; margin-bottom: 16px; }
+      .afford-card-price {
+        display: inline-block; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+        padding: 8px 20px; border-radius: 100px;
+      }
+      .afford-card-price span { font-size: 20px; font-weight: 700; }
+
+      .stats-bar { background: var(--primary); padding: 56px 40px; position: relative; overflow: hidden; }
+      .stats-bar::before {
+        content: ''; position: absolute; inset: 0;
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+        opacity: 0.8;
+      }
+      .stats-inner {
+        max-width: 1280px; margin: 0 auto;
+        display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px;
+        position: relative; z-index: 1;
+      }
+      .stat-item { text-align: center; }
+      .stat-number {
+        font-family: 'Cormorant Garamond', serif; font-size: 48px;
+        font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 6px;
+      }
+      .stat-label { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+
+      .features-section { padding: 100px 40px; background: var(--bg); }
+      .features-inner { max-width: 1280px; margin: 0 auto; }
+      .features-header { text-align: center; margin-bottom: 64px; }
+      .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+      .feat-card {
+        background: var(--card-bg); border-radius: var(--radius-lg); padding: 40px 32px;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        border: 1px solid rgba(0,0,0,0.04); position: relative; overflow: hidden;
+      }
+      .feat-card::before {
+        content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent)); opacity: 0; transition: opacity 0.3s;
+      }
+      .feat-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+      .feat-card:hover::before { opacity: 1; }
+      .feat-icon {
+        width: 56px; height: 56px; border-radius: 14px;
+        display: flex; align-items: center; justify-content: center; margin-bottom: 24px;
+        background: linear-gradient(135deg, rgba(26,77,46,0.1), rgba(26,77,46,0.04));
+      }
+      .feat-icon svg { width: 26px; height: 26px; color: var(--primary); }
+      .feat-card h3 { font-size: 24px; margin-bottom: 10px; color: var(--text); }
+      .feat-card p { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+      .moments-section { padding: 80px 40px 100px; background: var(--bg-dark); }
+      .moments-inner { max-width: 1280px; margin: 0 auto; }
+      .moments-header { text-align: center; margin-bottom: 48px; }
+      .moments-header .section-title { color: #fff; }
+      .moments-header .section-desc { color: rgba(240,237,232,0.55); margin: 0 auto; }
+      .moments-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 200px 200px 200px;
+        gap: 12px;
+      }
+      .moment-item {
+        border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer;
+      }
+      .moment-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+      .moment-item:hover img { transform: scale(1.08); }
+      .moment-overlay {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%);
+        opacity: 0; transition: opacity 0.3s;
+      }
+      .moment-item:hover .moment-overlay { opacity: 1; }
+      .moment-label {
+        position: absolute; bottom: 14px; left: 14px; color: #fff;
+        font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600;
+        opacity: 0; transform: translateY(8px); transition: all 0.35s;
+      }
+      .moment-item:hover .moment-label { opacity: 1; transform: translateY(0); }
+      .m1 { grid-column: span 2; grid-row: span 2; }
+      .m2 { grid-column: span 2; }
+      .m6 { grid-column: span 2; }
+      .m8 { grid-column: span 2; }
+
+      .how-section { padding: 100px 40px; background: var(--bg); }
+      .how-inner { max-width: 1000px; margin: 0 auto; }
+      .how-header { text-align: center; margin-bottom: 72px; }
+      .steps-list { display: flex; flex-direction: column; gap: 0; position: relative; }
+      .steps-list::before {
+        content: ''; position: absolute; left: 39px; top: 40px; bottom: 40px; width: 2px;
+        background: linear-gradient(180deg, var(--accent), var(--primary), var(--accent));
+      }
+      .step-row { display: flex; align-items: flex-start; gap: 32px; padding: 32px 0; }
+      .step-marker {
+        width: 80px; height: 80px; border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-light));
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0; position: relative; z-index: 1;
+        box-shadow: 0 8px 24px rgba(26,77,46,0.25);
+      }
+      .step-marker svg { width: 32px; height: 32px; color: #fff; }
+      .step-body { padding-top: 8px; }
+      .step-body h3 { font-size: 28px; margin-bottom: 8px; }
+      .step-body p { font-size: 15px; color: var(--text-light); line-height: 1.7; max-width: 440px; }
+
+      .partner-section {
+        padding: 100px 40px; background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+        position: relative; overflow: hidden;
+      }
+      .partner-section::before {
+        content: ''; position: absolute; inset: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      .partner-inner {
+        max-width: 1100px; margin: 0 auto; position: relative; z-index: 1;
+        display: flex; align-items: center; gap: 60px;
+      }
+      .partner-text { flex: 1; }
+      .partner-text h2 {
+        font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4vw, 52px);
+        color: #fff; margin-bottom: 16px; letter-spacing: -1px; line-height: 1.15;
+      }
+      .partner-text h2 span { color: var(--accent); }
+      .partner-text p { font-size: 17px; color: rgba(255,255,255,0.75); line-height: 1.7; margin-bottom: 28px; max-width: 480px; }
+      .partner-benefits {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 36px;
+      }
+      .partner-benefit {
+        display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500;
+      }
+      .partner-benefit svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
+      .partner-cta-btn {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: var(--accent); color: var(--primary-dark); font-weight: 700;
+        padding: 16px 36px; border-radius: 12px; font-size: 16px;
+        transition: all 0.3s; text-decoration: none;
+        box-shadow: 0 4px 20px var(--accent-glow);
+      }
+      .partner-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px var(--accent-glow); background: var(--accent-light); }
+      .partner-cta-btn svg { width: 20px; height: 20px; }
+      .partner-stats {
+        flex: 0 0 340px; display: flex; flex-direction: column; gap: 20px;
+      }
+      .partner-stat-card {
+        background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.1); border-radius: 16px;
+        padding: 28px; text-align: center;
+      }
+      .partner-stat-card h3 {
+        font-family: 'Cormorant Garamond', serif; font-size: 40px; color: var(--accent);
+        margin-bottom: 6px; font-weight: 700;
+      }
+      .partner-stat-card p { font-size: 14px; color: rgba(255,255,255,0.7); }
+
+      .cta-section { position: relative; padding: 120px 40px; overflow: hidden; }
+      .cta-bg { position: absolute; inset: 0; }
+      .cta-bg img { width: 100%; height: 100%; object-fit: cover; }
+      .cta-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,15,12,0.85) 0%, rgba(26,77,46,0.75) 100%); }
+      .cta-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; text-align: center; }
+      .cta-content h2 { font-size: clamp(36px, 5vw, 60px); color: #fff; margin-bottom: 20px; letter-spacing: -1.5px; }
+      .cta-content p { font-size: 18px; color: rgba(255,255,255,0.75); max-width: 520px; margin: 0 auto 16px; line-height: 1.7; }
+      .cta-savings {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
+        color: #86efac; padding: 8px 20px; border-radius: 100px;
+        font-size: 14px; font-weight: 600; margin-bottom: 32px;
+      }
+      .cta-savings svg { width: 16px; height: 16px; }
+      .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+      .qr-wrap {
+        background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+        border-radius: var(--radius-lg); padding: 40px; display: inline-flex;
+        align-items: center; gap: 40px; backdrop-filter: blur(12px);
+      }
+      .qr-info h4 { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 6px; }
+      .qr-info p { font-size: 14px; color: rgba(255,255,255,0.55); margin: 0; text-align: left; }
+      .qr-box {
+        width: 140px; height: 140px; background: #fff;
+        border-radius: 14px; padding: 10px; flex-shrink: 0;
+      }
+      .qr-box canvas { width: 100% !important; height: 100% !important; }
+
+      .footer {
+        background: var(--bg-dark); border-top: 1px solid rgba(255,255,255,0.06);
+        padding: 64px 40px 32px; color: var(--text-on-dark);
+      }
+      .footer-inner { max-width: 1280px; margin: 0 auto; }
+      .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+      .footer-brand-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+      .footer-brand-icon { width: 32px; height: 32px; overflow: hidden; }
+      .footer-brand-icon img { width: 100%; height: 100%; object-fit: contain; }
+      .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: #fff; }
+      .footer-brand p { font-size: 14px; color: rgba(240,237,232,0.45); line-height: 1.7; max-width: 300px; }
+      .footer-col h4 {
+        font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700;
+        text-transform: uppercase; letter-spacing: 2px; color: rgba(240,237,232,0.35); margin-bottom: 20px;
+      }
+      .footer-col a { display: block; font-size: 14px; color: rgba(240,237,232,0.65); padding: 5px 0; transition: all 0.2s; }
+      .footer-col a:hover { color: var(--accent); transform: translateX(2px); }
+      .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px;
+        display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+      }
+      .footer-bottom p { font-size: 13px; color: rgba(240,237,232,0.3); }
+      .footer-bottom .powered { font-size: 13px; color: rgba(240,237,232,0.3); }
+      .footer-bottom .powered span { color: var(--accent); font-weight: 600; }
+
+      .loading-overlay {
+        display: none; position: fixed; inset: 0;
+        background: linear-gradient(165deg, var(--primary-dark), var(--primary));
+        z-index: 9999; align-items: center; justify-content: center;
+        flex-direction: column; gap: 24px;
+      }
+      .loading-overlay.active { display: flex; }
+      .loading-spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .loading-overlay p { font-size: 16px; color: rgba(255,255,255,0.8); font-weight: 500; }
+
+      .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+      .reveal.visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 1024px) {
+        .features-grid { grid-template-columns: repeat(2, 1fr); }
+        .deals-grid { grid-template-columns: repeat(2, 1fr); }
+        .affordable-grid { grid-template-columns: repeat(2, 1fr); }
+        .stats-inner { grid-template-columns: repeat(3, 1fr); }
+        .moments-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; }
+        .m1 { grid-column: span 2; grid-row: span 1; }
+        .m2, .m6, .m8 { grid-column: span 1; }
+        .footer-top { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      }
+      @media (max-width: 768px) {
+        .nav-links { display: none; }
+        .nav-inner { padding: 0 20px; }
+        .hero-content { padding: 0 20px 80px; }
+        .hero-slide-nav { right: 20px; bottom: 28px; }
+        .hero-scroll { display: none; }
+        .price-banner { padding: 16px 20px; }
+        .price-banner-inner { gap: 16px; }
+        .price-banner-item { font-size: 12px; }
+        .dest-header { padding: 0 20px; }
+        .dest-scroll { padding: 0 20px 20px; }
+        .dest-card { flex: 0 0 260px; height: 340px; }
+        .dest-section { padding: 72px 0 60px; }
+        .deals-section { padding: 72px 20px; }
+        .deals-grid { grid-template-columns: 1fr; }
+        .deal-card-img { height: 180px; }
+        .immersive { min-height: 520px; }
+        .immersive-content { padding: 60px 20px; }
+        .immersive.right .immersive-text { margin-left: 0; }
+        .immersive.right .immersive-overlay,
+        .immersive.left .immersive-overlay {
+          background: linear-gradient(180deg, rgba(10,15,12,0.3) 0%, rgba(10,15,12,0.85) 50%, rgba(10,15,12,0.95) 100%);
+        }
+        .immersive-text { max-width: 100%; }
+        .photo-row { flex-direction: column; }
+        .photo-item { min-height: 200px; }
+        .photo-item.tall { min-height: 280px; }
+        .affordable-section { padding: 72px 20px; }
+        .affordable-grid { grid-template-columns: 1fr; }
+        .features-section { padding: 72px 20px; }
+        .features-grid { grid-template-columns: 1fr; }
+        .stats-bar { padding: 40px 20px; }
+        .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+        .stat-number { font-size: 36px; }
+        .moments-section { padding: 60px 20px 80px; }
+        .moments-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
+        .m1 { grid-column: span 2; }
+        .m2, .m6, .m8 { grid-column: span 1; }
+        .moment-item { min-height: 180px; }
+        .how-section { padding: 72px 20px; }
+        .steps-list::before { left: 19px; }
+        .step-marker { width: 40px; height: 40px; }
+        .step-marker svg { width: 18px; height: 18px; }
+        .step-row { gap: 20px; padding: 20px 0; }
+        .partner-section { padding: 72px 20px; }
+        .partner-inner { flex-direction: column; gap: 40px; }
+        .partner-stats { flex: none; width: 100%; flex-direction: row; gap: 12px; }
+        .partner-stat-card { flex: 1; padding: 20px; }
+        .partner-stat-card h3 { font-size: 28px; }
+        .partner-benefits { grid-template-columns: 1fr; }
+        .cta-section { padding: 80px 20px; }
+        .qr-wrap { flex-direction: column; padding: 28px; gap: 24px; }
+        .qr-info { text-align: center; }
+        .qr-info p { text-align: center; }
+        .footer { padding: 48px 20px 24px; }
+        .footer-top { grid-template-columns: 1fr; gap: 28px; }
+        .footer-bottom { flex-direction: column; text-align: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-overlay" id="loading">
+      <div class="loading-spinner"></div>
+      <p>Opening in Expo Go...</p>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER logo" /></div>
+          <span class="nav-logo-text">APP_NAME_PLACEHOLDER</span>
+        </a>
+        <div class="nav-links">
+          <a href="#destinations" class="nav-link">Destinations</a>
+          <a href="#deals" class="nav-link">Deals</a>
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#download" class="nav-link">Get the App</a>
+          <a href="/partner" class="nav-link">List Your Business</a>
+          <a href="/app" class="nav-cta">Open Web App</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO: 6-slide cinematic auto-rotating -->
+    <section class="hero" id="hero">
+      <div class="hero-slides">
+        <div class="hero-slide active">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80&auto=format" alt="Open road through golden landscape" loading="eager" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80&auto=format" alt="Turquoise tropical beach" loading="lazy" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1551009175-15bdf9dcb580?w=1920&q=80&auto=format" alt="African wildlife safari" loading="lazy" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1920&q=80&auto=format" alt="Luxury overwater resort" loading="lazy" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=1920&q=80&auto=format" alt="Majestic waterfall in tropical forest" loading="lazy" />
+        </div>
+        <div class="hero-slide">
+          <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1920&q=80&auto=format" alt="Mountain valley panorama" loading="lazy" />
+        </div>
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-inner">
+          <div class="hero-logo-mark"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER" /></div>
+          <div class="hero-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Premium Travel Platform
+          </div>
+          <h1 class="hero-title">The World Awaits.<br><em>Go Explore.</em></h1>
+          <p class="hero-subtitle">Stays, safaris, dining, car hire, and more. Unbeatable prices, extraordinary experiences, all in one place.</p>
+          <div class="hero-actions">
+            <a href="/app" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+              Start Exploring
+            </a>
+            <a href="#deals" class="btn btn-glass">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              See Today's Deals
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide-nav" id="heroNav"></div>
+      <div class="hero-scroll">
+        <span>Scroll</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </section>
+
+    <!-- AFFORDABILITY BANNER -->
+    <div class="price-banner">
+      <div class="price-banner-inner">
+        <div class="price-banner-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>No hidden fees <span class="price-banner-highlight">ever</span></span>
+        </div>
+        <div class="price-banner-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          <span>Save up to <span class="price-banner-highlight">40% off</span> with deals</span>
+        </div>
+        <div class="price-banner-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Best price <span class="price-banner-highlight">guarantee</span></span>
+        </div>
+        <div class="price-banner-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Free cancellation on <span class="price-banner-highlight">most stays</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESTINATIONS with prices -->
+    <section class="dest-section" id="destinations">
+      <div class="dest-header reveal">
+        <div class="section-label">Handpicked Destinations</div>
+        <h2 class="section-title">Where Will You Go?</h2>
+        <p class="section-desc">Incredible destinations at prices that will surprise you. Your dream trip is more affordable than you think.</p>
+      </div>
+      <div class="dest-scroll">
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=640&q=80&auto=format" alt="Bali" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-tag">Trending</div>
+          <div class="dest-card-price">From <span>$29</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Bali</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Indonesia</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=640&q=80&auto=format" alt="Santorini" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-tag">Popular</div>
+          <div class="dest-card-price">From <span>$55</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Santorini</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Greece</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=640&q=80&auto=format" alt="Maasai Mara" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-tag">Safari</div>
+          <div class="dest-card-price">From <span>$45</span>/day</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Maasai Mara</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Kenya</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=640&q=80&auto=format" alt="Maldives" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-tag">Luxury</div>
+          <div class="dest-card-price">From <span>$89</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Maldives</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Indian Ocean</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=640&q=80&auto=format" alt="Italy" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-price">From <span>$42</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Tuscany</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Italy</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=640&q=80&auto=format" alt="Paris" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-price">From <span>$65</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Paris</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>France</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=640&q=80&auto=format" alt="Ha Long Bay" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-price">From <span>$22</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Ha Long Bay</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Vietnam</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=640&q=80&auto=format" alt="Kyoto" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-price">From <span>$38</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Kyoto</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Japan</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=640&q=80&auto=format" alt="Thailand" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-tag">Budget</div>
+          <div class="dest-card-price">From <span>$18</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Thailand</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Southeast Asia</div>
+          </div>
+        </div>
+        <div class="dest-card">
+          <img src="https://images.unsplash.com/photo-1534567153574-2b12153a87f0?w=640&q=80&auto=format" alt="Morocco" loading="lazy" />
+          <div class="dest-card-overlay"></div>
+          <div class="dest-card-price">From <span>$25</span>/night</div>
+          <div class="dest-card-info">
+            <div class="dest-card-name">Morocco</div>
+            <div class="dest-card-loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>North Africa</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TODAY'S DEALS with prices -->
+    <section class="deals-section" id="deals">
+      <div class="deals-inner">
+        <div class="deals-header reveal">
+          <div class="section-label">Unbeatable Prices</div>
+          <h2 class="section-title">Today's Best Deals</h2>
+          <p class="section-desc" style="margin: 0 auto;">Incredible travel experiences at prices you won't believe. Limited-time offers refreshed daily.</p>
+        </div>
+        <div class="deals-grid reveal">
+          <a href="/app#deals" class="deal-card">
+            <div class="deal-card-img">
+              <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=640&q=80&auto=format" alt="Luxury hotel room" loading="lazy" />
+              <div class="deal-card-badge">-35% OFF</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-title">Boutique Beach Resort</div>
+              <div class="deal-card-loc">Zanzibar, Tanzania</div>
+              <div class="deal-card-prices">
+                <span class="deal-price-old">$120</span>
+                <span class="deal-price-new">$78<span class="deal-price-unit">/night</span></span>
+              </div>
+              <div class="deal-card-saves">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                You save $42/night
+              </div>
+            </div>
+          </a>
+          <a href="/app#deals" class="deal-card">
+            <div class="deal-card-img">
+              <img src="https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?w=640&q=80&auto=format" alt="Safari sunrise" loading="lazy" />
+              <div class="deal-card-badge green">EARLY BIRD</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-title">3-Day Safari Adventure</div>
+              <div class="deal-card-loc">Maasai Mara, Kenya</div>
+              <div class="deal-card-prices">
+                <span class="deal-price-old">$299</span>
+                <span class="deal-price-new">$189<span class="deal-price-unit">/person</span></span>
+              </div>
+              <div class="deal-card-saves">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                You save $110
+              </div>
+            </div>
+          </a>
+          <a href="/app#deals" class="deal-card">
+            <div class="deal-card-img">
+              <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=640&q=80&auto=format" alt="Modern apartment" loading="lazy" />
+              <div class="deal-card-badge">-40% OFF</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-title">Downtown City Apartment</div>
+              <div class="deal-card-loc">Barcelona, Spain</div>
+              <div class="deal-card-prices">
+                <span class="deal-price-old">$95</span>
+                <span class="deal-price-new">$57<span class="deal-price-unit">/night</span></span>
+              </div>
+              <div class="deal-card-saves">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                You save $38/night
+              </div>
+            </div>
+          </a>
+          <a href="/app#deals" class="deal-card">
+            <div class="deal-card-img">
+              <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=640&q=80&auto=format" alt="Fine dining" loading="lazy" />
+              <div class="deal-card-badge green">GROUP DEAL</div>
+            </div>
+            <div class="deal-card-body">
+              <div class="deal-card-title">Chef's Table Experience</div>
+              <div class="deal-card-loc">Nairobi, Kenya</div>
+              <div class="deal-card-prices">
+                <span class="deal-price-old">$85</span>
+                <span class="deal-price-new">$49<span class="deal-price-unit">/person</span></span>
+              </div>
+              <div class="deal-card-saves">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                You save $36/person
+              </div>
+            </div>
+          </a>
+        </div>
+        <div style="text-align: center; margin-top: 40px;" class="reveal">
+          <a href="/app#deals" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            View All Deals
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO WALL 1: Safari & Wildlife -->
+    <div class="photo-wall">
+      <div class="photo-row">
+        <div class="photo-item wide">
+          <img src="https://images.unsplash.com/photo-1551009175-15bdf9dcb580?w=1200&q=80&auto=format" alt="Elephants in wild" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Elephants at Dawn</div>
+          <div class="photo-item-price-tag">Safaris from $45/day</div>
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1535941339077-2dd1c7963098?w=640&q=80&auto=format" alt="Safari landscape" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Golden Savanna</div>
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=640&q=80&auto=format" alt="African sunset" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">African Sunset</div>
+        </div>
+      </div>
+      <div class="photo-row">
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=640&q=80&auto=format" alt="Wildlife close-up" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Wildlife Wonder</div>
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=640&q=80&auto=format" alt="Zebras" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Zebras at Play</div>
+        </div>
+        <div class="photo-item wide">
+          <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&q=80&auto=format" alt="Safari jeep" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Safari Adventure</div>
+          <div class="photo-item-price-tag">From $45/day</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMMERSIVE: Safari -->
+    <section class="immersive left">
+      <div class="immersive-bg">
+        <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1920&q=80&auto=format" alt="Safari wildlife" loading="lazy" />
+      </div>
+      <div class="immersive-overlay"></div>
+      <div class="immersive-content">
+        <div class="immersive-text reveal">
+          <div class="immersive-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/></svg>
+            Safari Adventures
+          </div>
+          <h2 class="immersive-title">Into the Wild</h2>
+          <div class="immersive-price-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Safaris from just $45/day - 40% cheaper than competitors
+          </div>
+          <p class="immersive-desc">Walk alongside giants. From the Great Migration in the Maasai Mara to the Big Five in Kruger. Expert guides, premium lodges, and unforgettable encounters - all at prices that make it accessible to everyone.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(46,204,113,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#2ECC71;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Verified expert guides & lodges</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(218,165,32,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#DAA520;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>Group discounts up to 25% off</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(52,152,219,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#3498DB;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>Secure booking, pay later options</div>
+          </div>
+          <a href="/app#experiences" class="btn btn-primary btn-sm">Explore Safaris</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO WALL 2: Stays & Resorts -->
+    <div class="photo-wall">
+      <div class="photo-row">
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=640&q=80&auto=format" alt="Luxury resort" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Luxury Resort</div>
+          <div class="photo-item-price-tag">From $55/night</div>
+        </div>
+        <div class="photo-item tall">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&auto=format" alt="Villa with pool" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Private Villa</div>
+          <div class="photo-item-price-tag">From $89/night</div>
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=640&q=80&auto=format" alt="Hotel lobby" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Boutique Hotel</div>
+          <div class="photo-item-price-tag">From $35/night</div>
+        </div>
+      </div>
+      <div class="photo-row">
+        <div class="photo-item wide">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200&q=80&auto=format" alt="Overwater villa" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Overwater Paradise</div>
+          <div class="photo-item-price-tag">From $99/night</div>
+        </div>
+        <div class="photo-item">
+          <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=640&q=80&auto=format" alt="Camping" loading="lazy" />
+          <div class="photo-item-overlay"></div>
+          <div class="photo-item-label">Glamping</div>
+          <div class="photo-item-price-tag">From $18/night</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- IMMERSIVE: Stays -->
+    <section class="immersive right">
+      <div class="immersive-bg">
+        <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=1920&q=80&auto=format" alt="Luxury pool resort" loading="lazy" />
+      </div>
+      <div class="immersive-overlay"></div>
+      <div class="immersive-content">
+        <div class="immersive-text reveal">
+          <div class="immersive-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            BnB Stays
+          </div>
+          <h2 class="immersive-title">Your Perfect Stay</h2>
+          <div class="immersive-price-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Stays from just $18/night - half the price of hotels
+          </div>
+          <p class="immersive-desc">From private villas overlooking the ocean to cozy cabins in the mountains. Browse hundreds of unique stays with Airbnb-style filters, instant booking, and verified reviews. Budget-friendly to ultra-luxury.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(46,204,113,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#2ECC71;"><polyline points="20 6 9 17 4 12"/></svg></div>15+ property types from $18/night</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(52,152,219,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#3498DB;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>Instant book & free cancellation</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(231,76,60,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#E74C3C;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>Last-minute deals up to 40% off</div>
+          </div>
+          <a href="/app#stays" class="btn btn-primary btn-sm">Browse Stays</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMMERSIVE: Dining -->
+    <section class="immersive left">
+      <div class="immersive-bg">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80&auto=format" alt="Fine dining" loading="lazy" />
+      </div>
+      <div class="immersive-overlay"></div>
+      <div class="immersive-content">
+        <div class="immersive-text reveal">
+          <div class="immersive-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
+            Fine Dining
+          </div>
+          <h2 class="immersive-title">Taste the World</h2>
+          <div class="immersive-price-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Award-winning dining from just $15/person
+          </div>
+          <p class="immersive-desc">Discover incredible restaurants at every price point. From Michelin-starred kitchens to authentic local street food. Book your table and savor every moment without breaking the bank.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(218,165,32,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#DAA520;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>Curated reviews & ratings</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(155,89,182,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#9B59B6;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/></svg></div>Group discounts for 4+ diners</div>
+          </div>
+          <a href="/app#experiences" class="btn btn-primary btn-sm">Find Restaurants</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMMERSIVE: Car Hire -->
+    <section class="immersive right">
+      <div class="immersive-bg">
+        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1920&q=80&auto=format" alt="Road trip" loading="lazy" />
+      </div>
+      <div class="immersive-overlay"></div>
+      <div class="immersive-content">
+        <div class="immersive-text reveal">
+          <div class="immersive-label">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Car Hire
+          </div>
+          <h2 class="immersive-title">Hit the Road</h2>
+          <div class="immersive-price-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            Rentals from just $25/day - insurance included
+          </div>
+          <p class="immersive-desc">Freedom to explore at your own pace. From compact city cars to 4x4 safari vehicles. Full insurance coverage, GPS tracking, and flexible pickup locations. No hidden surcharges.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(46,204,113,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#2ECC71;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Full insurance included in price</div>
+            <div class="immersive-feat"><div class="immersive-feat-icon" style="background:rgba(52,152,219,0.15);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#3498DB;"><polyline points="20 6 9 17 4 12"/></svg></div>Free cancellation up to 24h before</div>
+          </div>
+          <a href="/app#cars" class="btn btn-primary btn-sm">Browse Cars</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+      <div class="stats-inner reveal">
+        <div class="stat-item"><div class="stat-number">500+</div><div class="stat-label">Unique Stays</div></div>
+        <div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Experiences</div></div>
+        <div class="stat-item"><div class="stat-number">50+</div><div class="stat-label">Destinations</div></div>
+        <div class="stat-item"><div class="stat-number">40%</div><div class="stat-label">Avg. Savings</div></div>
+        <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
+      </div>
+    </div>
+
+    <!-- WHY WE'RE AFFORDABLE -->
+    <section class="affordable-section" id="pricing">
+      <div class="affordable-inner">
+        <div class="affordable-header reveal">
+          <div class="section-label">Seriously Affordable</div>
+          <h2 class="section-title">Travel More, Spend Less</h2>
+          <p class="section-desc" style="margin: 0 auto;">We cut out the middlemen and pass the savings directly to you. Here's what you can book today.</p>
+        </div>
+        <div class="affordable-grid">
+          <div class="afford-card reveal">
+            <div class="afford-card-icon" style="background:linear-gradient(135deg,rgba(46,204,113,0.15),rgba(46,204,113,0.05));">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#2ECC71;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <h3>Stays</h3>
+            <p>Entire homes, villas, and apartments. Skip the hotel markup. Stay like a local for a fraction of the price.</p>
+            <div class="afford-card-price">From <span>$18</span> /night</div>
+          </div>
+          <div class="afford-card reveal">
+            <div class="afford-card-icon" style="background:linear-gradient(135deg,rgba(230,126,34,0.15),rgba(230,126,34,0.05));">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#E67E22;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3>Safaris</h3>
+            <p>Full-day guided safaris with expert rangers. See the Big Five for less than a fancy dinner at home.</p>
+            <div class="afford-card-price">From <span>$45</span> /day</div>
+          </div>
+          <div class="afford-card reveal">
+            <div class="afford-card-icon" style="background:linear-gradient(135deg,rgba(231,76,60,0.15),rgba(231,76,60,0.05));">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#E74C3C;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <h3>Dining</h3>
+            <p>Top-rated restaurants from street food to fine dining. Incredible meals at honest local prices.</p>
+            <div class="afford-card-price">From <span>$15</span> /person</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES GRID -->
+    <section class="features-section" id="features">
+      <div class="features-inner">
+        <div class="features-header reveal">
+          <div class="section-label">Everything You Need</div>
+          <h2 class="section-title">One App, Endless Possibilities</h2>
+          <p class="section-desc" style="margin: 0 auto;">From booking to exploring, every travel service at your fingertips.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(46,204,113,0.15),rgba(46,204,113,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#2ECC71;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><h3>BnB Stays</h3><p>Hundreds of unique accommodations worldwide. Villas, cabins, resorts, and more with smart filters and instant booking.</p></div>
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(230,126,34,0.15),rgba(230,126,34,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#E67E22;"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><h3>Safari Adventures</h3><p>Curated wildlife experiences with expert guides. From the Big Five to the Great Migration, all at competitive prices.</p></div>
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(231,76,60,0.15),rgba(231,76,60,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#E74C3C;"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg></div><h3>Fine Dining</h3><p>Discover restaurants from hidden gems to award-winning venues. Reserve tables instantly with verified reviews.</p></div>
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(52,152,219,0.15),rgba(52,152,219,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#3498DB;"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><h3>Car Hire</h3><p>Rent vehicles with full insurance, GPS tracking, and flexible pickup. No hidden fees, ever.</p></div>
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(155,89,182,0.15),rgba(155,89,182,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#9B59B6;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Destination Guides</h3><p>AI-powered travel guides with hidden gems, budget tips, cultural etiquette, and emergency info.</p></div>
+          <div class="feat-card reveal"><div class="feat-icon" style="background:linear-gradient(135deg,rgba(218,165,32,0.15),rgba(218,165,32,0.05));"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#DAA520;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Safety First</h3><p>Built-in safety center with emergency contacts, verified vendors, content filtering, and 24/7 support.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOMENTS GALLERY: Big mosaic with lots of photos -->
+    <section class="moments-section">
+      <div class="moments-inner">
+        <div class="moments-header reveal">
+          <div class="section-label">Visual Journey</div>
+          <h2 class="section-title">Moments That Take Your Breath Away</h2>
+          <p class="section-desc">Every trip tells a story. These are the experiences waiting for you.</p>
+        </div>
+        <div class="moments-grid">
+          <div class="moment-item m1">
+            <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80&auto=format" alt="Mountain lake" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Alpine Serenity</div>
+          </div>
+          <div class="moment-item m2">
+            <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=640&q=80&auto=format" alt="Night celebration" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Celebrations</div>
+          </div>
+          <div class="moment-item">
+            <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=640&q=80&auto=format" alt="Beach fun" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Beach Life</div>
+          </div>
+          <div class="moment-item">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=640&q=80&auto=format" alt="White sand beach" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Island Paradise</div>
+          </div>
+          <div class="moment-item">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=640&q=80&auto=format" alt="Mountain sunset" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Golden Hour</div>
+          </div>
+          <div class="moment-item m6">
+            <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?w=800&q=80&auto=format" alt="Adventure sports" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Adventure Awaits</div>
+          </div>
+          <div class="moment-item">
+            <img src="https://images.unsplash.com/photo-1543731068-7e0f5beff43a?w=640&q=80&auto=format" alt="City skyline" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">City Lights</div>
+          </div>
+          <div class="moment-item m8">
+            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=800&q=80&auto=format" alt="Tropical paradise" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Tropical Dreams</div>
+          </div>
+          <div class="moment-item">
+            <img src="https://images.unsplash.com/photo-1546587348-d12660c30c50?w=640&q=80&auto=format" alt="Nature landscape" loading="lazy" />
+            <div class="moment-overlay"></div>
+            <div class="moment-label">Into Nature</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-section" id="how">
+      <div class="how-inner">
+        <div class="how-header reveal">
+          <div class="section-label">Simple & Seamless</div>
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-desc" style="margin: 0 auto;">Three steps to your dream trip. No switching apps. No hidden fees.</p>
+        </div>
+        <div class="steps-list">
+          <div class="step-row reveal">
+            <div class="step-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+            <div class="step-body"><h3>Discover</h3><p>Browse stays, safaris, dining, and car hire across 50+ destinations worldwide. Use smart filters to find exactly what you want at your budget.</p></div>
+          </div>
+          <div class="step-row reveal">
+            <div class="step-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div class="step-body"><h3>Compare & Save</h3><p>View detailed listings with verified reviews and competitive prices. Our deal engine automatically finds discounts and group rates so you always get the best value.</p></div>
+          </div>
+          <div class="step-row reveal">
+            <div class="step-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="step-body"><h3>Book & Go</h3><p>Pay securely with Stripe. Instant confirmations, free cancellation options, and your complete trip timeline. No hidden fees - the price you see is the price you pay.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BECOME A PARTNER -->
+    <section class="partner-section" id="partner">
+      <div class="partner-inner reveal">
+        <div class="partner-text">
+          <h2>Grow Your Business<br>with <span>Tripsbnb</span></h2>
+          <p>List your restaurant, bar, club, or cafe on the fastest-growing travel platform. Reach travelers from around the world, manage bookings effortlessly, and keep 100% of your listed price.</p>
+          <div class="partner-benefits">
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              No monthly fees
+            </div>
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Keep 100% of your price
+            </div>
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Global traveler reach
+            </div>
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Instant Stripe payouts
+            </div>
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Reservation management
+            </div>
+            <div class="partner-benefit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Setup in under 5 minutes
+            </div>
+          </div>
+          <a href="/partner" class="partner-cta-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            List Your Business
+          </a>
+        </div>
+        <div class="partner-stats">
+          <div class="partner-stat-card">
+            <h3>0%</h3>
+            <p>Monthly listing fees</p>
+          </div>
+          <div class="partner-stat-card">
+            <h3>12%</h3>
+            <p>Service fee (paid by traveler)</p>
+          </div>
+          <div class="partner-stat-card">
+            <h3>24/7</h3>
+            <p>Booking management</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="download">
+      <div class="cta-bg">
+        <img src="https://images.unsplash.com/photo-1530789253388-582c481c54b0?w=1920&q=80&auto=format" alt="Travel inspiration" loading="lazy" />
+      </div>
+      <div class="cta-overlay"></div>
+      <div class="cta-content reveal">
+        <h2>Ready for Your<br>Next Adventure?</h2>
+        <p>Join thousands of smart travelers discovering extraordinary experiences at unbeatable prices.</p>
+        <div class="cta-savings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          Travelers save an average of 40% vs. traditional booking sites
+        </div>
+        <div class="cta-actions">
+          <a href="/app" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Open Web App
+          </a>
+          <a href="exps://EXPS_URL_PLACEHOLDER" class="btn btn-glass" id="open-expo-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            Open in Expo Go
+          </a>
+        </div>
+        <div class="qr-wrap">
+          <div class="qr-info">
+            <h4>Scan to Open on Mobile</h4>
+            <p>Point your camera at the QR code<br>to open in Expo Go</p>
+          </div>
+          <div class="qr-box" id="qr-code"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="footer-brand-logo">
+              <div class="footer-brand-icon"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER" /></div>
+              <div class="footer-brand-name">APP_NAME_PLACEHOLDER</div>
+            </div>
+            <p>Your all-in-one travel companion. Extraordinary experiences at unbeatable prices across 50+ destinations worldwide.</p>
+          </div>
+          <div class="footer-col">
+            <h4>Platform</h4>
+            <a href="/app">Web App</a>
+            <a href="/app#stays">Stays</a>
+            <a href="/app#experiences">Experiences</a>
+            <a href="/app#cars">Car Hire</a>
+            <a href="/app#deals">Deals</a>
+          </div>
+          <div class="footer-col">
+            <h4>Company</h4>
+            <a href="/about">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Press</a>
+            <a href="/partner">List Your Business</a>
+            <a href="/vendor-dashboard">Vendor Dashboard</a>
+            <a href="/restaurant-dashboard">Restaurant Dashboard</a>
+          </div>
+          <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>2026 APP_NAME_PLACEHOLDER. All rights reserved.</p>
+          <div class="powered">Powered by <span>TripVerse</span></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/qr-code-styling@1.6.0/lib/qr-code-styling.js"></script>
+    <script>
+      (function() {
+        var nav = document.getElementById('nav');
+        window.addEventListener('scroll', function() {
+          nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        var slides = document.querySelectorAll('.hero-slide');
+        var navContainer = document.getElementById('heroNav');
+        var currentSlide = 0;
+        var slideInterval;
+
+        slides.forEach(function(_, i) {
+          var dot = document.createElement('div');
+          dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', function() { goToSlide(i); });
+          navContainer.appendChild(dot);
+        });
+
+        function goToSlide(index) {
+          slides[currentSlide].classList.remove('active');
+          navContainer.children[currentSlide].classList.remove('active');
+          currentSlide = index;
+          slides[currentSlide].classList.add('active');
+          navContainer.children[currentSlide].classList.add('active');
+          clearInterval(slideInterval);
+          startSlideshow();
+        }
+
+        function startSlideshow() {
+          slideInterval = setInterval(function() {
+            goToSlide((currentSlide + 1) % slides.length);
+          }, 5000);
+        }
+        startSlideshow();
+
+        var reveals = document.querySelectorAll('.reveal');
+        var observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        reveals.forEach(function(el) { observer.observe(el); });
+
+        var ua = navigator.userAgent;
+        var isAndroid = /Android/i.test(ua);
+        var isIOS = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        var deepLink = 'exps://EXPS_URL_PLACEHOLDER';
+
+        var qrCode = new QRCodeStyling({
+          width: 400, height: 400, data: deepLink,
+          image: '/assets/images/logo.png',
+          dotsOptions: { color: '#1A4D2E', type: 'rounded' },
+          backgroundOptions: { color: '#ffffff' },
+          imageOptions: { crossOrigin: 'anonymous', margin: 6, imageSize: 0.3 },
+          cornersSquareOptions: { type: 'extra-rounded' },
+          cornersDotOptions: { type: 'dot' },
+          qrOptions: { errorCorrectionLevel: 'H' }
+        });
+        qrCode.append(document.getElementById('qr-code'));
+
+        if (isAndroid || isIOS) {
+          var loadingEl = document.getElementById('loading');
+          loadingEl.classList.add('active');
+          window.location.href = deepLink;
+          setTimeout(function() { loadingEl.classList.remove('active'); }, 800);
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+          anchor.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (href && href !== '#') {
+              var target = document.querySelector(href);
+              if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            }
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

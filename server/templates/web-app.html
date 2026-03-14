@@ -1,0 +1,3798 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>APP_NAME_PLACEHOLDER - Your Journey Begins Here</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    :root {
+      --primary: #1A4D2E;
+      --primary-dark: #133A22;
+      --primary-light: #2D6B45;
+      --accent: #DAA520;
+      --accent-light: #F0D080;
+      --bg: #FAFAF8;
+      --bg-card: #FFFFFF;
+      --text: #2D2D2D;
+      --text-light: #777777;
+      --text-muted: #AAAAAA;
+      --border: #E8E8E4;
+      --border-light: #F0F0EC;
+      --shadow: rgba(0,0,0,0.06);
+      --shadow-hover: rgba(0,0,0,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --radius-xs: 6px;
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --max-width: 1320px;
+      --nav-height: 72px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: transparent;
+      backdrop-filter: none;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .navbar.scrolled {
+      background: rgba(26, 77, 46, 0.92);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .navbar-inner {
+      width: 100%;
+      max-width: var(--max-width);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #fff;
+    }
+    .nav-logo-icon {
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .nav-logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-xs);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+    .nav-links a.active { color: #fff; background: rgba(218,165,32,0.25); }
+    .nav-links a svg { width: 16px; height: 16px; }
+    .nav-partner-link {
+      background: rgba(218,165,32,0.2) !important;
+      color: #DAA520 !important;
+      border: 1px solid rgba(218,165,32,0.3);
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+    }
+    .nav-partner-link:hover {
+      background: rgba(218,165,32,0.35) !important;
+      color: #fff !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .nav-hamburger svg { width: 24px; height: 24px; }
+
+    /* ===== MAIN CONTENT ===== */
+    .main { padding-top: 0; }
+    .main .page:not(#page-home) { padding-top: var(--nav-height); }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ===== CINEMATIC HERO ===== */
+    .cinema-hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      overflow: hidden;
+    }
+    .cinema-hero-slides {
+      position: absolute;
+      inset: 0;
+    }
+    .cinema-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+      will-change: opacity;
+    }
+    .cinema-slide.active { opacity: 1; }
+    .cinema-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.05);
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      0% { transform: scale(1.05) translate(0, 0); }
+      100% { transform: scale(1.15) translate(-2%, -1%); }
+    }
+    .cinema-slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0.1) 30%,
+        rgba(0,0,0,0.15) 60%,
+        rgba(0,0,0,0.7) 100%
+      );
+    }
+    .cinema-hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      padding: 0 64px 100px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .cinema-hero-logo {
+      width: 120px;
+      height: 120px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+    .cinema-hero-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .cinema-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(218,165,32,0.2);
+      border: 1px solid rgba(218,165,32,0.4);
+      border-radius: 40px;
+      color: var(--accent-light);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .cinema-hero-badge svg { width: 16px; height: 16px; }
+    .cinema-hero h1 {
+      font-family: var(--font-heading);
+      font-size: 72px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -2px;
+      max-width: 800px;
+    }
+    .cinema-hero h1 em {
+      font-style: italic;
+      color: var(--accent-light);
+    }
+    .cinema-hero p {
+      font-size: 20px;
+      color: rgba(255,255,255,0.85);
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .cinema-hero-search {
+      display: flex;
+      max-width: 560px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 60px;
+      border: 1px solid rgba(255,255,255,0.25);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+    .cinema-hero-search input {
+      flex: 1;
+      padding: 18px 28px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      font-family: var(--font-body);
+      outline: none;
+    }
+    .cinema-hero-search input::placeholder { color: rgba(255,255,255,0.5); }
+    .cinema-hero-search button {
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+      border-radius: 0 60px 60px 0;
+    }
+    .cinema-hero-search button:hover { background: #C49200; }
+
+    .cinema-slide-indicators {
+      position: absolute;
+      bottom: 40px;
+      right: 64px;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .cinema-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+    .cinema-dot.active {
+      width: 32px;
+      border-radius: 5px;
+      background: var(--accent);
+    }
+
+    .cinema-slide-caption {
+      position: absolute;
+      bottom: 40px;
+      left: 64px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+    }
+    .cinema-slide-caption svg { width: 14px; height: 14px; }
+
+    /* ===== DESTINATION GALLERY STRIP ===== */
+    .dest-strip {
+      padding: 80px 0;
+      background: #fff;
+      overflow: hidden;
+    }
+    .dest-strip-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .dest-strip-header h2 {
+      font-family: var(--font-heading);
+      font-size: 44px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .dest-strip-header p {
+      font-size: 16px;
+      color: var(--text-light);
+    }
+    .dest-scroll {
+      display: flex;
+      gap: 20px;
+      padding: 0 32px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .dest-scroll::-webkit-scrollbar { display: none; }
+    .dest-card {
+      flex: 0 0 320px;
+      height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: start;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .dest-card:hover { transform: scale(1.02); }
+    .dest-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .dest-card:hover img { transform: scale(1.08); }
+    .dest-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.75) 100%);
+    }
+    .dest-card-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px;
+    }
+    .dest-card-name {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .dest-card-country {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dest-card-country svg { width: 14px; height: 14px; }
+    .dest-card-tag {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 6px 14px;
+      background: rgba(218,165,32,0.85);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ===== IMMERSIVE SPLIT SECTIONS ===== */
+    .immersive-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .immersive-section.reverse { direction: rtl; }
+    .immersive-section.reverse > * { direction: ltr; }
+    .immersive-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .immersive-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .immersive-img:hover img { transform: scale(1.04); }
+    .immersive-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 64px;
+      background: var(--bg);
+    }
+    .immersive-text .overline {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .immersive-text h2 {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .immersive-text p {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    .immersive-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .immersive-feat {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .immersive-feat-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(26,77,46,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .immersive-feat-icon svg { width: 18px; height: 18px; color: var(--primary); }
+    .immersive-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 60px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.3s;
+      text-decoration: none;
+      width: fit-content;
+    }
+    .immersive-cta:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    .immersive-cta svg { width: 18px; height: 18px; }
+
+    /* ===== PHOTO MOSAIC ===== */
+    .mosaic-section {
+      padding: 80px 0;
+      background: var(--primary-dark);
+    }
+    .mosaic-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .mosaic-header h2 {
+      font-family: var(--font-heading);
+      font-size: 44px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .mosaic-header p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 8px;
+    }
+    .mosaic-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      gap: 12px;
+    }
+    .mosaic-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+    }
+    .mosaic-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .mosaic-item:hover img { transform: scale(1.1); }
+    .mosaic-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.6) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .mosaic-item:hover .mosaic-item-overlay { opacity: 1; }
+    .mosaic-item-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s;
+    }
+    .mosaic-item:hover .mosaic-item-label { opacity: 1; transform: translateY(0); }
+    .mosaic-tall { grid-row: span 2; }
+    .mosaic-wide { grid-column: span 2; }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--primary);
+      padding: 48px 0;
+    }
+    .stats-bar-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-family: var(--font-heading);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+
+    /* ===== SECTION HEADERS ===== */
+    .section {
+      padding: 60px 0;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+    .section-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 24px;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      background: none;
+      font-family: var(--font-body);
+    }
+    .section-cta:hover { background: var(--primary); color: #fff; }
+    .section-cta svg { width: 16px; height: 16px; }
+
+    /* ===== PARTNER BANNER ===== */
+    .partner-banner {
+      margin-top: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, #2d6a4f 100%);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+    }
+    .partner-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M20 20h20v20H20zM0 0h20v20H0z'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .partner-banner-inner {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 36px 40px;
+      gap: 24px;
+    }
+    .partner-banner-text h3 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .partner-banner-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      max-width: 440px;
+      line-height: 1.6;
+    }
+    .partner-banner-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: var(--radius-xs);
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.3s;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(218,165,32,0.3);
+    }
+    .partner-banner-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(218,165,32,0.4);
+    }
+
+    /* ===== GRID ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--shadow-hover);
+    }
+    .card-img {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-img svg { color: rgba(255,255,255,0.5); width: 48px; height: 48px; }
+    .card-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(26,77,46,0.85);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: capitalize;
+      backdrop-filter: blur(4px);
+    }
+    .card-deal-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: linear-gradient(135deg, var(--accent), #C49200);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card-body { padding: 16px; }
+    .card-name {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .card-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .card-location svg { width: 14px; height: 14px; color: #E74C3C; }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-meta-item svg { width: 14px; height: 14px; }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-light);
+      margin-top: 4px;
+    }
+    .card-price {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .card-price span {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+    .card-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .card-rating svg { width: 14px; height: 14px; fill: var(--accent); }
+
+    .stars { display: inline-flex; gap: 1px; }
+    .stars svg { width: 14px; height: 14px; }
+    .stars svg.filled { color: var(--accent); fill: var(--accent); }
+    .stars svg.empty { color: #ddd; }
+
+    /* ===== GRADIENT BACKGROUNDS FOR CARDS ===== */
+    .grad-stay { background: linear-gradient(135deg, #1A4D2E, #3a8f5c); }
+    .grad-safari { background: linear-gradient(135deg, #DAA520, #8B6914); }
+    .grad-dining { background: linear-gradient(135deg, #C0392B, #8E2B1F); }
+    .grad-car { background: linear-gradient(135deg, #2C3E50, #4A6FA5); }
+    .grad-companion { background: linear-gradient(135deg, #8E44AD, #5B2C6F); }
+    .grad-deal { background: linear-gradient(135deg, #DAA520, #1A4D2E); }
+
+    /* ===== FILTER BAR ===== */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      padding: 16px 0;
+    }
+    .filter-chip {
+      padding: 8px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: var(--font-body);
+      text-transform: capitalize;
+    }
+    .filter-chip:hover { border-color: var(--primary); color: var(--primary); }
+    .filter-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* ===== TABS ===== */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .tab-btn {
+      padding: 14px 28px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-light);
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--primary); }
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--accent);
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== PAGE HEADERS ===== */
+    .page-header {
+      padding: 48px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+    .page-header h1 {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .page-header p {
+      font-size: 16px;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    /* ===== DESTINATION GUIDE ===== */
+    .guide-search {
+      display: flex;
+      max-width: 600px;
+      margin: 0 auto 48px;
+      gap: 12px;
+    }
+    .guide-search input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg-card);
+      transition: border-color 0.2s;
+    }
+    .guide-search input:focus { outline: none; border-color: var(--primary); }
+    .guide-search button {
+      padding: 14px 32px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .guide-search button:hover { background: var(--primary-dark); }
+    .guide-search button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .guide-content { max-width: 900px; margin: 0 auto; }
+    .guide-hero {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: var(--radius);
+      padding: 48px;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .guide-hero h2 {
+      font-family: var(--font-heading);
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .guide-hero .tagline {
+      font-size: 18px;
+      opacity: 0.85;
+    }
+
+    .guide-section {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    .guide-section-title {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .guide-section-title svg { width: 22px; height: 22px; color: var(--accent); }
+
+    .guide-item {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .guide-item:last-child { border-bottom: none; }
+    .guide-item-name {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .guide-item-desc {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+    .guide-item-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .guide-tip-badge {
+      display: inline-flex;
+      padding: 2px 10px;
+      background: #E8F5E9;
+      color: var(--primary);
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+
+    /* ===== LOADING ===== */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+      color: var(--text-light);
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--border-light) 25%, var(--border) 50%, var(--border-light) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-xs);
+    }
+    @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .skeleton-card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .skeleton-card .skeleton-img { height: 200px; }
+    .skeleton-card .skeleton-body { padding: 16px; }
+    .skeleton-card .skeleton-line {
+      height: 14px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .skeleton-card .skeleton-line.w75 { width: 75%; }
+    .skeleton-card .skeleton-line.w50 { width: 50%; }
+    .skeleton-card .skeleton-line.w30 { width: 30%; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+    }
+    .modal-hero {
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .modal-hero svg { color: rgba(255,255,255,0.4); width: 64px; height: 64px; }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(0,0,0,0.6); }
+    .modal-close svg { width: 20px; height: 20px; }
+    .modal-body { padding: 32px; }
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .modal-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+    .modal-location svg { width: 16px; height: 16px; }
+    .modal-details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .modal-detail {
+      background: var(--bg);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+    }
+    .modal-detail-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .modal-detail-value {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .modal-description {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .modal-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .modal-amenity {
+      padding: 6px 14px;
+      background: #E8F5E9;
+      color: var(--primary);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .modal-book-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: opacity 0.2s;
+      text-align: center;
+    }
+    .modal-book-btn:hover { opacity: 0.9; }
+
+    /* ===== ERROR STATE ===== */
+    .error-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-light);
+    }
+    .error-state svg { width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 16px; }
+    .error-state h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+    .error-state p { font-size: 14px; max-width: 400px; margin: 0 auto 16px; }
+    .error-state button {
+      padding: 10px 24px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-xs);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state svg { width: 56px; height: 56px; margin-bottom: 16px; }
+    .empty-state h3 {
+      font-family: var(--font-heading);
+      font-size: 24px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    /* ===== TOOLKIT PAGE ===== */
+    .toolkit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 28px; margin-top: 28px; }
+    .toolkit-card { background: var(--bg-card); border-radius: var(--radius); padding: 28px; border: 1px solid var(--border-light); }
+    .toolkit-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .toolkit-card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .toolkit-card-icon svg { width: 22px; height: 22px; color: #fff; }
+    .toolkit-card-title { font-family: var(--font-heading); font-size: 22px; font-weight: 700; }
+    .toolkit-card-subtitle { font-size: 13px; color: var(--text-light); }
+    .toolkit-row { display: flex; gap: 12px; margin-bottom: 14px; }
+    .toolkit-select, .toolkit-input {
+      flex: 1; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-xs);
+      font-family: var(--font-body); font-size: 14px; background: var(--bg); color: var(--text); outline: none;
+    }
+    .toolkit-select:focus, .toolkit-input:focus { border-color: var(--primary); }
+    .toolkit-btn {
+      padding: 12px 24px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: #fff; border: none; border-radius: var(--radius-xs); font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: var(--font-body); transition: opacity 0.2s; white-space: nowrap;
+    }
+    .toolkit-btn:hover { opacity: 0.9; }
+    .toolkit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .toolkit-result { background: var(--bg); border-radius: var(--radius-sm); padding: 20px; margin-top: 16px; min-height: 60px; }
+    .toolkit-result h4 { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .toolkit-result-value { font-size: 28px; font-weight: 700; color: var(--text); font-family: var(--font-heading); }
+    .toolkit-result-sub { font-size: 13px; color: var(--text-light); margin-top: 4px; }
+    .toolkit-list { list-style: none; }
+    .toolkit-list li { padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 14px; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .toolkit-list li:last-child { border-bottom: none; }
+    .toolkit-list li svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; margin-top: 2px; }
+    .toolkit-spinner { display: flex; justify-content: center; padding: 30px; }
+    .toolkit-spinner::after { content: ''; width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .converter-rate-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 14px; }
+    .converter-rate-item { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: var(--radius-xs); padding: 10px 12px; text-align: center; }
+    .converter-rate-code { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+    .converter-rate-val { font-size: 16px; font-weight: 700; color: var(--text); }
+
+    /* ===== SAFETY PAGE ===== */
+    .safety-hero { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: var(--radius); padding: 40px; color: #fff; margin-bottom: 32px; text-align: center; }
+    .safety-hero h2 { font-family: var(--font-heading); font-size: 32px; margin-bottom: 8px; }
+    .safety-hero p { font-size: 15px; opacity: 0.85; max-width: 600px; margin: 0 auto; }
+    .safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .safety-card { background: var(--bg-card); border-radius: var(--radius); padding: 24px; border: 1px solid var(--border-light); }
+    .safety-card-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .safety-card-icon svg { width: 20px; height: 20px; color: #fff; }
+    .safety-card h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .safety-card p { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+    .safety-card ul { list-style: none; margin-top: 12px; }
+    .safety-card ul li { padding: 6px 0; font-size: 14px; color: var(--text); display: flex; align-items: flex-start; gap: 8px; }
+    .safety-card ul li svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; margin-top: 2px; }
+    .safety-emergency-bar { background: #FFF3E0; border: 1px solid #FFB74D; border-radius: var(--radius-sm); padding: 20px; margin-top: 32px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .safety-emergency-bar svg { width: 28px; height: 28px; color: #E65100; flex-shrink: 0; }
+    .safety-emergency-bar strong { font-size: 16px; color: #E65100; }
+    .safety-emergency-bar p { font-size: 14px; color: var(--text-light); margin: 0; }
+
+    /* ===== CHAT PAGE ===== */
+    .chat-container { display: grid; grid-template-columns: 320px 1fr; gap: 0; height: calc(100vh - var(--nav-height) - 40px); margin-top: 20px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); background: var(--bg-card); }
+    .chat-sidebar { border-right: 1px solid var(--border); overflow-y: auto; }
+    .chat-sidebar-header { padding: 20px; border-bottom: 1px solid var(--border-light); }
+    .chat-sidebar-header h3 { font-family: var(--font-heading); font-size: 20px; font-weight: 700; }
+    .chat-sidebar-header p { font-size: 12px; color: var(--text-muted); }
+    .chat-conv-item { display: flex; align-items: center; gap: 12px; padding: 14px 20px; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid var(--border-light); }
+    .chat-conv-item:hover, .chat-conv-item.active { background: #E8F5E9; }
+    .chat-conv-avatar { width: 44px; height: 44px; border-radius: 22px; background: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+    .chat-conv-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .chat-conv-avatar svg { width: 20px; height: 20px; color: #fff; }
+    .chat-conv-info { flex: 1; min-width: 0; }
+    .chat-conv-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chat-conv-preview { font-size: 12px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chat-conv-type { font-size: 10px; color: var(--primary); font-weight: 600; text-transform: uppercase; background: #E8F5E9; padding: 2px 6px; border-radius: 4px; }
+    .chat-main { display: flex; flex-direction: column; }
+    .chat-main-header { padding: 16px 24px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 12px; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+    .chat-msg { max-width: 70%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+    .chat-msg.sent { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+    .chat-msg.received { align-self: flex-start; background: var(--bg); color: var(--text); border-bottom-left-radius: 4px; }
+    .chat-msg .chat-msg-time { font-size: 10px; opacity: 0.6; margin-top: 4px; display: block; }
+    .chat-msg .chat-msg-filtered { font-style: italic; opacity: 0.7; }
+    .chat-input-bar { padding: 16px 24px; border-top: 1px solid var(--border-light); display: flex; gap: 12px; align-items: center; }
+    .chat-input-bar input { flex: 1; padding: 12px 16px; border: 1px solid var(--border); border-radius: 24px; font-family: var(--font-body); font-size: 14px; outline: none; }
+    .chat-input-bar input:focus { border-color: var(--primary); }
+    .chat-input-bar button { width: 44px; height: 44px; border-radius: 22px; background: var(--primary); border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+    .chat-input-bar button:hover { opacity: 0.85; }
+    .chat-input-bar button svg { width: 18px; height: 18px; }
+    .chat-empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 12px; }
+    .chat-empty-state svg { width: 48px; height: 48px; }
+    .chat-filter-warning { background: #FFF3E0; color: #E65100; padding: 8px 14px; border-radius: 8px; font-size: 12px; margin: 0 24px; display: flex; align-items: center; gap: 8px; }
+    .chat-filter-warning svg { width: 14px; height: 14px; flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .chat-container { grid-template-columns: 1fr; height: auto; }
+      .chat-sidebar { max-height: 300px; border-right: none; border-bottom: 1px solid var(--border); }
+      .toolkit-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.8);
+      padding: 60px 0 32px;
+      margin-top: 60px;
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      margin-bottom: 32px;
+    }
+    .footer-brand h3 {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-brand p {
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-col-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .footer-social a {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: rgba(255,255,255,0.7);
+      transition: all 0.2s;
+    }
+    .footer-social a:hover { background: var(--accent); color: #fff; }
+    .footer-social a svg { width: 16px; height: 16px; }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+    }
+    .footer-powered {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-powered span { color: var(--accent); font-weight: 600; }
+
+    /* ===== DEALS PAGE ===== */
+    .deals-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+      .mosaic-grid { grid-template-columns: repeat(3, 1fr); }
+      .cinema-hero h1 { font-size: 56px; }
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
+      .immersive-section { grid-template-columns: 1fr; }
+      .immersive-section.reverse { direction: ltr; }
+      .immersive-img { min-height: 350px; }
+      .immersive-text { padding: 48px 32px; }
+      .cinema-hero h1 { font-size: 44px; }
+      .cinema-hero-content { padding: 0 32px 80px; }
+      .stats-bar-inner { flex-wrap: wrap; gap: 32px; }
+      .stat-value { font-size: 36px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .modal-details-grid { grid-template-columns: 1fr; }
+      .dest-strip-header h2 { font-size: 34px; }
+    }
+    @media (max-width: 768px) {
+      :root { --nav-height: 64px; }
+      .navbar-inner { padding: 0 16px; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: rgba(26, 77, 46, 0.95);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        padding: 16px;
+        gap: 4px;
+      }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: block; }
+      .container { padding: 0 16px; }
+      .cinema-hero { min-height: 600px; }
+      .cinema-hero h1 { font-size: 36px; letter-spacing: -1px; }
+      .cinema-hero p { font-size: 16px; }
+      .cinema-hero-content { padding: 0 24px 80px; }
+      .cinema-hero-badge { font-size: 11px; padding: 6px 14px; }
+      .cinema-slide-caption { left: 24px; bottom: 24px; }
+      .cinema-slide-indicators { right: 24px; bottom: 24px; }
+      .section-title { font-size: 28px; }
+      .page-header h1 { font-size: 32px; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .mosaic-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 160px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .guide-search { flex-direction: column; }
+      .guide-hero { padding: 32px 20px; }
+      .guide-hero h2 { font-size: 30px; }
+      .modal { margin: 16px; max-height: calc(100vh - 32px); }
+      .filter-bar { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 8px; }
+      .filter-chip { flex-shrink: 0; }
+      .dest-card { flex: 0 0 260px; height: 340px; }
+    }
+
+    @media (max-width: 480px) {
+      .grid { grid-template-columns: 1fr; }
+      .mosaic-grid { grid-template-columns: 1fr; }
+      .cinema-hero h1 { font-size: 30px; }
+      .stats-bar-inner { flex-direction: column; gap: 24px; }
+      .partner-banner-inner { flex-direction: column; text-align: center; padding: 28px 20px; }
+      .partner-banner-text p { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="mainNav">
+    <div class="navbar-inner">
+      <a href="#home" class="nav-logo">
+        <div class="nav-logo-icon"><img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER logo" /></div>
+        <span class="nav-logo-text">APP_NAME_PLACEHOLDER</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active" data-nav="home"><i data-feather="compass" style="color:#DAA520;"></i> Discover</a></li>
+        <li><a href="#stays" data-nav="stays"><i data-feather="home" style="color:#2ECC71;"></i> Stays</a></li>
+        <li><a href="#experiences" data-nav="experiences"><i data-feather="sunrise" style="color:#E67E22;"></i> Experiences</a></li>
+        <li><a href="#cars" data-nav="cars"><i data-feather="truck" style="color:#3498DB;"></i> Car Hire</a></li>
+        <li><a href="#deals" data-nav="deals"><i data-feather="tag" style="color:#E74C3C;"></i> Deals</a></li>
+        <li><a href="#guide" data-nav="guide"><i data-feather="map" style="color:#9B59B6;"></i> Guide</a></li>
+        <li><a href="#toolkit" data-nav="toolkit"><i data-feather="briefcase" style="color:#16A085;"></i> Toolkit</a></li>
+        <li><a href="#safety" data-nav="safety"><i data-feather="shield" style="color:#F39C12;"></i> Safety</a></li>
+        <li><a href="#chat" data-nav="chat"><i data-feather="message-circle" style="color:#8E44AD;"></i> Chat</a></li>
+        <li><a href="/partner" class="nav-partner-link"><i data-feather="plus-circle"></i> List Your Business</a></li>
+      </ul>
+      <button class="nav-hamburger" id="navToggle" aria-label="Toggle navigation">
+        <i data-feather="menu"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ===== HOME PAGE ===== -->
+    <div class="page active" id="page-home">
+
+      <!-- CINEMATIC HERO with real travel photography -->
+      <div class="cinema-hero">
+        <div class="cinema-hero-slides">
+          <div class="cinema-slide active">
+            <img src="https://images.unsplash.com/photo-1551009175-15bdf9dcb580?w=1920&q=80&auto=format" alt="African safari landscape with elephants at golden hour" loading="eager" />
+          </div>
+          <div class="cinema-slide">
+            <img src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&q=80&auto=format" alt="Crystal clear turquoise ocean and white sand beach" loading="lazy" />
+          </div>
+          <div class="cinema-slide">
+            <img src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=1920&q=80&auto=format" alt="Misty mountain peaks at sunrise" loading="lazy" />
+          </div>
+          <div class="cinema-slide">
+            <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1920&q=80&auto=format" alt="Vibrant tropical sunset over the ocean" loading="lazy" />
+          </div>
+          <div class="cinema-slide">
+            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&q=80&auto=format" alt="Hot air balloons over Cappadocia valleys at dawn" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="cinema-hero-content">
+          <div class="cinema-hero-logo">
+            <img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER logo" />
+          </div>
+          <div class="cinema-hero-badge">
+            <i data-feather="award"></i> Premium Travel Platform
+          </div>
+          <h1>Wander Beyond <em>Imagination</em></h1>
+          <p>From African safaris to tropical paradises. Discover stays, experiences, and moments that transform ordinary trips into extraordinary journeys.</p>
+          <div class="cinema-hero-search">
+            <input type="text" id="heroSearchInput" placeholder="Where does your heart want to go?" />
+            <button onclick="handleHeroSearch()"><i data-feather="search"></i> Explore</button>
+          </div>
+        </div>
+
+        <div class="cinema-slide-caption">
+          <i data-feather="camera"></i>
+          <span id="slideCaption">Serengeti National Park, Tanzania</span>
+        </div>
+
+        <div class="cinema-slide-indicators" id="slideIndicators">
+          <button class="cinema-dot active" data-slide="0"></button>
+          <button class="cinema-dot" data-slide="1"></button>
+          <button class="cinema-dot" data-slide="2"></button>
+          <button class="cinema-dot" data-slide="3"></button>
+          <button class="cinema-dot" data-slide="4"></button>
+        </div>
+      </div>
+
+      <!-- STATS BAR -->
+      <div class="stats-bar">
+        <div class="stats-bar-inner">
+          <div class="stat-item">
+            <div class="stat-value">500+</div>
+            <div class="stat-label">Premium Stays</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">200+</div>
+            <div class="stat-label">Curated Experiences</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">50+</div>
+            <div class="stat-label">Destinations</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">24/7</div>
+            <div class="stat-label">Travel Support</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DESTINATION GALLERY STRIP -->
+      <div class="dest-strip">
+        <div class="dest-strip-header container">
+          <h2>Destinations That Captivate</h2>
+          <p>Scroll through the world's most breathtaking places</p>
+        </div>
+        <div class="dest-scroll">
+          <div class="dest-card" onclick="navigateToGuide('Zanzibar')">
+            <img src="https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?w=640&q=80&auto=format" alt="Zanzibar beach with turquoise water" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <span class="dest-card-tag">Trending</span>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Zanzibar</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#E74C3C;"></i> Tanzania</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Santorini')">
+            <img src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=640&q=80&auto=format" alt="Santorini white buildings and blue domes" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Santorini</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#3498DB;"></i> Greece</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Bali')">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=640&q=80&auto=format" alt="Bali rice terraces in lush green" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <span class="dest-card-tag">Popular</span>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Bali</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#2ECC71;"></i> Indonesia</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Maasai Mara')">
+            <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=640&q=80&auto=format" alt="Maasai Mara safari with giraffe and acacia trees" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <span class="dest-card-tag">Safari</span>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Maasai Mara</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#E67E22;"></i> Kenya</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Maldives')">
+            <img src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=640&q=80&auto=format" alt="Maldives overwater bungalows and crystal ocean" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Maldives</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#1ABC9C;"></i> Indian Ocean</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Cape Town')">
+            <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=640&q=80&auto=format" alt="Cape Town Table Mountain view at sunset" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Cape Town</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#DAA520;"></i> South Africa</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Kyoto')">
+            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=640&q=80&auto=format" alt="Kyoto bamboo grove in golden light" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Kyoto</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#E74C3C;"></i> Japan</div>
+            </div>
+          </div>
+          <div class="dest-card" onclick="navigateToGuide('Marrakech')">
+            <img src="https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=640&q=80&auto=format" alt="Marrakech colorful market streets" loading="lazy" />
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-info">
+              <div class="dest-card-name">Marrakech</div>
+              <div class="dest-card-country"><i data-feather="map-pin" style="color:#9B59B6;"></i> Morocco</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMMERSIVE: SAFARI EXPERIENCES -->
+      <div class="immersive-section">
+        <div class="immersive-img">
+          <img src="https://images.unsplash.com/photo-1549366021-9f761d450615?w=960&q=80&auto=format" alt="Lions resting in the African savanna" loading="lazy" />
+        </div>
+        <div class="immersive-text">
+          <div class="overline">Wild Encounters</div>
+          <h2>Safari Adventures That Take Your Breath Away</h2>
+          <p>Witness the Great Migration, track the Big Five, and sleep under a canopy of stars in the African bush. Our handpicked safari experiences connect you with nature's most spectacular moments.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#F39C12;"><i data-feather="sunrise"></i></div>
+              Game drives at golden hour
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#2ECC71;"><i data-feather="shield"></i></div>
+              Expert local guides
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#E74C3C;"><i data-feather="camera"></i></div>
+              Photography safaris available
+            </div>
+          </div>
+          <a href="#experiences" class="immersive-cta" onclick="navigateTo('experiences')">
+            Explore Safaris <i data-feather="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- IMMERSIVE: LUXURY STAYS -->
+      <div class="immersive-section reverse">
+        <div class="immersive-img">
+          <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=960&q=80&auto=format" alt="Luxury villa with infinity pool overlooking the ocean" loading="lazy" />
+        </div>
+        <div class="immersive-text">
+          <div class="overline">Unparalleled Comfort</div>
+          <h2>Stays That Redefine Luxury</h2>
+          <p>From overwater villas in the Maldives to historic riads in Morocco, every accommodation in our collection has been personally vetted for exceptional quality, stunning views, and unforgettable experiences.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#3498DB;"><i data-feather="home"></i></div>
+              Villas, lodges, treehouses & more
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#2ECC71;"><i data-feather="check-circle"></i></div>
+              Verified properties only
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#DAA520;"><i data-feather="star"></i></div>
+              Guest-rated experiences
+            </div>
+          </div>
+          <a href="#stays" class="immersive-cta" onclick="navigateTo('stays')">
+            Browse Stays <i data-feather="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- PHOTO MOSAIC -->
+      <div class="mosaic-section">
+        <div class="mosaic-header container">
+          <h2>Moments Worth Traveling For</h2>
+          <p>Real places, real experiences, real magic</p>
+        </div>
+        <div class="mosaic-grid">
+          <div class="mosaic-item mosaic-tall">
+            <img src="https://images.unsplash.com/photo-1535941339077-2dd1c7963098?w=640&q=80&auto=format" alt="Elephant close-up on safari" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Kruger National Park</div>
+          </div>
+          <div class="mosaic-item mosaic-wide">
+            <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?w=640&q=80&auto=format" alt="Tropical hammock over turquoise water" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Tropical Paradise</div>
+          </div>
+          <div class="mosaic-item">
+            <img src="https://images.unsplash.com/photo-1528127269322-539801943592?w=640&q=80&auto=format" alt="Vietnamese boat in emerald lagoon" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Ha Long Bay</div>
+          </div>
+          <div class="mosaic-item">
+            <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=640&q=80&auto=format" alt="Glamping tent under starry skies" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Starlit Glamping</div>
+          </div>
+          <div class="mosaic-item mosaic-wide">
+            <img src="https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=640&q=80&auto=format" alt="Serengeti wildebeest migration across the plains" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">The Great Migration</div>
+          </div>
+          <div class="mosaic-item">
+            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=640&q=80&auto=format" alt="Traditional Moroccan doorway in blue city" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Chefchaouen</div>
+          </div>
+          <div class="mosaic-item mosaic-tall">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=640&q=80&auto=format" alt="Mountain lake reflection at golden hour" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Alpine Serenity</div>
+          </div>
+          <div class="mosaic-item">
+            <img src="https://images.unsplash.com/photo-1517960413843-0aee8e2b3285?w=640&q=80&auto=format" alt="Zebras on African savanna at sunset" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">African Wildlife</div>
+          </div>
+          <div class="mosaic-item">
+            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=640&q=80&auto=format" alt="Luxury resort pool at twilight" loading="lazy" />
+            <div class="mosaic-item-overlay"></div>
+            <div class="mosaic-item-label">Luxury Retreat</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMMERSIVE: DINING -->
+      <div class="immersive-section">
+        <div class="immersive-img">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=960&q=80&auto=format" alt="Fine dining table setup with elegant presentation" loading="lazy" />
+        </div>
+        <div class="immersive-text">
+          <div class="overline">Culinary Journeys</div>
+          <h2>Taste the World, One Dish at a Time</h2>
+          <p>From street food markets in Marrakech to Michelin-starred restaurants in Cape Town, savor authentic flavors prepared by passionate chefs who celebrate their local culinary heritage.</p>
+          <div class="immersive-features">
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#DAA520;"><i data-feather="award"></i></div>
+              Curated restaurant selections
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#E74C3C;"><i data-feather="map-pin"></i></div>
+              Local hidden gems
+            </div>
+            <div class="immersive-feat">
+              <div class="immersive-feat-icon" style="color:#2ECC71;"><i data-feather="dollar-sign"></i></div>
+              Every budget, every palette
+            </div>
+          </div>
+          <a href="#experiences" class="immersive-cta" onclick="navigateTo('experiences')">
+            Discover Dining <i data-feather="arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- FEATURED LISTINGS FROM API -->
+      <div class="container">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Featured Stays</h2>
+              <p class="section-subtitle">Handpicked accommodations for the discerning traveler</p>
+            </div>
+            <a href="#stays" class="section-cta" onclick="navigateTo('stays')">View All <i data-feather="arrow-right"></i></a>
+          </div>
+          <div id="home-stays" class="grid"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Featured Experiences</h2>
+              <p class="section-subtitle">Curated safaris and adventures await</p>
+            </div>
+            <a href="#experiences" class="section-cta" onclick="navigateTo('experiences')">View All <i data-feather="arrow-right"></i></a>
+          </div>
+          <div id="home-safaris" class="grid"></div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">Featured Dining</h2>
+              <p class="section-subtitle">Savor authentic flavors from around the world</p>
+            </div>
+            <a href="#experiences" class="section-cta" onclick="navigateTo('experiences')">View All <i data-feather="arrow-right"></i></a>
+          </div>
+          <div id="home-restaurants" class="grid"></div>
+        </div>
+
+        <div class="partner-banner">
+          <div class="partner-banner-inner">
+            <div class="partner-banner-text">
+              <h3>Own a Restaurant, Bar, or Cafe?</h3>
+              <p>List your venue on Tripsbnb and reach travelers worldwide. No monthly fees, keep 100% of your listed price.</p>
+            </div>
+            <a href="/partner" class="partner-banner-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+              List Your Business
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== STAYS PAGE ===== -->
+    <div class="page" id="page-stays">
+      <div class="container">
+        <div class="page-header">
+          <h1>Accommodation Any Destination BnB</h1>
+          <p>Find your perfect home away from home</p>
+        </div>
+        <div class="filter-bar" id="staysFilterBar"></div>
+
+        <div id="monthly-deals-section" style="display:none;margin-bottom:40px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <div>
+              <h2 style="font-family:var(--font-heading);font-size:28px;font-weight:700;margin-bottom:4px;">Monthly Apartment Deals</h2>
+              <p style="color:var(--text-light);font-size:14px;">Extended stays at discounted rates — save up to 40% vs nightly booking</p>
+            </div>
+            <button onclick="toggleMonthlyFilter()" id="monthlyFilterBtn" style="display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;transition:all 0.2s;white-space:nowrap;">
+              <i data-feather="calendar" style="width:16px;height:16px;"></i> Show Monthly Only
+            </button>
+          </div>
+          <div id="monthly-deals-grid" class="grid"></div>
+        </div>
+
+        <div id="all-stays-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+          <h2 style="font-family:var(--font-heading);font-size:24px;font-weight:700;">All Stays</h2>
+        </div>
+        <div id="stays-grid" class="grid"></div>
+      </div>
+    </div>
+
+    <!-- ===== EXPERIENCES PAGE ===== -->
+    <div class="page" id="page-experiences">
+      <div class="container">
+        <div class="page-header">
+          <h1>Experiences</h1>
+          <p>Safaris, dining, and travel companions</p>
+        </div>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="exp-safaris">Safaris</button>
+          <button class="tab-btn" data-tab="exp-dining">Dining</button>
+          <button class="tab-btn" data-tab="exp-companions">Companions</button>
+        </div>
+        <div class="tab-panel active" id="panel-exp-safaris">
+          <div id="exp-safaris-grid" class="grid"></div>
+        </div>
+        <div class="tab-panel" id="panel-exp-dining">
+          <div id="exp-dining-grid" class="grid"></div>
+        </div>
+        <div class="tab-panel" id="panel-exp-companions">
+          <div id="exp-companions-grid" class="grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CAR HIRE PAGE ===== -->
+    <div class="page" id="page-cars">
+      <div class="container">
+        <div class="page-header">
+          <h1>Car Hire</h1>
+          <p>Explore at your own pace with premium vehicles</p>
+        </div>
+        <div id="cars-grid" class="grid"></div>
+      </div>
+    </div>
+
+    <!-- ===== DEALS PAGE ===== -->
+    <div class="page" id="page-deals">
+      <div class="container">
+        <div class="page-header">
+          <h1>Exclusive Deals</h1>
+          <p>Special offers and curated packages</p>
+        </div>
+        <div class="deals-filter" id="dealsFilterBar">
+          <button class="filter-chip active" data-deal-filter="all">All Deals</button>
+          <button class="filter-chip" data-deal-filter="stays">Stays</button>
+          <button class="filter-chip" data-deal-filter="safaris">Safaris</button>
+          <button class="filter-chip" data-deal-filter="dining">Dining</button>
+          <button class="filter-chip" data-deal-filter="cars">Car Hire</button>
+        </div>
+        <div id="deals-grid" class="grid"></div>
+      </div>
+    </div>
+
+    <!-- ===== DESTINATION GUIDE PAGE ===== -->
+    <div class="page" id="page-guide">
+      <div class="container">
+        <div class="page-header" style="text-align:center; border-bottom:none;">
+          <h1>Destination Guide</h1>
+          <p>AI-powered travel insights for any destination</p>
+        </div>
+        <div class="guide-search">
+          <input type="text" id="guideSearchInput" placeholder="Enter a city or destination..." />
+          <button id="guideSearchBtn" onclick="fetchGuide()"><i data-feather="compass"></i> Explore</button>
+        </div>
+        <div id="guide-result"></div>
+      </div>
+    </div>
+
+    <!-- ===== TOOLKIT PAGE ===== -->
+    <div class="page" id="page-toolkit">
+      <div class="container">
+        <div class="page-header" style="text-align:center; border-bottom:none;">
+          <h1>Travel Toolkit</h1>
+          <p>Essential tools for every traveler — currency converter, packing lists, and emergency info</p>
+        </div>
+        <div class="toolkit-grid">
+
+          <div class="toolkit-card">
+            <div class="toolkit-card-header">
+              <div class="toolkit-card-icon" style="background:linear-gradient(135deg,#16A085,#1ABC9C);"><i data-feather="dollar-sign"></i></div>
+              <div>
+                <div class="toolkit-card-title">Currency Converter</div>
+                <div class="toolkit-card-subtitle">Live exchange rates for 44 currencies</div>
+              </div>
+            </div>
+            <div class="toolkit-row">
+              <input type="number" class="toolkit-input" id="converterAmount" value="100" min="0" step="1" />
+              <select class="toolkit-select" id="converterFrom">
+                <option value="USD">USD</option><option value="EUR">EUR</option><option value="GBP">GBP</option><option value="JPY">JPY</option><option value="CNY">CNY</option><option value="AUD">AUD</option><option value="CAD">CAD</option><option value="CHF">CHF</option><option value="INR">INR</option><option value="KES">KES</option><option value="ZAR">ZAR</option><option value="AED">AED</option><option value="TZS">TZS</option><option value="NGN">NGN</option><option value="GHS">GHS</option><option value="THB">THB</option><option value="BRL">BRL</option><option value="MXN">MXN</option><option value="NZD">NZD</option><option value="SEK">SEK</option><option value="SGD">SGD</option><option value="HKD">HKD</option><option value="KRW">KRW</option><option value="TRY">TRY</option><option value="PLN">PLN</option><option value="IDR">IDR</option><option value="MYR">MYR</option><option value="PHP">PHP</option><option value="EGP">EGP</option><option value="PKR">PKR</option><option value="UGX">UGX</option><option value="MAD">MAD</option>
+              </select>
+            </div>
+            <div class="toolkit-row">
+              <select class="toolkit-select" id="converterTo">
+                <option value="EUR">EUR</option><option value="USD">USD</option><option value="GBP">GBP</option><option value="KES">KES</option><option value="ZAR">ZAR</option><option value="JPY">JPY</option><option value="CNY">CNY</option><option value="INR">INR</option><option value="AUD">AUD</option><option value="CAD">CAD</option><option value="CHF">CHF</option><option value="AED">AED</option><option value="TZS">TZS</option><option value="NGN">NGN</option><option value="GHS">GHS</option><option value="THB">THB</option><option value="BRL">BRL</option><option value="MXN">MXN</option>
+              </select>
+              <button class="toolkit-btn" onclick="convertCurrency()"><i data-feather="refresh-cw" style="width:14px;height:14px;margin-right:4px;"></i> Convert</button>
+            </div>
+            <div class="toolkit-result" id="converterResult" style="display:none;"></div>
+          </div>
+
+          <div class="toolkit-card">
+            <div class="toolkit-card-header">
+              <div class="toolkit-card-icon" style="background:linear-gradient(135deg,#E67E22,#F39C12);"><i data-feather="package"></i></div>
+              <div>
+                <div class="toolkit-card-title">Smart Packing List</div>
+                <div class="toolkit-card-subtitle">AI-generated packing list for your destination</div>
+              </div>
+            </div>
+            <div class="toolkit-row">
+              <input type="text" class="toolkit-input" id="packingDestination" placeholder="e.g. Bali, Tokyo, Nairobi..." />
+            </div>
+            <div class="toolkit-row">
+              <input type="number" class="toolkit-input" id="packingDays" placeholder="Days" min="1" max="90" value="7" style="max-width:120px;" />
+              <select class="toolkit-select" id="packingTripType">
+                <option value="leisure">Leisure</option><option value="business">Business</option><option value="adventure">Adventure</option><option value="safari">Safari</option><option value="beach">Beach</option><option value="winter">Winter/Ski</option>
+              </select>
+              <button class="toolkit-btn" id="packingBtn" onclick="generatePackingList()"><i data-feather="list" style="width:14px;height:14px;margin-right:4px;"></i> Generate</button>
+            </div>
+            <div id="packingResult"></div>
+          </div>
+
+          <div class="toolkit-card">
+            <div class="toolkit-card-header">
+              <div class="toolkit-card-icon" style="background:linear-gradient(135deg,#E74C3C,#C0392B);"><i data-feather="alert-circle"></i></div>
+              <div>
+                <div class="toolkit-card-title">Emergency Info</div>
+                <div class="toolkit-card-subtitle">Emergency numbers, phrases, visa, and safety info</div>
+              </div>
+            </div>
+            <div class="toolkit-row">
+              <input type="text" class="toolkit-input" id="emergencyDestination" placeholder="Enter destination..." />
+              <button class="toolkit-btn" id="emergencyBtn" onclick="fetchEmergencyInfo()"><i data-feather="shield" style="width:14px;height:14px;margin-right:4px;"></i> Get Info</button>
+            </div>
+            <div id="emergencyResult"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SAFETY PAGE ===== -->
+    <div class="page" id="page-safety">
+      <div class="container">
+        <div class="safety-hero">
+          <i data-feather="shield" style="width:48px;height:48px;margin-bottom:12px;"></i>
+          <h2>Safety Center</h2>
+          <p>Your safety is our top priority. Tripsbnb provides tools, guidelines, and protections for every interaction on the platform.</p>
+        </div>
+        <div class="safety-grid">
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#1A4D2E,#2D6B45);"><i data-feather="lock"></i></div>
+            <h3>Communication Protection</h3>
+            <p>All chat messages are automatically filtered to prevent sharing of personal contact details outside the platform.</p>
+            <ul>
+              <li><i data-feather="check"></i> Phone numbers are automatically hidden</li>
+              <li><i data-feather="check"></i> Email addresses are blocked from messages</li>
+              <li><i data-feather="check"></i> External app mentions (WhatsApp, Telegram, etc.) are filtered</li>
+              <li><i data-feather="check"></i> Social media handles are masked</li>
+              <li><i data-feather="check"></i> Street addresses and meeting locations are filtered</li>
+              <li><i data-feather="check"></i> GPS coordinates are blocked</li>
+              <li><i data-feather="check"></i> Creative evasion attempts (spelled numbers, spaced digits) are caught</li>
+            </ul>
+          </div>
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#DAA520,#F0D080);"><i data-feather="credit-card"></i></div>
+            <h3>Payment Security</h3>
+            <p>All transactions are processed through Stripe, ensuring your financial data is protected.</p>
+            <ul>
+              <li><i data-feather="check"></i> PCI-compliant payment processing</li>
+              <li><i data-feather="check"></i> No vendor has access to your card details</li>
+              <li><i data-feather="check"></i> Transparent 12% service fee on all bookings</li>
+              <li><i data-feather="check"></i> Refund protection for cancelled bookings</li>
+            </ul>
+          </div>
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#E74C3C,#C0392B);"><i data-feather="alert-triangle"></i></div>
+            <h3>Companion Safety</h3>
+            <p>Special protections are in place for companion interactions.</p>
+            <ul>
+              <li><i data-feather="check"></i> Safety acknowledgment required before connecting</li>
+              <li><i data-feather="check"></i> Verified companion badges for identity-checked profiles</li>
+              <li><i data-feather="check"></i> In-app chat keeps all communication on-platform</li>
+              <li><i data-feather="check"></i> Report and block functionality</li>
+              <li><i data-feather="check"></i> Contact details only revealed after confirmed booking</li>
+            </ul>
+          </div>
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#3498DB,#2980B9);"><i data-feather="globe"></i></div>
+            <h3>Travel Safety</h3>
+            <p>Stay safe at your destination with built-in tools and resources.</p>
+            <ul>
+              <li><i data-feather="check"></i> AI-powered emergency info for any destination</li>
+              <li><i data-feather="check"></i> Local emergency numbers at your fingertips</li>
+              <li><i data-feather="check"></i> Cultural etiquette and safety advisories</li>
+              <li><i data-feather="check"></i> Verified vendor ratings and reviews</li>
+            </ul>
+          </div>
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#9B59B6,#8E44AD);"><i data-feather="eye"></i></div>
+            <h3>Privacy Controls</h3>
+            <p>You control what information is shared and when.</p>
+            <ul>
+              <li><i data-feather="check"></i> Vendor contact info is masked until booking is confirmed</li>
+              <li><i data-feather="check"></i> Your personal details are never shared with other users</li>
+              <li><i data-feather="check"></i> Profile visibility settings</li>
+              <li><i data-feather="check"></i> Data encryption in transit and at rest</li>
+            </ul>
+          </div>
+          <div class="safety-card">
+            <div class="safety-card-icon" style="background:linear-gradient(135deg,#E67E22,#D35400);"><i data-feather="flag"></i></div>
+            <h3>Reporting & Support</h3>
+            <p>If something goes wrong, we are here for you.</p>
+            <ul>
+              <li><i data-feather="check"></i> Report inappropriate behavior directly in chat</li>
+              <li><i data-feather="check"></i> 24/7 safety support for active bookings</li>
+              <li><i data-feather="check"></i> Dispute resolution for booking issues</li>
+              <li><i data-feather="check"></i> Emergency contact hotline</li>
+            </ul>
+          </div>
+        </div>
+        <div class="safety-emergency-bar">
+          <i data-feather="phone-call"></i>
+          <div>
+            <strong>Emergency?</strong>
+            <p>If you are in immediate danger, contact local emergency services first. Then reach out to Tripsbnb support via the in-app chat for assistance with your booking.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CHAT PAGE ===== -->
+    <div class="page" id="page-chat">
+      <div class="container" style="max-width:1000px;">
+        <div class="chat-container">
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+              <h3>Messages</h3>
+              <p>Your conversations with vendors</p>
+            </div>
+            <div id="chatConvList">
+              <div class="chat-empty-state" style="padding:40px 20px;">
+                <i data-feather="message-circle"></i>
+                <p style="font-size:13px;">No conversations yet. Book a stay or connect with a companion to start chatting.</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-main" id="chatMain">
+            <div class="chat-empty-state">
+              <i data-feather="message-circle"></i>
+              <p style="font-size:14px;">Select a conversation to start messaging</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DETAIL MODAL -->
+  <div class="modal-overlay" id="detailModal">
+    <div class="modal">
+      <div class="modal-hero" id="modalHero">
+        <button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+            <img src="/assets/images/logo.png" alt="APP_NAME_PLACEHOLDER" style="width:48px;height:48px;object-fit:contain;" />
+            <h3 style="margin-bottom:0;">APP_NAME_PLACEHOLDER</h3>
+          </div>
+          <p>Your all-in-one travel companion. Discover stays, experiences, dining, and transportation across the globe.</p>
+          <div class="footer-social">
+            <a href="#"><i data-feather="twitter" style="color:#1DA1F2;"></i></a>
+            <a href="#"><i data-feather="instagram" style="color:#E1306C;"></i></a>
+            <a href="#"><i data-feather="facebook" style="color:#4267B2;"></i></a>
+            <a href="#"><i data-feather="youtube" style="color:#FF0000;"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Quick Links</div>
+          <ul class="footer-links">
+            <li><a href="#home">Discover</a></li>
+            <li><a href="#stays">Stays</a></li>
+            <li><a href="#experiences">Experiences</a></li>
+            <li><a href="#cars">Car Hire</a></li>
+            <li><a href="#deals">Deals</a></li>
+            <li><a href="#toolkit">Travel Toolkit</a></li>
+            <li><a href="#chat">Messages</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="/about">About Us</a></li>
+            <li><a href="#safety">Safety Center</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Legal</div>
+          <ul class="footer-links">
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+            <li><a href="#">Download the App</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-powered">Powered by <span>TripVerse</span></div>
+        <div>&copy; 2026 APP_NAME_PLACEHOLDER. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function() {
+    'use strict';
+
+    // ===== DATA CACHE =====
+    const cache = {
+      accommodations: null,
+      safaris: null,
+      restaurants: null,
+      companions: null,
+      carRentals: null
+    };
+
+    // ===== CURRENCY FORMATTING =====
+    const currencySymbols = { usd: '$', eur: '\u20AC', gbp: '\u00A3', kes: 'KSh', zar: 'R', tzs: 'TSh', ugx: 'USh', ngn: '\u20A6', ghs: 'GH\u20B5', aed: 'AED', inr: '\u20B9', jpy: '\u00A5', cny: '\u00A5', thb: '\u0E3F', brl: 'R$', mxn: 'MX$', cad: 'CA$', aud: 'A$', nzd: 'NZ$' };
+
+    function formatPrice(cents, currency) {
+      if (!cents && cents !== 0) return 'Price on request';
+      const code = (currency || 'usd').toLowerCase();
+      const symbol = currencySymbols[code] || code.toUpperCase() + ' ';
+      const amount = (cents / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return symbol + amount;
+    }
+
+    // ===== RATING STARS =====
+    function renderStars(rating) {
+      if (!rating) return '';
+      const full = Math.floor(rating);
+      const half = rating - full >= 0.5 ? 1 : 0;
+      const empty = 5 - full - half;
+      let html = '<span class="stars">';
+      for (let i = 0; i < full; i++) html += '<svg class="filled" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      for (let i = 0; i < half; i++) html += '<svg class="filled" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      for (let i = 0; i < empty; i++) html += '<svg class="empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      html += '</span>';
+      return html;
+    }
+
+    // ===== GRADIENT ASSIGNMENT =====
+    const gradients = [
+      'linear-gradient(135deg, #1A4D2E, #3a8f5c)',
+      'linear-gradient(135deg, #2C3E50, #4A6FA5)',
+      'linear-gradient(135deg, #8E44AD, #5B2C6F)',
+      'linear-gradient(135deg, #C0392B, #8E2B1F)',
+      'linear-gradient(135deg, #2980B9, #1A5276)',
+      'linear-gradient(135deg, #16A085, #0E6655)',
+      'linear-gradient(135deg, #D4AC0D, #7D6608)',
+      'linear-gradient(135deg, #E67E22, #A04000)',
+      'linear-gradient(135deg, #1ABC9C, #148F77)',
+      'linear-gradient(135deg, #6C3483, #4A235A)'
+    ];
+    function getGradient(str) {
+      let hash = 0;
+      for (let i = 0; i < (str || '').length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      return gradients[Math.abs(hash) % gradients.length];
+    }
+
+    function getCardIcon(type) {
+      const icons = {
+        stay: '<i data-feather="home" style="color:#2ECC71;"></i>',
+        safari: '<i data-feather="sunrise" style="color:#E67E22;"></i>',
+        restaurant: '<i data-feather="coffee" style="color:#E74C3C;"></i>',
+        companion: '<i data-feather="users" style="color:#9B59B6;"></i>',
+        car: '<i data-feather="truck" style="color:#3498DB;"></i>'
+      };
+      return icons[type] || '<i data-feather="map-pin" style="color:#DAA520;"></i>';
+    }
+
+    function renderSkeletons(container, count) {
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        html += `<div class="skeleton-card">
+          <div class="skeleton skeleton-img"></div>
+          <div class="skeleton-body">
+            <div class="skeleton skeleton-line w75"></div>
+            <div class="skeleton skeleton-line w50"></div>
+            <div class="skeleton skeleton-line w30"></div>
+          </div>
+        </div>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function renderError(container, msg, retryFn) {
+      container.innerHTML = `<div class="error-state" style="grid-column: 1/-1;">
+        <div><i data-feather="alert-circle"></i></div>
+        <h3>Something went wrong</h3>
+        <p>${msg || 'Failed to load data. Please try again.'}</p>
+        ${retryFn ? `<button onclick="${retryFn}">Try Again</button>` : ''}
+      </div>`;
+      feather.replace();
+    }
+
+    function renderEmpty(container, message) {
+      container.innerHTML = `<div class="empty-state" style="grid-column: 1/-1;">
+        <div><i data-feather="inbox"></i></div>
+        <h3>${message || 'No items found'}</h3>
+      </div>`;
+      feather.replace();
+    }
+
+    async function fetchData(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    // ===== CARD RENDERERS =====
+    function renderAccommodationCard(item, showDeal) {
+      const grad = item.imageUrl ? '' : `style="background: ${getGradient(item.name)}"`;
+      const imgContent = item.imageUrl
+        ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+        : getCardIcon('stay');
+      const monthlyBadge = item.monthlyAvailable && item.monthlyPrice > 0
+        ? `<span style="position:absolute;bottom:10px;left:10px;background:rgba(46,204,113,0.92);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;z-index:2;"><i data-feather="calendar" style="width:12px;height:12px;display:inline;vertical-align:-2px;margin-right:3px;"></i>Monthly Available</span>`
+        : '';
+      const monthlySavings = item.monthlyAvailable && item.monthlyPrice > 0 && item.bookingPrice > 0 && item.monthlyPrice < item.bookingPrice * 30
+        ? Math.round((1 - (item.monthlyPrice / (item.bookingPrice * 30))) * 100)
+        : 0;
+      const savingsBadge = monthlySavings > 0
+        ? `<span style="position:absolute;top:10px;right:10px;background:rgba(231,76,60,0.92);color:#fff;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;z-index:2;">Save ${monthlySavings}%</span>`
+        : '';
+      return `<div class="card" onclick="openModal('accommodation', '${item.id}')">
+        <div class="card-img" ${grad}>
+          ${imgContent}
+          ${item.propertyType ? `<span class="card-badge">${item.propertyType}</span>` : ''}
+          ${showDeal ? '<span class="card-deal-badge">Deal</span>' : ''}
+          ${monthlyBadge}
+          ${item.monthlyAvailable ? savingsBadge : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${item.name}</div>
+          <div class="card-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+          <div class="card-meta">
+            ${item.bedrooms ? `<span class="card-meta-item"><i data-feather="columns"></i> ${item.bedrooms} bed${item.bedrooms > 1 ? 's' : ''}</span>` : ''}
+            ${item.bathrooms ? `<span class="card-meta-item"><i data-feather="droplet"></i> ${item.bathrooms} bath</span>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(item.bookingPrice, item.bookingCurrency)} <span>/ night</span>${item.monthlyAvailable && item.monthlyPrice > 0 ? `<div style="font-size:12px;color:#2ECC71;font-weight:600;margin-top:2px;">${formatPrice(item.monthlyPrice, item.bookingCurrency)} /month</div>` : ''}</div>
+            <div class="card-rating">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : ''}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderSafariCard(item, showDeal) {
+      const grad = item.imageUrl ? '' : `style="background: ${getGradient(item.name)}"`;
+      const imgContent = item.imageUrl
+        ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+        : getCardIcon('safari');
+      return `<div class="card" onclick="openModal('safari', '${item.id}')">
+        <div class="card-img" ${grad}>
+          ${imgContent}
+          ${item.safariType ? `<span class="card-badge">${item.safariType.replace(/_/g, ' ')}</span>` : ''}
+          ${showDeal ? '<span class="card-deal-badge">Deal</span>' : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${item.name}</div>
+          <div class="card-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+          <div class="card-meta">
+            ${item.duration ? `<span class="card-meta-item"><i data-feather="clock"></i> ${item.duration}</span>` : ''}
+            ${item.difficulty ? `<span class="card-meta-item"><i data-feather="activity"></i> ${item.difficulty}</span>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div>
+            <div class="card-rating">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : ''}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function isVenueOpen(item) {
+      if (!item.operatingHours) return true;
+      try {
+        var hours = typeof item.operatingHours === 'string' ? JSON.parse(item.operatingHours) : item.operatingHours;
+        var days = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+        var now = new Date();
+        var dayKey = days[now.getDay()];
+        var dayHours = hours[dayKey];
+        if (!dayHours || dayHours.closed) return false;
+        var currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+        if (dayHours.close < dayHours.open) {
+          return currentTime >= dayHours.open || currentTime <= dayHours.close;
+        }
+        return currentTime >= dayHours.open && currentTime <= dayHours.close;
+      } catch(e) { return true; }
+    }
+
+    function getVenueTypeLabel(item) {
+      var t = item.venueType || 'restaurant';
+      return t.charAt(0).toUpperCase() + t.slice(1).replace(/-/g, ' ');
+    }
+
+    function renderRestaurantCard(item, showDeal) {
+      var open = isVenueOpen(item);
+      var grad = item.imageUrl ? '' : `style="background: ${getGradient(item.name)}"`;
+      var imgContent = item.imageUrl
+        ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+        : getCardIcon('restaurant');
+      var closedOverlay = !open ? '<div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:2;"><span style="background:rgba(239,68,68,0.9);color:#fff;padding:6px 16px;border-radius:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Currently Closed</span></div>' : '';
+      var badges = '';
+      if (item.offersDelivery) badges += '<span style="position:absolute;bottom:8px;left:8px;background:rgba(34,197,94,0.9);color:#fff;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;z-index:3;"><i data-feather="truck" style="width:10px;height:10px;display:inline;vertical-align:-1px;margin-right:3px;"></i>Delivery</span>';
+      if (item.acceptsReservations) badges += '<span style="position:absolute;bottom:8px;' + (item.offersDelivery ? 'left:90px' : 'left:8px') + ';background:rgba(218,165,32,0.9);color:#fff;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:700;z-index:3;"><i data-feather="calendar" style="width:10px;height:10px;display:inline;vertical-align:-1px;margin-right:3px;"></i>Reserve</span>';
+      return `<div class="card${!open ? ' venue-closed' : ''}" onclick="openModal('restaurant', '${item.id}')" style="${!open ? 'opacity:0.6;filter:grayscale(0.5);' : ''}">
+        <div class="card-img" ${grad} style="position:relative;">
+          ${imgContent}
+          ${closedOverlay}
+          ${item.cuisineType ? `<span class="card-badge">${item.cuisineType}</span>` : ''}
+          ${showDeal ? '<span class="card-deal-badge">Deal</span>' : ''}
+          ${badges}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${item.name}</div>
+          <div class="card-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+          <div class="card-meta">
+            ${item.venueType && item.venueType !== 'restaurant' ? `<span class="card-meta-item"><i data-feather="home"></i> ${getVenueTypeLabel(item)}</span>` : ''}
+            ${item.priceRange ? `<span class="card-meta-item"><i data-feather="dollar-sign"></i> ${item.priceRange}</span>` : ''}
+            ${open ? '<span class="card-meta-item" style="color:#22C55E;"><i data-feather="clock"></i> Open Now</span>' : '<span class="card-meta-item" style="color:#EF4444;"><i data-feather="clock"></i> Closed</span>'}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div>
+            <div class="card-rating">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : ''}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderCompanionCard(item) {
+      const grad = item.imageUrl ? '' : `style="background: ${getGradient(item.name)}"`;
+      const imgContent = item.imageUrl
+        ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+        : getCardIcon('companion');
+      return `<div class="card" onclick="openModal('companion', '${item.id}')">
+        <div class="card-img" ${grad}>
+          ${imgContent}
+          ${item.serviceType ? `<span class="card-badge">${item.serviceType.replace(/_/g, ' ')}</span>` : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${item.name}</div>
+          <div class="card-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+          <div class="card-meta">
+            ${item.specialty ? `<span class="card-meta-item"><i data-feather="award"></i> ${item.specialty}</span>` : ''}
+            ${item.languages ? `<span class="card-meta-item"><i data-feather="globe"></i> ${Array.isArray(item.languages) ? item.languages.join(', ') : item.languages}</span>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div>
+            <div class="card-rating">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : ''}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    function renderCarCard(item) {
+      const grad = item.imageUrl ? '' : `style="background: ${getGradient(item.vehicleName || item.name)}"`;
+      const imgContent = item.imageUrl
+        ? `<img src="${item.imageUrl}" alt="${item.vehicleName || item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+        : getCardIcon('car');
+      const name = item.vehicleName || item.name || 'Vehicle';
+      return `<div class="card" onclick="openModal('car', '${item.id}')">
+        <div class="card-img" ${grad}>
+          ${imgContent}
+          ${item.vehicleType ? `<span class="card-badge">${item.vehicleType}</span>` : ''}
+        </div>
+        <div class="card-body">
+          <div class="card-name">${name}</div>
+          <div class="card-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+          <div class="card-meta">
+            ${item.transmission ? `<span class="card-meta-item"><i data-feather="settings"></i> ${item.transmission}</span>` : ''}
+            ${item.fuelType ? `<span class="card-meta-item"><i data-feather="zap"></i> ${item.fuelType}</span>` : ''}
+            ${item.seats ? `<span class="card-meta-item"><i data-feather="users"></i> ${item.seats} seats</span>` : ''}
+            ${item.hasGps ? `<span class="card-meta-item"><i data-feather="navigation"></i> GPS</span>` : ''}
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${formatPrice(item.bookingPrice, item.bookingCurrency)} <span>/ day</span></div>
+            <div class="card-rating">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : ''}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    // ===== DATA LOADING =====
+    async function loadAccommodations() {
+      if (cache.accommodations) return cache.accommodations;
+      const data = await fetchData('/api/accommodations');
+      cache.accommodations = data;
+      return data;
+    }
+    async function loadSafaris() {
+      if (cache.safaris) return cache.safaris;
+      const data = await fetchData('/api/safaris');
+      cache.safaris = data;
+      return data;
+    }
+    async function loadRestaurants() {
+      if (cache.restaurants) return cache.restaurants;
+      const data = await fetchData('/api/restaurants');
+      cache.restaurants = data;
+      return data;
+    }
+    async function loadCompanions() {
+      if (cache.companions) return cache.companions;
+      const data = await fetchData('/api/companions');
+      cache.companions = data;
+      return data;
+    }
+    async function loadCarRentals() {
+      if (cache.carRentals) return cache.carRentals;
+      const data = await fetchData('/api/car-rentals');
+      cache.carRentals = data;
+      return data;
+    }
+
+    // ===== PAGE LOADERS =====
+    async function loadHomePage() {
+      const containers = {
+        stays: document.getElementById('home-stays'),
+        safaris: document.getElementById('home-safaris'),
+        restaurants: document.getElementById('home-restaurants')
+      };
+
+      renderSkeletons(containers.stays, 4);
+      renderSkeletons(containers.safaris, 4);
+      renderSkeletons(containers.restaurants, 4);
+      feather.replace();
+
+      try {
+        const [stays, safaris, restaurants] = await Promise.all([
+          loadAccommodations(), loadSafaris(), loadRestaurants()
+        ]);
+
+        if (stays.length) {
+          containers.stays.innerHTML = stays.slice(0, 4).map(i => renderAccommodationCard(i)).join('');
+        } else {
+          renderEmpty(containers.stays, 'No stays available yet');
+        }
+        if (safaris.length) {
+          containers.safaris.innerHTML = safaris.slice(0, 4).map(i => renderSafariCard(i)).join('');
+        } else {
+          renderEmpty(containers.safaris, 'No safaris available yet');
+        }
+        if (restaurants.length) {
+          containers.restaurants.innerHTML = restaurants.slice(0, 4).map(i => renderRestaurantCard(i)).join('');
+        } else {
+          renderEmpty(containers.restaurants, 'No restaurants available yet');
+        }
+        feather.replace();
+      } catch (err) {
+        renderError(containers.stays, 'Failed to load stays', 'loadHomePage()');
+        renderError(containers.safaris, 'Failed to load safaris');
+        renderError(containers.restaurants, 'Failed to load restaurants');
+      }
+    }
+
+    let staysFilter = 'all';
+    const propertyTypes = ['all','house','apartment','villa','hotel','cabin','cottage','resort','lodge','camp','guesthouse','farmstay','treehouse','houseboat','hostel'];
+
+    function initStaysFilters() {
+      const bar = document.getElementById('staysFilterBar');
+      bar.innerHTML = propertyTypes.map(t =>
+        `<button class="filter-chip ${t === 'all' ? 'active' : ''}" data-filter="${t}">${t === 'all' ? 'All Properties' : t}</button>`
+      ).join('');
+
+      bar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.filter-chip');
+        if (!chip) return;
+        bar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        staysFilter = chip.dataset.filter;
+        renderStaysGrid();
+      });
+    }
+
+    let monthlyOnlyMode = false;
+
+    function toggleMonthlyFilter() {
+      monthlyOnlyMode = !monthlyOnlyMode;
+      const btn = document.getElementById('monthlyFilterBtn');
+      if (monthlyOnlyMode) {
+        btn.style.background = 'var(--accent)';
+        btn.style.color = '#fff';
+        btn.innerHTML = '<i data-feather="calendar" style="width:16px;height:16px;"></i> Show All Stays';
+      } else {
+        btn.style.background = 'transparent';
+        btn.style.color = 'var(--accent)';
+        btn.innerHTML = '<i data-feather="calendar" style="width:16px;height:16px;"></i> Show Monthly Only';
+      }
+      feather.replace();
+      renderStaysGrid();
+    }
+
+    function renderStaysGrid() {
+      const grid = document.getElementById('stays-grid');
+      const monthlyGrid = document.getElementById('monthly-deals-grid');
+      const monthlySection = document.getElementById('monthly-deals-section');
+      const allStaysHeader = document.getElementById('all-stays-header');
+      if (!cache.accommodations) return;
+
+      const monthlyItems = cache.accommodations.filter(i => i.monthlyAvailable && i.monthlyPrice);
+      if (monthlyItems.length > 0) {
+        monthlySection.style.display = 'block';
+        monthlyGrid.innerHTML = monthlyItems.map(i => renderAccommodationCard(i)).join('');
+      } else {
+        monthlySection.style.display = 'none';
+      }
+
+      let items = cache.accommodations;
+      if (monthlyOnlyMode) {
+        items = items.filter(i => i.monthlyAvailable && i.monthlyPrice);
+        allStaysHeader.querySelector('h2').textContent = 'Monthly Stays';
+      } else {
+        allStaysHeader.querySelector('h2').textContent = 'All Stays';
+      }
+      if (staysFilter !== 'all') {
+        items = items.filter(i => (i.propertyType || '').toLowerCase() === staysFilter);
+      }
+      if (items.length) {
+        grid.innerHTML = items.map(i => renderAccommodationCard(i)).join('');
+      } else {
+        renderEmpty(grid, monthlyOnlyMode ? 'No monthly stays found' : `No ${staysFilter} properties found`);
+      }
+      feather.replace();
+    }
+
+    async function loadStaysPage() {
+      const grid = document.getElementById('stays-grid');
+      renderSkeletons(grid, 8);
+      feather.replace();
+      try {
+        await loadAccommodations();
+        initStaysFilters();
+        renderStaysGrid();
+      } catch (err) {
+        renderError(grid, 'Failed to load accommodations', 'loadStaysPage()');
+      }
+    }
+
+    async function loadExperiencesPage() {
+      const safarisGrid = document.getElementById('exp-safaris-grid');
+      const diningGrid = document.getElementById('exp-dining-grid');
+      const companionsGrid = document.getElementById('exp-companions-grid');
+
+      renderSkeletons(safarisGrid, 4);
+      renderSkeletons(diningGrid, 4);
+      renderSkeletons(companionsGrid, 4);
+      feather.replace();
+
+      try {
+        const [safaris, restaurants, companions] = await Promise.all([
+          loadSafaris(), loadRestaurants(), loadCompanions()
+        ]);
+
+        if (safaris.length) {
+          safarisGrid.innerHTML = safaris.map(i => renderSafariCard(i)).join('');
+        } else { renderEmpty(safarisGrid, 'No safaris available'); }
+        if (restaurants.length) {
+          diningGrid.innerHTML = restaurants.map(i => renderRestaurantCard(i)).join('');
+        } else { renderEmpty(diningGrid, 'No restaurants available'); }
+        if (companions.length) {
+          companionsGrid.innerHTML = companions.map(i => renderCompanionCard(i)).join('');
+        } else { renderEmpty(companionsGrid, 'No companions available'); }
+        feather.replace();
+      } catch (err) {
+        renderError(safarisGrid, 'Failed to load safaris');
+        renderError(diningGrid, 'Failed to load restaurants');
+        renderError(companionsGrid, 'Failed to load companions');
+      }
+    }
+
+    async function loadCarsPage() {
+      const grid = document.getElementById('cars-grid');
+      renderSkeletons(grid, 4);
+      feather.replace();
+      try {
+        const cars = await loadCarRentals();
+        if (cars.length) {
+          grid.innerHTML = cars.map(i => renderCarCard(i)).join('');
+        } else { renderEmpty(grid, 'No car rentals available'); }
+        feather.replace();
+      } catch (err) {
+        renderError(grid, 'Failed to load car rentals', 'loadCarsPage()');
+      }
+    }
+
+    let dealsFilter = 'all';
+    async function loadDealsPage() {
+      const grid = document.getElementById('deals-grid');
+      renderSkeletons(grid, 8);
+      feather.replace();
+
+      try {
+        const [stays, safaris, restaurants, cars] = await Promise.all([
+          loadAccommodations(), loadSafaris(), loadRestaurants(), loadCarRentals()
+        ]);
+
+        renderDealsGrid(stays, safaris, restaurants, cars);
+      } catch (err) {
+        renderError(grid, 'Failed to load deals', 'loadDealsPage()');
+      }
+    }
+
+    function renderDealsGrid(stays, safaris, restaurants, cars) {
+      const grid = document.getElementById('deals-grid');
+      let cards = [];
+
+      if (dealsFilter === 'all' || dealsFilter === 'stays') {
+        stays.filter(i => i.isFeatured || i.bookingPrice).slice(0, 6).forEach(i => {
+          cards.push({ html: renderAccommodationCard(i, true), type: 'stays' });
+        });
+      }
+      if (dealsFilter === 'all' || dealsFilter === 'safaris') {
+        safaris.filter(i => i.isFeatured || i.bookingPrice).slice(0, 6).forEach(i => {
+          cards.push({ html: renderSafariCard(i, true), type: 'safaris' });
+        });
+      }
+      if (dealsFilter === 'all' || dealsFilter === 'dining') {
+        restaurants.filter(i => i.isFeatured || i.bookingPrice).slice(0, 6).forEach(i => {
+          cards.push({ html: renderRestaurantCard(i, true), type: 'dining' });
+        });
+      }
+      if (dealsFilter === 'all' || dealsFilter === 'cars') {
+        cars.filter(i => i.isFeatured || i.bookingPrice).slice(0, 6).forEach(i => {
+          cards.push({ html: renderCarCard(i), type: 'cars' });
+        });
+      }
+
+      if (cards.length) {
+        grid.innerHTML = cards.map(c => c.html).join('');
+      } else {
+        renderEmpty(grid, 'No deals available at the moment');
+      }
+      feather.replace();
+    }
+
+    // ===== DESTINATION GUIDE =====
+    window.fetchGuide = async function() {
+      const input = document.getElementById('guideSearchInput');
+      const btn = document.getElementById('guideSearchBtn');
+      const result = document.getElementById('guide-result');
+      const destination = input.value.trim();
+
+      if (!destination) { input.focus(); return; }
+
+      btn.disabled = true;
+      result.innerHTML = `<div class="loading-container"><div class="spinner"></div><div>Generating your travel guide for <strong>${destination}</strong>...</div></div>`;
+
+      try {
+        const res = await fetch('/api/destination-guide', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ destination })
+        });
+        if (!res.ok) throw new Error('Failed');
+        const guide = await res.json();
+        renderGuide(guide, destination);
+      } catch (err) {
+        result.innerHTML = `<div class="error-state">
+          <div><i data-feather="alert-circle"></i></div>
+          <h3>Could not generate guide</h3>
+          <p>Please try again or check your connection.</p>
+          <button onclick="fetchGuide()">Try Again</button>
+        </div>`;
+        feather.replace();
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    function renderGuide(guide, destination) {
+      const result = document.getElementById('guide-result');
+      let html = `<div class="guide-content">
+        <div class="guide-hero">
+          <h2>${destination}</h2>
+          ${guide.tagline ? `<div class="tagline">${guide.tagline}</div>` : ''}
+        </div>`;
+
+      const sections = [
+        { key: 'hiddenGems', title: 'Hidden Gems', icon: 'compass' },
+        { key: 'budgetTips', title: 'Budget Tips', icon: 'dollar-sign' },
+        { key: 'localTransport', title: 'Getting Around', icon: 'map' },
+        { key: 'foodGuide', title: 'Food Guide', icon: 'coffee' },
+        { key: 'culturalEtiquette', title: 'Cultural Etiquette', icon: 'heart' },
+        { key: 'topExperiences', title: 'Top Experiences', icon: 'star' },
+        { key: 'safetyTips', title: 'Safety Tips', icon: 'shield' }
+      ];
+
+      sections.forEach(sec => {
+        const data = guide[sec.key];
+        if (!data) return;
+        const items = Array.isArray(data) ? data : (typeof data === 'string' ? [data] : []);
+        if (!items.length) return;
+
+        html += `<div class="guide-section">
+          <div class="guide-section-title"><i data-feather="${sec.icon}"></i> ${sec.title}</div>`;
+
+        items.forEach(item => {
+          if (typeof item === 'object' && item.name) {
+            html += `<div class="guide-item">
+              <div class="guide-item-name">${item.name}${item.tip ? `<span class="guide-tip-badge">${item.tip}</span>` : ''}</div>
+              ${item.description ? `<div class="guide-item-desc">${item.description}</div>` : ''}
+              ${item.price || item.duration ? `<div class="guide-item-meta">
+                ${item.price ? `<span>${item.price}</span>` : ''}
+                ${item.duration ? `<span>${item.duration}</span>` : ''}
+              </div>` : ''}
+            </div>`;
+          } else {
+            html += `<div class="guide-item"><div class="guide-item-desc">${item}</div></div>`;
+          }
+        });
+
+        html += '</div>';
+      });
+
+      if (guide.weather) {
+        html += `<div class="guide-section">
+          <div class="guide-section-title"><i data-feather="cloud"></i> Weather & Best Time</div>
+          <div class="guide-item"><div class="guide-item-desc">${typeof guide.weather === 'string' ? guide.weather : JSON.stringify(guide.weather)}</div></div>
+        </div>`;
+      }
+      if (guide.currency) {
+        html += `<div class="guide-section">
+          <div class="guide-section-title"><i data-feather="credit-card"></i> Currency Info</div>
+          <div class="guide-item"><div class="guide-item-desc">${typeof guide.currency === 'string' ? guide.currency : JSON.stringify(guide.currency)}</div></div>
+        </div>`;
+      }
+
+      html += '</div>';
+      result.innerHTML = html;
+      feather.replace();
+    }
+
+    // ===== MODAL =====
+    window.openModal = async function(type, id) {
+      const overlay = document.getElementById('detailModal');
+      const hero = document.getElementById('modalHero');
+      const body = document.getElementById('modalBody');
+
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      let item;
+      try {
+        if (type === 'accommodation') {
+          const items = await loadAccommodations();
+          item = items.find(i => String(i.id) === String(id));
+          if (!item) throw new Error('Not found');
+          const grad = item.imageUrl ? '' : getGradient(item.name);
+          hero.style.background = item.imageUrl ? '' : grad;
+          hero.innerHTML = (item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+            : '<i data-feather="home"></i>')
+            + '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+
+          const mSavings = item.monthlyAvailable && item.monthlyPrice > 0 && item.bookingPrice > 0 && item.monthlyPrice < item.bookingPrice * 30
+            ? Math.round((1 - (item.monthlyPrice / (item.bookingPrice * 30))) * 100) : 0;
+          const monthlySection = item.monthlyAvailable && item.monthlyPrice > 0 ? `
+            <div style="margin:20px 0;padding:18px;background:linear-gradient(135deg,rgba(46,204,113,0.08),rgba(39,174,96,0.04));border:1px solid rgba(46,204,113,0.25);border-radius:14px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                <i data-feather="calendar" style="width:18px;height:18px;color:#2ECC71;"></i>
+                <span style="font-weight:700;font-size:16px;color:#27AE60;">Monthly Rate Available</span>
+                ${mSavings > 0 ? `<span style="background:#E74C3C;color:#fff;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;margin-left:auto;">Save ${mSavings}%</span>` : ''}
+              </div>
+              <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;">
+                <span style="font-size:26px;font-weight:800;color:var(--text);">${formatPrice(item.monthlyPrice, item.bookingCurrency)}</span>
+                <span style="font-size:14px;color:var(--text-light);">/ month</span>
+              </div>
+              <div style="font-size:13px;color:var(--text-light);">vs ${formatPrice(item.bookingPrice * 30, item.bookingCurrency)} at nightly rate (30 nights)</div>
+              ${item.minimumStay > 1 ? `<div style="font-size:12px;color:var(--text-light);margin-top:6px;"><i data-feather="info" style="width:12px;height:12px;display:inline;vertical-align:-2px;"></i> Minimum stay: ${item.minimumStay} nights</div>` : ''}
+            </div>` : '';
+
+          body.innerHTML = `
+            <div class="modal-title">${item.name}</div>
+            <div class="modal-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+            <div class="modal-details-grid">
+              <div class="modal-detail"><div class="modal-detail-label">Nightly Price</div><div class="modal-detail-value">${formatPrice(item.bookingPrice, item.bookingCurrency)} / night</div></div>
+              <div class="modal-detail"><div class="modal-detail-label">Rating</div><div class="modal-detail-value">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : 'N/A'}</div></div>
+              ${item.propertyType ? `<div class="modal-detail"><div class="modal-detail-label">Type</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.propertyType}</div></div>` : ''}
+              ${item.bedrooms ? `<div class="modal-detail"><div class="modal-detail-label">Bedrooms</div><div class="modal-detail-value">${item.bedrooms}</div></div>` : ''}
+              ${item.bathrooms ? `<div class="modal-detail"><div class="modal-detail-label">Bathrooms</div><div class="modal-detail-value">${item.bathrooms}</div></div>` : ''}
+              ${item.maxGuests ? `<div class="modal-detail"><div class="modal-detail-label">Max Guests</div><div class="modal-detail-value">${item.maxGuests}</div></div>` : ''}
+            </div>
+            ${monthlySection}
+            ${item.description ? `<div class="modal-description">${item.description}</div>` : ''}
+            ${item.amenities && item.amenities.length ? `<div class="modal-amenities">${item.amenities.map(a => `<span class="modal-amenity">${a}</span>`).join('')}</div>` : ''}
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="modal-book-btn" style="flex:1;">Book Nightly - ${formatPrice(item.bookingPrice, item.bookingCurrency)}</button>
+              ${item.monthlyAvailable && item.monthlyPrice > 0 ? `<button class="modal-book-btn" style="flex:1;background:linear-gradient(135deg,#2ECC71,#27AE60);">Book Monthly - ${formatPrice(item.monthlyPrice, item.bookingCurrency)}</button>` : ''}
+            </div>
+          `;
+        } else if (type === 'safari') {
+          const items = await loadSafaris();
+          item = items.find(i => String(i.id) === String(id));
+          if (!item) throw new Error('Not found');
+          hero.style.background = item.imageUrl ? '' : getGradient(item.name);
+          hero.innerHTML = (item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+            : '<i data-feather="sunrise"></i>')
+            + '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+
+          body.innerHTML = `
+            <div class="modal-title">${item.name}</div>
+            <div class="modal-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+            <div class="modal-details-grid">
+              <div class="modal-detail"><div class="modal-detail-label">Price</div><div class="modal-detail-value">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div></div>
+              <div class="modal-detail"><div class="modal-detail-label">Rating</div><div class="modal-detail-value">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : 'N/A'}</div></div>
+              ${item.safariType ? `<div class="modal-detail"><div class="modal-detail-label">Type</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.safariType.replace(/_/g, ' ')}</div></div>` : ''}
+              ${item.duration ? `<div class="modal-detail"><div class="modal-detail-label">Duration</div><div class="modal-detail-value">${item.duration}</div></div>` : ''}
+              ${item.difficulty ? `<div class="modal-detail"><div class="modal-detail-label">Difficulty</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.difficulty}</div></div>` : ''}
+              ${item.groupSize ? `<div class="modal-detail"><div class="modal-detail-label">Group Size</div><div class="modal-detail-value">${item.groupSize}</div></div>` : ''}
+            </div>
+            ${item.description ? `<div class="modal-description">${item.description}</div>` : ''}
+            <button class="modal-book-btn">Book Safari - ${formatPrice(item.bookingPrice, item.bookingCurrency)}</button>
+          `;
+        } else if (type === 'restaurant') {
+          const items = await loadRestaurants();
+          item = items.find(i => String(i.id) === String(id));
+          if (!item) throw new Error('Not found');
+          hero.style.background = item.imageUrl ? '' : getGradient(item.name);
+          const venueOpen = isVenueOpen(item);
+          const statusBadge = venueOpen
+            ? '<span style="position:absolute;top:12px;right:56px;background:rgba(34,197,94,0.9);color:#fff;padding:5px 14px;border-radius:8px;font-size:12px;font-weight:700;z-index:3;">Open Now</span>'
+            : '<span style="position:absolute;top:12px;right:56px;background:rgba(239,68,68,0.9);color:#fff;padding:5px 14px;border-radius:8px;font-size:12px;font-weight:700;z-index:3;">Closed</span>';
+          hero.innerHTML = (item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+            : '<i data-feather="coffee"></i>')
+            + statusBadge
+            + '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+
+          let hoursHtml = '';
+          if (item.operatingHours) {
+            try {
+              const hrs = typeof item.operatingHours === 'string' ? JSON.parse(item.operatingHours) : item.operatingHours;
+              const dayNames = {monday:'Mon',tuesday:'Tue',wednesday:'Wed',thursday:'Thu',friday:'Fri',saturday:'Sat',sunday:'Sun'};
+              const dayOrder = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+              const currentDay = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'][new Date().getDay()];
+              let rows = dayOrder.map(d => {
+                const h = hrs[d];
+                const isToday = d === currentDay;
+                if (!h || h.closed) return `<div style="display:flex;justify-content:space-between;padding:6px 0;${isToday?'font-weight:700;color:#DAA520;':'color:rgba(255,255,255,0.5);'}"><span>${dayNames[d]}</span><span style="color:#EF4444;">Closed</span></div>`;
+                return `<div style="display:flex;justify-content:space-between;padding:6px 0;${isToday?'font-weight:700;color:#DAA520;':''}"><span>${dayNames[d]}</span><span>${h.open} - ${h.close}</span></div>`;
+              }).join('');
+              hoursHtml = `<div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;margin:16px 0;">
+                <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.5);margin-bottom:8px;"><i data-feather="clock" style="width:14px;height:14px;display:inline;vertical-align:-2px;margin-right:6px;"></i>Operating Hours</div>
+                ${rows}
+              </div>`;
+            } catch(e) {}
+          }
+
+          let featuresHtml = '';
+          const features = [];
+          if (item.offersDelivery) features.push(`<span style="display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,0.12);color:#22C55E;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;"><i data-feather="truck" style="width:14px;height:14px;"></i>Delivery Available${item.deliveryRadius ? ' (' + item.deliveryRadius + 'km)' : ''}</span>`);
+          if (item.acceptsReservations) features.push(`<span style="display:inline-flex;align-items:center;gap:6px;background:rgba(218,165,32,0.12);color:#DAA520;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;"><i data-feather="calendar" style="width:14px;height:14px;"></i>Reservations</span>`);
+          if (item.hasVipSection) features.push(`<span style="display:inline-flex;align-items:center;gap:6px;background:rgba(147,51,234,0.12);color:#A855F7;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;"><i data-feather="star" style="width:14px;height:14px;"></i>VIP Section</span>`);
+          if (item.seatingCapacity) features.push(`<span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;"><i data-feather="users" style="width:14px;height:14px;"></i>${item.seatingCapacity} seats</span>`);
+          if (features.length > 0) featuresHtml = `<div style="display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;">${features.join('')}</div>`;
+
+          let seatingHtml = '';
+          if (item.seatingArrangementUrl) {
+            seatingHtml = `<div style="margin:16px 0;">
+              <div style="font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.5);margin-bottom:10px;"><i data-feather="layout" style="width:14px;height:14px;display:inline;vertical-align:-2px;margin-right:6px;"></i>Seating Arrangement</div>
+              <img src="${item.seatingArrangementUrl}" style="width:100%;border-radius:12px;border:1px solid rgba(255,255,255,0.1);max-height:300px;object-fit:contain;background:rgba(0,0,0,0.3);" alt="Seating layout" />
+            </div>`;
+          }
+
+          let menuHtml = '';
+          try {
+            const menuRes = await fetch('/api/restaurants/' + item.id + '/menu');
+            if (menuRes.ok) {
+              const menuItems = await menuRes.json();
+              const available = menuItems.filter(m => m.isAvailable);
+              if (available.length > 0) {
+                const categories = {};
+                available.forEach(m => {
+                  const cat = m.category || 'other';
+                  if (!categories[cat]) categories[cat] = [];
+                  categories[cat].push(m);
+                });
+                const catOrder = ['special','appetizer','main','side','dessert','drink','other'];
+                const catLabels = {special:'Specials',appetizer:'Appetizers',main:'Mains',side:'Sides',dessert:'Desserts',drink:'Drinks',other:'Other'};
+                let menuBody = '';
+                catOrder.forEach(cat => {
+                  if (!categories[cat]) return;
+                  menuBody += `<div style="margin-bottom:16px;">
+                    <div style="font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:10px;">${catLabels[cat] || cat}</div>`;
+                  categories[cat].forEach(m => {
+                    menuBody += `<div class="menu-item-row" style="display:flex;align-items:center;justify-content:space-between;padding:12px;margin-bottom:8px;background:rgba(255,255,255,0.04);border-radius:10px;border:1px solid rgba(255,255,255,0.06);transition:background 0.2s;">
+                      <div style="flex:1;">
+                        <div style="font-weight:600;font-size:14px;">${m.name}</div>
+                        ${m.description ? `<div style="font-size:12px;color:var(--text-light);margin-top:2px;">${m.description}</div>` : ''}
+                        <div style="font-size:14px;font-weight:700;color:var(--accent);margin-top:4px;">${formatPrice(m.price, item.bookingCurrency || 'usd')}</div>
+                      </div>
+                      <button onclick="addToCart('${item.id}','${m.id}','${m.name.replace(/'/g,"\\'")}',${m.price},'${item.bookingCurrency || 'usd'}','${item.name.replace(/'/g,"\\'")}')" style="background:var(--primary);color:#fff;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;transition:transform 0.15s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">+</button>
+                    </div>`;
+                  });
+                  menuBody += '</div>';
+                });
+                menuHtml = `<div style="margin:20px 0;">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+                    <div style="font-weight:700;font-size:16px;"><i data-feather="book-open" style="width:16px;height:16px;display:inline;vertical-align:-3px;margin-right:6px;"></i>Menu</div>
+                    <button onclick="openCartPanel('${item.id}','${item.name.replace(/'/g,"\\'")}','${item.bookingCurrency || 'usd'}',${item.offersDelivery ? 'true' : 'false'},${item.deliveryFee || 0},${item.deliveryRadius || 0})" id="cartBtnInModal" style="display:none;align-items:center;gap:6px;padding:8px 16px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);font-weight:600;font-size:13px;cursor:pointer;">
+                      <i data-feather="shopping-cart" style="width:14px;height:14px;"></i>
+                      Cart (<span id="cartCountBadge">0</span>)
+                    </button>
+                  </div>
+                  ${menuBody}
+                </div>`;
+              }
+            }
+          } catch(e) { console.log('Menu load error:', e); }
+
+          body.innerHTML = `
+            <div class="modal-title">${item.name}</div>
+            <div class="modal-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+            <div class="modal-details-grid">
+              <div class="modal-detail"><div class="modal-detail-label">Price</div><div class="modal-detail-value">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div></div>
+              <div class="modal-detail"><div class="modal-detail-label">Rating</div><div class="modal-detail-value">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : 'N/A'}</div></div>
+              ${item.cuisineType ? `<div class="modal-detail"><div class="modal-detail-label">Cuisine</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.cuisineType}</div></div>` : ''}
+              ${item.priceRange ? `<div class="modal-detail"><div class="modal-detail-label">Price Range</div><div class="modal-detail-value">${item.priceRange}</div></div>` : ''}
+              ${item.venueType && item.venueType !== 'restaurant' ? `<div class="modal-detail"><div class="modal-detail-label">Venue</div><div class="modal-detail-value" style="text-transform:capitalize;">${(item.venueType || '').replace(/-/g,' ')}</div></div>` : ''}
+            </div>
+            ${featuresHtml}
+            ${item.description ? `<div class="modal-description">${item.description}</div>` : ''}
+            ${menuHtml}
+            ${hoursHtml}
+            ${seatingHtml}
+            <button class="modal-book-btn">${item.acceptsReservations ? 'Reserve a Table' : 'Book Now'} - ${formatPrice(item.bookingPrice, item.bookingCurrency)}</button>
+          `;
+        } else if (type === 'companion') {
+          const items = await loadCompanions();
+          item = items.find(i => String(i.id) === String(id));
+          if (!item) throw new Error('Not found');
+          hero.style.background = item.imageUrl ? '' : getGradient(item.name);
+          hero.innerHTML = (item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${item.name}" style="width:100%;height:100%;object-fit:cover;" />`
+            : '<i data-feather="users"></i>')
+            + '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+
+          body.innerHTML = `
+            <div class="modal-title">${item.name}</div>
+            <div class="modal-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+            <div class="modal-details-grid">
+              <div class="modal-detail"><div class="modal-detail-label">Rate</div><div class="modal-detail-value">${formatPrice(item.bookingPrice, item.bookingCurrency)}</div></div>
+              <div class="modal-detail"><div class="modal-detail-label">Rating</div><div class="modal-detail-value">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : 'N/A'}</div></div>
+              ${item.serviceType ? `<div class="modal-detail"><div class="modal-detail-label">Service</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.serviceType.replace(/_/g, ' ')}</div></div>` : ''}
+              ${item.languages ? `<div class="modal-detail"><div class="modal-detail-label">Languages</div><div class="modal-detail-value">${Array.isArray(item.languages) ? item.languages.join(', ') : item.languages}</div></div>` : ''}
+            </div>
+            ${item.bio || item.description ? `<div class="modal-description">${item.bio || item.description}</div>` : ''}
+            <button class="modal-book-btn">Book Companion - ${formatPrice(item.bookingPrice, item.bookingCurrency)}</button>
+          `;
+        } else if (type === 'car') {
+          const items = await loadCarRentals();
+          item = items.find(i => String(i.id) === String(id));
+          if (!item) throw new Error('Not found');
+          const name = item.vehicleName || item.name || 'Vehicle';
+          hero.style.background = item.imageUrl ? '' : getGradient(name);
+          hero.innerHTML = (item.imageUrl
+            ? `<img src="${item.imageUrl}" alt="${name}" style="width:100%;height:100%;object-fit:cover;" />`
+            : '<i data-feather="truck"></i>')
+            + '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+
+          body.innerHTML = `
+            <div class="modal-title">${name}</div>
+            <div class="modal-location"><i data-feather="map-pin"></i> ${item.city || ''}${item.city && item.country ? ', ' : ''}${item.country || ''}</div>
+            <div class="modal-details-grid">
+              <div class="modal-detail"><div class="modal-detail-label">Price</div><div class="modal-detail-value">${formatPrice(item.bookingPrice, item.bookingCurrency)} / day</div></div>
+              <div class="modal-detail"><div class="modal-detail-label">Rating</div><div class="modal-detail-value">${renderStars(item.averageRating || item.rating)} ${item.averageRating || item.rating ? (item.averageRating || item.rating).toFixed(1) : 'N/A'}</div></div>
+              ${item.vehicleType ? `<div class="modal-detail"><div class="modal-detail-label">Type</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.vehicleType}</div></div>` : ''}
+              ${item.transmission ? `<div class="modal-detail"><div class="modal-detail-label">Transmission</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.transmission}</div></div>` : ''}
+              ${item.fuelType ? `<div class="modal-detail"><div class="modal-detail-label">Fuel</div><div class="modal-detail-value" style="text-transform:capitalize;">${item.fuelType}</div></div>` : ''}
+              ${item.seats ? `<div class="modal-detail"><div class="modal-detail-label">Seats</div><div class="modal-detail-value">${item.seats}</div></div>` : ''}
+            </div>
+            ${item.description ? `<div class="modal-description">${item.description}</div>` : ''}
+            <button class="modal-book-btn">Rent Vehicle - ${formatPrice(item.bookingPrice, item.bookingCurrency)}/day</button>
+          `;
+        }
+      } catch (err) {
+        body.innerHTML = `<div class="error-state"><h3>Could not load details</h3><p>Please try again.</p></div>`;
+        hero.style.background = 'linear-gradient(135deg, #1A4D2E, #2D6B45)';
+        hero.innerHTML = '<button class="modal-close" onclick="closeModal()"><i data-feather="x"></i></button>';
+      }
+      feather.replace();
+    };
+
+    window.closeModal = function() {
+      document.getElementById('detailModal').classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    document.getElementById('detailModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // ===== CINEMATIC HERO SLIDESHOW =====
+    const slideCaptions = [
+      'Serengeti National Park, Tanzania',
+      'Pristine Beach, Seychelles',
+      'Swiss Alps, Switzerland',
+      'Tropical Sunset, Thailand',
+      'Cappadocia, Turkey'
+    ];
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.cinema-slide');
+    const dots = document.querySelectorAll('.cinema-dot');
+    const captionEl = document.getElementById('slideCaption');
+
+    function goToSlide(index) {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[index].classList.add('active');
+      dots[index].classList.add('active');
+      if (captionEl) captionEl.textContent = slideCaptions[index];
+      currentSlide = index;
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => goToSlide(parseInt(dot.dataset.slide)));
+    });
+
+    setInterval(() => {
+      goToSlide((currentSlide + 1) % slides.length);
+    }, 6000);
+
+    // ===== NAVBAR SCROLL =====
+    const mainNav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+    });
+
+    // ===== CART & ORDERING SYSTEM =====
+    let cart = {};
+    let cartRestaurantId = null;
+    let cartRestaurantName = '';
+    let cartCurrency = 'usd';
+
+    window.addToCart = function(restaurantId, itemId, itemName, price, currency, restaurantName) {
+      if (cartRestaurantId && cartRestaurantId !== restaurantId) {
+        if (!confirm('Adding items from a different restaurant will clear your current cart. Continue?')) return;
+        cart = {};
+      }
+      cartRestaurantId = restaurantId;
+      cartRestaurantName = restaurantName;
+      cartCurrency = currency;
+      if (!cart[itemId]) {
+        cart[itemId] = { id: itemId, name: itemName, price: price, quantity: 0 };
+      }
+      cart[itemId].quantity++;
+      updateCartBadge();
+    };
+
+    function updateCartBadge() {
+      const total = Object.values(cart).reduce((s, i) => s + i.quantity, 0);
+      const badge = document.getElementById('cartCountBadge');
+      const btn = document.getElementById('cartBtnInModal');
+      if (badge) badge.textContent = total;
+      if (btn) btn.style.display = total > 0 ? 'inline-flex' : 'none';
+    }
+
+    window.openCartPanel = function(restaurantId, restaurantName, currency, offersDelivery, deliveryFee, deliveryRadius) {
+      const items = Object.values(cart);
+      if (items.length === 0) return;
+      const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+      const serviceFee = Math.round(subtotal * 0.12);
+      const deliveryFeeCents = deliveryFee || 0;
+
+      let itemsHtml = items.map(i => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <div style="flex:1;">
+            <div style="font-weight:600;font-size:14px;">${i.name}</div>
+            <div style="font-size:12px;color:var(--text-light);">${formatPrice(i.price, currency)} each</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button onclick="changeQty('${i.id}',-1)" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;cursor:pointer;font-size:16px;">-</button>
+            <span style="font-weight:700;min-width:20px;text-align:center;" id="qty-${i.id}">${i.quantity}</span>
+            <button onclick="changeQty('${i.id}',1)" style="width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;cursor:pointer;font-size:16px;">+</button>
+            <span style="font-weight:700;min-width:60px;text-align:right;">${formatPrice(i.price * i.quantity, currency)}</span>
+          </div>
+        </div>`).join('');
+
+      const cartOverlay = document.createElement('div');
+      cartOverlay.id = 'cartPanel';
+      cartOverlay.style.cssText = 'position:fixed;top:0;right:0;bottom:0;width:420px;max-width:100vw;background:rgba(20,25,20,0.98);backdrop-filter:blur(20px);z-index:2001;padding:30px;overflow-y:auto;box-shadow:-4px 0 30px rgba(0,0,0,0.5);animation:slideInRight 0.3s ease;';
+      cartOverlay.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+          <h2 style="font-family:var(--font-heading);font-size:24px;margin:0;">Your Order</h2>
+          <button onclick="document.getElementById('cartPanel').remove()" style="background:transparent;border:none;color:#fff;cursor:pointer;font-size:20px;"><i data-feather="x"></i></button>
+        </div>
+        <div style="font-size:13px;color:var(--text-light);margin-bottom:16px;">From <span style="color:var(--accent);font-weight:600;">${restaurantName}</span></div>
+        <div id="cartItemsList">${itemsHtml}</div>
+
+        <div style="margin:20px 0;">
+          <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Order Type</div>
+          <div style="display:flex;gap:10px;">
+            <button id="orderTypeDelivery" onclick="setOrderType('delivery')" style="flex:1;padding:12px;border-radius:10px;border:2px solid ${offersDelivery ? 'var(--accent)' : 'rgba(255,255,255,0.1)'};background:${offersDelivery ? 'rgba(218,165,32,0.1)' : 'transparent'};color:${offersDelivery ? 'var(--accent)' : 'rgba(255,255,255,0.3)'};cursor:${offersDelivery ? 'pointer' : 'not-allowed'};font-weight:600;font-size:13px;" ${offersDelivery ? '' : 'disabled'}>
+              <i data-feather="truck" style="width:16px;height:16px;display:inline;vertical-align:-3px;margin-right:4px;"></i> Delivery
+            </button>
+            <button id="orderTypePickup" onclick="setOrderType('pickup')" style="flex:1;padding:12px;border-radius:10px;border:2px solid var(--primary);background:rgba(26,77,46,0.1);color:var(--primary);cursor:pointer;font-weight:600;font-size:13px;">
+              <i data-feather="package" style="width:16px;height:16px;display:inline;vertical-align:-3px;margin-right:4px;"></i> Pickup
+            </button>
+          </div>
+        </div>
+
+        <div id="deliveryFields" style="display:none;margin:16px 0;">
+          <input type="text" id="deliveryAddress" placeholder="Delivery address" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;margin-bottom:8px;box-sizing:border-box;" />
+          <input type="text" id="deliveryCity" placeholder="City" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;margin-bottom:8px;box-sizing:border-box;" />
+          <textarea id="deliveryNotes" placeholder="Delivery notes (optional)" rows="2" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;resize:none;box-sizing:border-box;"></textarea>
+        </div>
+
+        <div style="margin:20px 0;">
+          <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Contact Info</div>
+          <input type="text" id="customerName" placeholder="Your name" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;margin-bottom:8px;box-sizing:border-box;" />
+          <input type="tel" id="customerPhone" placeholder="Phone number" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;margin-bottom:8px;box-sizing:border-box;" />
+          <input type="email" id="customerEmail" placeholder="Email" style="width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;font-size:14px;box-sizing:border-box;" />
+        </div>
+
+        <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;">
+            <span>Subtotal</span><span id="cartSubtotal">${formatPrice(subtotal, currency)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;color:var(--text-light);" id="deliveryFeeRow" hidden>
+            <span>Delivery fee</span><span id="cartDeliveryFee">${formatPrice(deliveryFeeCents, currency)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;color:var(--text-light);">
+            <span>Service fee (12%)</span><span id="cartServiceFee">${formatPrice(serviceFee, currency)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-weight:700;font-size:18px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.1);">
+            <span>Total</span><span id="cartTotal">${formatPrice(subtotal + serviceFee, currency)}</span>
+          </div>
+        </div>
+
+        <button onclick="submitOrder('${restaurantId}','${currency}',${deliveryFeeCents})" style="width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--primary),#2D7A4A);color:#fff;font-weight:700;font-size:16px;cursor:pointer;margin-top:20px;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" id="checkoutBtn">
+          <i data-feather="credit-card" style="width:18px;height:18px;display:inline;vertical-align:-4px;margin-right:6px;"></i>
+          Proceed to Checkout
+        </button>
+      `;
+      document.body.appendChild(cartOverlay);
+      feather.replace();
+      window._cartDeliveryFee = deliveryFeeCents;
+      window._cartOrderType = 'pickup';
+      setOrderType('pickup');
+    };
+
+    window.setOrderType = function(type) {
+      window._cartOrderType = type;
+      const delBtn = document.getElementById('orderTypeDelivery');
+      const pickBtn = document.getElementById('orderTypePickup');
+      const delFields = document.getElementById('deliveryFields');
+      const delFeeRow = document.getElementById('deliveryFeeRow');
+      if (type === 'delivery') {
+        if (delBtn) { delBtn.style.borderColor = 'var(--accent)'; delBtn.style.background = 'rgba(218,165,32,0.1)'; delBtn.style.color = 'var(--accent)'; }
+        if (pickBtn) { pickBtn.style.borderColor = 'rgba(255,255,255,0.1)'; pickBtn.style.background = 'transparent'; pickBtn.style.color = 'rgba(255,255,255,0.5)'; }
+        if (delFields) delFields.style.display = 'block';
+        if (delFeeRow) delFeeRow.hidden = false;
+      } else {
+        if (pickBtn) { pickBtn.style.borderColor = 'var(--primary)'; pickBtn.style.background = 'rgba(26,77,46,0.1)'; pickBtn.style.color = 'var(--primary)'; }
+        if (delBtn && !delBtn.disabled) { delBtn.style.borderColor = 'rgba(255,255,255,0.1)'; delBtn.style.background = 'transparent'; delBtn.style.color = 'rgba(255,255,255,0.5)'; }
+        if (delFields) delFields.style.display = 'none';
+        if (delFeeRow) delFeeRow.hidden = true;
+      }
+      recalcCartTotals();
+    };
+
+    window.changeQty = function(itemId, delta) {
+      if (!cart[itemId]) return;
+      cart[itemId].quantity += delta;
+      if (cart[itemId].quantity <= 0) {
+        delete cart[itemId];
+      }
+      const items = Object.values(cart);
+      if (items.length === 0) {
+        cart = {};
+        cartRestaurantId = null;
+        cartRestaurantName = '';
+        cartCurrency = 'usd';
+        const panel = document.getElementById('cartPanel');
+        if (panel) panel.remove();
+        updateCartBadge();
+        return;
+      }
+      const qtyEl = document.getElementById('qty-' + itemId);
+      if (qtyEl && cart[itemId]) qtyEl.textContent = cart[itemId].quantity;
+      else if (qtyEl) qtyEl.parentElement.parentElement.remove();
+      updateCartBadge();
+      recalcCartTotals();
+    };
+
+    function recalcCartTotals() {
+      const items = Object.values(cart);
+      const subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+      const serviceFee = Math.round(subtotal * 0.12);
+      const deliveryFee = window._cartOrderType === 'delivery' ? (window._cartDeliveryFee || 0) : 0;
+      const total = subtotal + serviceFee + deliveryFee;
+      const el = (id) => document.getElementById(id);
+      if (el('cartSubtotal')) el('cartSubtotal').textContent = formatPrice(subtotal, cartCurrency);
+      if (el('cartServiceFee')) el('cartServiceFee').textContent = formatPrice(serviceFee, cartCurrency);
+      if (el('cartDeliveryFee')) el('cartDeliveryFee').textContent = formatPrice(deliveryFee, cartCurrency);
+      if (el('cartTotal')) el('cartTotal').textContent = formatPrice(total, cartCurrency);
+    }
+
+    window.submitOrder = async function(restaurantId, currency, deliveryFee) {
+      const btn = document.getElementById('checkoutBtn');
+      const name = document.getElementById('customerName')?.value?.trim();
+      const phone = document.getElementById('customerPhone')?.value?.trim();
+      const email = document.getElementById('customerEmail')?.value?.trim();
+      if (!name || !phone || !email) { alert('Please fill in your contact details.'); return; }
+      const orderType = window._cartOrderType || 'pickup';
+      if (orderType === 'delivery') {
+        const addr = document.getElementById('deliveryAddress')?.value?.trim();
+        const city = document.getElementById('deliveryCity')?.value?.trim();
+        if (!addr || !city) { alert('Please enter a delivery address and city.'); return; }
+      }
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      const items = Object.values(cart).map(i => ({
+        menuItemId: i.id,
+        itemName: i.name,
+        itemPrice: i.price,
+        quantity: i.quantity,
+      }));
+      try {
+        const res = await fetch('/api/delivery-orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            restaurantId,
+            customerName: name,
+            customerPhone: phone,
+            customerEmail: email,
+            orderType,
+            deliveryAddress: orderType === 'delivery' ? document.getElementById('deliveryAddress').value.trim() : '',
+            deliveryCity: orderType === 'delivery' ? document.getElementById('deliveryCity').value.trim() : '',
+            deliveryNotes: document.getElementById('deliveryNotes')?.value?.trim() || '',
+            currency,
+            items,
+          }),
+        });
+        const data = await res.json();
+        if (data.checkoutUrl) {
+          cart = {};
+          cartRestaurantId = null;
+          updateCartBadge();
+          window.open(data.checkoutUrl, '_blank');
+          const panel = document.getElementById('cartPanel');
+          if (panel) panel.remove();
+          showOrderTracking(data.order?.id || data.orderId);
+        } else if (data.order) {
+          cart = {};
+          cartRestaurantId = null;
+          updateCartBadge();
+          const panel = document.getElementById('cartPanel');
+          if (panel) panel.remove();
+          showOrderTracking(data.order.id);
+        } else {
+          alert('Order submitted but no checkout URL received.');
+        }
+      } catch (err) {
+        alert('Failed to submit order: ' + err.message);
+      }
+      btn.disabled = false;
+      btn.textContent = 'Proceed to Checkout';
+    };
+
+    // ===== ORDER TRACKING =====
+    window.showOrderTracking = function(orderId) {
+      if (!orderId) return;
+      closeModal();
+      const overlay = document.createElement('div');
+      overlay.id = 'orderTrackingOverlay';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(10,15,10,0.95);backdrop-filter:blur(20px);z-index:2002;display:flex;align-items:center;justify-content:center;animation:fadeIn 0.3s ease;';
+      overlay.innerHTML = '<div style="text-align:center;"><div class="spinner" style="margin:0 auto 16px;"></div><p>Loading order details...</p></div>';
+      document.body.appendChild(overlay);
+      fetchOrderStatus(orderId);
+    };
+
+    async function fetchOrderStatus(orderId) {
+      try {
+        const res = await fetch('/api/delivery-orders/' + orderId);
+        if (!res.ok) throw new Error('Order not found');
+        const order = await res.json();
+        renderOrderTracking(order);
+      } catch(e) {
+        const overlay = document.getElementById('orderTrackingOverlay');
+        if (overlay) overlay.innerHTML = `<div style="text-align:center;max-width:400px;padding:40px;">
+          <i data-feather="alert-circle" style="width:48px;height:48px;color:#E74C3C;margin-bottom:16px;"></i>
+          <h2>Order Not Found</h2>
+          <p style="color:var(--text-light);margin:12px 0;">Unable to load order details.</p>
+          <button onclick="document.getElementById('orderTrackingOverlay').remove()" style="padding:12px 24px;border-radius:10px;border:none;background:var(--primary);color:#fff;cursor:pointer;font-weight:600;">Close</button>
+        </div>`;
+        feather.replace();
+      }
+    }
+
+    function renderOrderTracking(order) {
+      const overlay = document.getElementById('orderTrackingOverlay');
+      if (!overlay) return;
+      const steps = ['pending','confirmed','preparing','ready','out_for_delivery','delivered'];
+      const stepLabels = {pending:'Order Placed',confirmed:'Confirmed',preparing:'Preparing',ready:'Ready',out_for_delivery:'On The Way',delivered:'Delivered'};
+      const stepIcons = {pending:'clock',confirmed:'check-circle',preparing:'coffee',ready:'package',out_for_delivery:'truck',delivered:'check'};
+      const currentIdx = steps.indexOf(order.status);
+      const isCancelled = order.status === 'cancelled';
+
+      let stepsHtml = steps.map((step, idx) => {
+        const isActive = idx <= currentIdx && !isCancelled;
+        const isCurrent = idx === currentIdx && !isCancelled;
+        return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;position:relative;">
+          <div style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;${isActive ? 'background:var(--primary);color:#fff;' : 'background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);'}${isCurrent ? 'box-shadow:0 0 0 4px rgba(26,77,46,0.3);' : ''}">
+            <i data-feather="${stepIcons[step]}" style="width:16px;height:16px;"></i>
+          </div>
+          <div style="font-size:11px;margin-top:6px;text-align:center;${isActive ? 'color:#fff;font-weight:600;' : 'color:rgba(255,255,255,0.3);'}">${stepLabels[step]}</div>
+          ${idx < steps.length - 1 ? `<div style="position:absolute;top:18px;left:calc(50% + 18px);width:calc(100% - 36px);height:2px;${idx < currentIdx && !isCancelled ? 'background:var(--primary);' : 'background:rgba(255,255,255,0.08);'}"></div>` : ''}
+        </div>`;
+      }).join('');
+
+      const itemsHtml = (order.items || []).map(i => `
+        <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <span>${i.quantity}x ${i.itemName}</span>
+          <span>${formatPrice(i.itemPrice * i.quantity, order.currency || 'usd')}</span>
+        </div>`).join('');
+
+      overlay.innerHTML = `
+        <div style="max-width:520px;width:90%;max-height:90vh;overflow-y:auto;padding:40px;position:relative;">
+          <button onclick="document.getElementById('orderTrackingOverlay').remove()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:#fff;cursor:pointer;"><i data-feather="x" style="width:24px;height:24px;"></i></button>
+          <div style="text-align:center;margin-bottom:30px;">
+            <div style="width:60px;height:60px;border-radius:50%;background:${isCancelled ? '#E74C3C' : 'var(--primary)'};display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+              <i data-feather="${isCancelled ? 'x' : 'shopping-bag'}" style="width:28px;height:28px;color:#fff;"></i>
+            </div>
+            <h2 style="font-family:var(--font-heading);font-size:24px;margin-bottom:4px;">${isCancelled ? 'Order Cancelled' : 'Order Tracking'}</h2>
+            <p style="color:var(--text-light);font-size:13px;">Order #${(order.id || '').slice(0,8).toUpperCase()}</p>
+          </div>
+
+          ${!isCancelled ? `<div style="display:flex;align-items:flex-start;margin-bottom:30px;overflow-x:auto;padding:0 10px;">${stepsHtml}</div>` : ''}
+
+          <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:20px;margin-bottom:20px;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Order Details</div>
+            ${itemsHtml}
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);font-size:14px;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span>Subtotal</span><span>${formatPrice(order.subtotalAmount, order.currency || 'usd')}</span></div>
+              ${order.deliveryFeeAmount > 0 ? `<div style="display:flex;justify-content:space-between;margin-bottom:4px;color:var(--text-light);"><span>Delivery</span><span>${formatPrice(order.deliveryFeeAmount, order.currency || 'usd')}</span></div>` : ''}
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px;color:var(--text-light);"><span>Service fee</span><span>${formatPrice(order.serviceFeeAmount, order.currency || 'usd')}</span></div>
+              <div style="display:flex;justify-content:space-between;font-weight:700;font-size:16px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.1);"><span>Total</span><span>${formatPrice(order.totalAmount, order.currency || 'usd')}</span></div>
+            </div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.04);border-radius:14px;padding:20px;">
+            <div style="font-weight:700;font-size:14px;margin-bottom:12px;">Delivery Info</div>
+            <div style="font-size:13px;color:var(--text-light);line-height:1.6;">
+              <div><strong>Type:</strong> ${(order.orderType || 'pickup').replace('_',' ')}</div>
+              ${order.deliveryAddress ? `<div><strong>Address:</strong> ${order.deliveryAddress}</div>` : ''}
+              ${order.deliveryCity ? `<div><strong>City:</strong> ${order.deliveryCity}</div>` : ''}
+              ${order.deliveryNotes ? `<div><strong>Notes:</strong> ${order.deliveryNotes}</div>` : ''}
+              ${order.estimatedDeliveryTime ? `<div><strong>Estimated:</strong> ${order.estimatedDeliveryTime}</div>` : ''}
+            </div>
+          </div>
+
+          ${!isCancelled && order.status !== 'delivered' ? `<button onclick="refreshOrderTracking('${order.id}')" style="width:100%;padding:14px;border:none;border-radius:12px;background:rgba(255,255,255,0.08);color:#fff;font-weight:600;cursor:pointer;margin-top:20px;font-size:14px;">
+            <i data-feather="refresh-cw" style="width:14px;height:14px;display:inline;vertical-align:-3px;margin-right:6px;"></i>Refresh Status
+          </button>` : ''}
+        </div>`;
+      feather.replace();
+
+      if (!isCancelled && order.status !== 'delivered') {
+        setTimeout(() => {
+          if (document.getElementById('orderTrackingOverlay')) {
+            fetchOrderStatus(order.id);
+          }
+        }, 30000);
+      }
+    }
+
+    window.refreshOrderTracking = function(orderId) {
+      fetchOrderStatus(orderId);
+    };
+
+    // ===== NAVIGATION =====
+    const validPages = ['home', 'stays', 'experiences', 'cars', 'deals', 'guide', 'toolkit', 'safety', 'chat'];
+    const loaded = {};
+    function navigateTo(page) {
+      if (!validPages.includes(page)) page = 'home';
+      const targetPage = document.getElementById('page-' + page);
+      if (!targetPage) return;
+
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      targetPage.classList.add('active');
+
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.nav-links a[data-nav="${page}"]`);
+      if (link) link.classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (page !== 'home') {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+
+      document.getElementById('navLinks').classList.remove('open');
+
+      if (page === 'home' && !loaded.home) { loaded.home = true; loadHomePage(); }
+      if (page === 'stays' && !loaded.stays) { loaded.stays = true; loadStaysPage(); }
+      if (page === 'experiences' && !loaded.experiences) { loaded.experiences = true; loadExperiencesPage(); }
+      if (page === 'cars' && !loaded.cars) { loaded.cars = true; loadCarsPage(); }
+      if (page === 'deals' && !loaded.deals) { loaded.deals = true; loadDealsPage(); }
+      if (page === 'toolkit') { loadToolkitPage(); }
+      if (page === 'safety') { feather.replace(); }
+      if (page === 'chat' && !loaded.chat) { loaded.chat = true; loadChatPage(); }
+    }
+    window.navigateTo = navigateTo;
+
+    window.navigateToGuide = function(destination) {
+      navigateTo('guide');
+      setTimeout(() => {
+        const input = document.getElementById('guideSearchInput');
+        if (input) {
+          input.value = destination;
+          fetchGuide();
+        }
+      }, 100);
+    };
+
+    // Tabs
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        const parent = btn.closest('.page');
+        parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + tab).classList.add('active');
+      });
+    });
+
+    // Deals filter
+    document.getElementById('dealsFilterBar').addEventListener('click', (e) => {
+      const chip = e.target.closest('.filter-chip');
+      if (!chip) return;
+      document.querySelectorAll('#dealsFilterBar .filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      dealsFilter = chip.dataset.dealFilter;
+      if (cache.accommodations) {
+        renderDealsGrid(cache.accommodations, cache.safaris || [], cache.restaurants || [], cache.carRentals || []);
+      }
+    });
+
+    // Hash routing
+    function handleHash() {
+      const hash = window.location.hash.replace('#', '') || 'home';
+      navigateTo(hash);
+    }
+    window.addEventListener('hashchange', handleHash);
+
+    // Hero search
+    window.handleHeroSearch = function() {
+      const val = document.getElementById('heroSearchInput').value.trim();
+      if (!val) return;
+      navigateToGuide(val);
+    };
+
+    document.getElementById('heroSearchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleHeroSearch();
+    });
+
+    // Hamburger
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Guide enter key
+    document.getElementById('guideSearchInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') fetchGuide();
+    });
+
+    // ===== TOOLKIT FUNCTIONS =====
+    let exchangeRates = null;
+    function loadToolkitPage() { feather.replace(); }
+
+    window.convertCurrency = async function() {
+      const amount = parseFloat(document.getElementById('converterAmount').value) || 0;
+      const from = document.getElementById('converterFrom').value;
+      const to = document.getElementById('converterTo').value;
+      const resultEl = document.getElementById('converterResult');
+      resultEl.style.display = 'block';
+      resultEl.innerHTML = '<div class="toolkit-spinner"></div>';
+      try {
+        if (!exchangeRates) {
+          const res = await fetch('/api/travel-toolkit/exchange-rates');
+          const data = await res.json();
+          exchangeRates = data.rates || data;
+        }
+        const fromRate = exchangeRates[from] || 1;
+        const toRate = exchangeRates[to] || 1;
+        const converted = (amount / fromRate) * toRate;
+        const rate = toRate / fromRate;
+        resultEl.innerHTML = `
+          <h4>Conversion Result</h4>
+          <div class="toolkit-result-value">${amount.toLocaleString()} ${from} = ${converted.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ${to}</div>
+          <div class="toolkit-result-sub">Rate: 1 ${from} = ${rate.toFixed(4)} ${to}</div>
+        `;
+      } catch (e) {
+        resultEl.innerHTML = '<p style="color:#E74C3C;">Failed to fetch rates. Try again.</p>';
+      }
+    };
+
+    window.generatePackingList = async function() {
+      const dest = document.getElementById('packingDestination').value.trim();
+      if (!dest) return;
+      const days = document.getElementById('packingDays').value || 7;
+      const tripType = document.getElementById('packingTripType').value;
+      const btn = document.getElementById('packingBtn');
+      const resultEl = document.getElementById('packingResult');
+      btn.disabled = true;
+      resultEl.innerHTML = '<div class="toolkit-spinner"></div>';
+      try {
+        const res = await fetch('/api/travel-toolkit/packing-list', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ destination: dest, days: parseInt(days), tripType })
+        });
+        const data = await res.json();
+        if (data.packingList) {
+          const sections = data.packingList.split('\n').filter(l => l.trim());
+          resultEl.innerHTML = `<div class="toolkit-result"><h4>Packing List for ${dest}</h4><ul class="toolkit-list">${
+            sections.map(item => `<li><i data-feather="check-circle"></i> ${item.replace(/^[-*]\s*/, '')}</li>`).join('')
+          }</ul></div>`;
+          feather.replace();
+        } else {
+          resultEl.innerHTML = '<div class="toolkit-result"><p style="color:var(--text-light);">Could not generate packing list. Try again.</p></div>';
+        }
+      } catch (e) {
+        resultEl.innerHTML = '<div class="toolkit-result"><p style="color:#E74C3C;">Failed to generate. Try again.</p></div>';
+      }
+      btn.disabled = false;
+    };
+
+    window.fetchEmergencyInfo = async function() {
+      const dest = document.getElementById('emergencyDestination').value.trim();
+      if (!dest) return;
+      const btn = document.getElementById('emergencyBtn');
+      const resultEl = document.getElementById('emergencyResult');
+      btn.disabled = true;
+      resultEl.innerHTML = '<div class="toolkit-spinner"></div>';
+      try {
+        const res = await fetch('/api/travel-toolkit/emergency-info', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ destination: dest })
+        });
+        const data = await res.json();
+        if (data.emergencyInfo) {
+          const lines = data.emergencyInfo.split('\n').filter(l => l.trim());
+          resultEl.innerHTML = `<div class="toolkit-result"><h4>Emergency Info - ${dest}</h4><ul class="toolkit-list">${
+            lines.map(item => `<li><i data-feather="alert-circle"></i> ${item.replace(/^[-*]\s*/, '')}</li>`).join('')
+          }</ul></div>`;
+          feather.replace();
+        } else {
+          resultEl.innerHTML = '<div class="toolkit-result"><p style="color:var(--text-light);">Could not load emergency info.</p></div>';
+        }
+      } catch (e) {
+        resultEl.innerHTML = '<div class="toolkit-result"><p style="color:#E74C3C;">Failed to fetch. Try again.</p></div>';
+      }
+      btn.disabled = false;
+    };
+
+    // ===== CHAT FUNCTIONS =====
+    const CHAT_USER_ID = 'traveler-web';
+    let activeChatConvId = null;
+    let chatRefreshInterval = null;
+
+    async function loadChatPage() {
+      try {
+        const res = await fetch(`/api/chat/conversations?userId=${CHAT_USER_ID}`);
+        const convs = await res.json();
+        const listEl = document.getElementById('chatConvList');
+        if (!Array.isArray(convs) || !convs.length) {
+          listEl.innerHTML = `<div class="chat-empty-state" style="padding:40px 20px;"><i data-feather="message-circle"></i><p style="font-size:13px;">No conversations yet. Book a stay or connect with a companion to start chatting.</p></div>`;
+          feather.replace();
+          return;
+        }
+        listEl.innerHTML = convs.map(c => `
+          <div class="chat-conv-item" data-conv-id="${c.id}" onclick="openChat('${c.id}','${(c.vendorName||'').replace(/'/g,"\\'")}','${c.vendorType||''}','${c.vendorImageUrl||''}')">
+            <div class="chat-conv-avatar">${c.vendorImageUrl ? `<img src="${c.vendorImageUrl}" alt="" />` : '<i data-feather="user"></i>'}</div>
+            <div class="chat-conv-info">
+              <div class="chat-conv-name">${c.vendorName || 'Unknown'}</div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <span class="chat-conv-type">${c.vendorType || ''}</span>
+                <span class="chat-conv-preview">${c.lastMessage || 'No messages yet'}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+        feather.replace();
+      } catch (e) {
+        console.error('Failed to load conversations:', e);
+      }
+    }
+
+    window.openChat = async function(convId, vendorName, vendorType, imageUrl) {
+      activeChatConvId = convId;
+      document.querySelectorAll('.chat-conv-item').forEach(el => el.classList.remove('active'));
+      const activeEl = document.querySelector(`.chat-conv-item[data-conv-id="${convId}"]`);
+      if (activeEl) activeEl.classList.add('active');
+
+      const mainEl = document.getElementById('chatMain');
+      mainEl.innerHTML = `
+        <div class="chat-main-header">
+          <div class="chat-conv-avatar" style="width:36px;height:36px;">${imageUrl ? `<img src="${imageUrl}" alt="" />` : '<i data-feather="user"></i>'}</div>
+          <div>
+            <div style="font-weight:600;font-size:14px;">${vendorName}</div>
+            <div style="font-size:11px;color:var(--text-muted);text-transform:capitalize;">${vendorType}</div>
+          </div>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div id="chatFilterWarning" style="display:none;" class="chat-filter-warning"><i data-feather="alert-triangle"></i><span></span></div>
+        <div class="chat-input-bar">
+          <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChatMessage()" />
+          <button onclick="sendChatMessage()"><i data-feather="send"></i></button>
+        </div>
+      `;
+      feather.replace();
+      await loadChatMessages(convId);
+      if (chatRefreshInterval) clearInterval(chatRefreshInterval);
+      chatRefreshInterval = setInterval(() => { if (activeChatConvId === convId) loadChatMessages(convId); }, 10000);
+    };
+
+    async function loadChatMessages(convId) {
+      try {
+        const res = await fetch(`/api/chat/conversations/${convId}/messages`);
+        const msgs = await res.json();
+        const el = document.getElementById('chatMessages');
+        if (!el) return;
+        if (!msgs.length) {
+          el.innerHTML = '<div class="chat-empty-state"><i data-feather="message-circle"></i><p style="font-size:13px;">Start the conversation</p></div>';
+          feather.replace();
+          return;
+        }
+        el.innerHTML = msgs.map(m => {
+          const isSent = m.senderId === CHAT_USER_ID;
+          const time = new Date(m.createdAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+          const filteredClass = m.isFiltered ? ' chat-msg-filtered' : '';
+          return `<div class="chat-msg ${isSent ? 'sent' : 'received'}"><span class="${filteredClass}">${m.content}</span><span class="chat-msg-time">${time}</span></div>`;
+        }).join('');
+        el.scrollTop = el.scrollHeight;
+      } catch (e) { console.error('Failed to load messages:', e); }
+    }
+
+    window.sendChatMessage = async function() {
+      const input = document.getElementById('chatInput');
+      if (!input || !activeChatConvId) return;
+      const content = input.value.trim();
+      if (!content) return;
+      input.value = '';
+      try {
+        const res = await fetch(`/api/chat/conversations/${activeChatConvId}/messages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ senderId: CHAT_USER_ID, content })
+        });
+        const msg = await res.json();
+        if (msg.wasFiltered) {
+          const warn = document.getElementById('chatFilterWarning');
+          if (warn) {
+            warn.style.display = 'flex';
+            warn.querySelector('span').textContent = msg.filterWarning || 'Some content was filtered for safety.';
+            setTimeout(() => { warn.style.display = 'none'; }, 5000);
+          }
+        }
+        await loadChatMessages(activeChatConvId);
+      } catch (e) { console.error('Failed to send message:', e); }
+    };
+
+    // ===== FOOTER LINKS =====
+    document.querySelectorAll('a[href="#toolkit"]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); navigateTo('toolkit'); }));
+    document.querySelectorAll('a[href="#safety"]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); navigateTo('safety'); }));
+    document.querySelectorAll('a[href="#chat"]').forEach(a => a.addEventListener('click', (e) => { e.preventDefault(); navigateTo('chat'); }));
+
+    // Init
+    feather.replace();
+    handleHash();
+    if (!loaded.home) { loaded.home = true; loadHomePage(); }
+
+  })();
+  </script>
+
+</body>
+</html>
